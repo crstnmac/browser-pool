@@ -92,7 +92,7 @@ class BrowserPool {
         logger.info(
           `[${callId}] getBrowser: Awaited launch promise completed. Browser connected: ${launchedBrowser?.isConnected()}`
         )
-        if (launchedBrowser && launchedBrowser.isConnected()) {
+        if (launchedBrowser?.isConnected()) {
           logger.info(
             `[${callId}] getBrowser: Returning browser from awaited promise.`
           )
@@ -144,7 +144,7 @@ class BrowserPool {
         )
         const newBrowser = await chromium.launch({
           headless: false, // Keeping this false as per your last change for debugging
-          args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],
+          args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
         })
 
         logger.info(
@@ -286,7 +286,9 @@ class BrowserPool {
     try {
       const page = await browser.newPage({
         /* userAgent, bypassCSP etc. if needed */
-        viewport: {width: 1280, height: 720}, // Example default viewport
+        viewport: { width: 1280, height: 720 }, // Example default viewport
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
+        bypassCSP: true,
       })
       logger.info('requirePage: New page created successfully.')
       this.requiredPages.push(page) // Add to required
@@ -319,40 +321,75 @@ class BrowserPool {
    * @param page The page to release.
    */
   public async releasePage(page: Page): Promise<void> {
-    this.lastActivityTime = Date.now() // Update activity time
-    logger.info('releasePage: Releasing page.')
+    this.lastActivityTime = Date.now()
+    logger.info('releasePage: Starting release process.')
 
     const requiredIndex = this.requiredPages.indexOf(page)
     if (requiredIndex === -1) {
-      logger.warn(
-        'releasePage: Attempted to release an unknown or already released page.'
-      )
-      // Check if it's in releasedPages (double release?)
-      if (this.releasedPages.includes(page)) {
-        logger.warn(
-          'releasePage: Page was found in releasedPages (potential double release).'
-        )
-      }
-      // It's possible the page was closed externally, ensure queue is notified.
-      if (this.getCurrentSize() >= this.maxSize) {
-        this._notifyWaitQueue()
-      }
-      return
+      this._handleUnknownReleaseAttempt(page)
+      return // Exit early if page is not recognized as active
     }
-    this.requiredPages.splice(requiredIndex, 1)
-    logger.info('releasePage: Releasing page.')
 
-    let addedToPool = false
+    // Remove page from active list *before* attempting cleanup
+    this.requiredPages.splice(requiredIndex, 1)
+    logger.info(`releasePage: Removed page from requiredPages list.`)
+
+    try {
+      // Attempt to cleanup the page (navigate to blank) and pool it, or close it.
+      await this._cleanupOrClosePage(page)
+    } catch (error: any) {
+      // Catch unexpected errors from _cleanupOrClosePage itself
+      logger.error(
+        `releasePage: Unexpected error during page cleanup/close: ${error.message}`
+      )
+      // Ensure page is attempted to be closed even if _cleanupOrClosePage fails unexpectedly
+      await this._closePageSafely(page, 'releasePage main catch')
+    } finally {
+      // Always notify the queue after a page is removed from requiredPages,
+      // regardless of whether it was successfully pooled or closed,
+      // as a slot has become available.
+      logger.info('releasePage: Notifying wait queue.')
+      this._notifyWaitQueue()
+    }
+    logger.info('releasePage: Finished release process.')
+  }
+
+  /**
+   * Handles the logic when an attempt is made to release a page
+   * that is not currently tracked as required/active.
+   */
+  private _handleUnknownReleaseAttempt(page: Page): void {
+    logger.warn(
+      'releasePage: Attempted to release an unknown or already released page.'
+    )
+    if (this.releasedPages.includes(page)) {
+      logger.warn(
+        'releasePage: Page was found in releasedPages (potential double release).'
+      )
+    }
+    // No need to notify queue here, as this page wasn't occupying a counted slot.
+    // If it was a double release, the original release would have notified.
+    // The original code had a potential notification here if getCurrentSize >= maxSize,
+    // but that seems incorrect as releasing an unknown page shouldn't free a slot.
+  }
+
+  /**
+   * Attempts to clean up a page by navigating it to 'about:blank' and adding it
+   * to the released pool. If cleanup fails or isn't possible (e.g., page closed),
+   * it ensures the page is closed.
+   */
+  private async _cleanupOrClosePage(page: Page): Promise<void> {
     if (!page.isClosed() && page.context().browser()?.isConnected()) {
+      logger.info(
+        'releasePage: Page is open and browser connected. Attempting cleanup.'
+      )
       try {
-        logger.info(
-          'releasePage: Attempting to navigate page to about:blank...'
-        )
-        // Avoid navigating if page is already on about:blank or similar
+        // Navigate to about:blank if not already there
         if (page.url() !== 'about:blank') {
+          logger.info('releasePage: Navigating page to about:blank...')
           await page.goto('about:blank', {
             waitUntil: 'domcontentloaded',
-            timeout: 3000,
+            timeout: 3000, // Keep timeout relatively short
           })
           logger.info('releasePage: Navigated page to about:blank.')
         } else {
@@ -360,46 +397,42 @@ class BrowserPool {
             'releasePage: Page already at about:blank, skipping navigation.'
           )
         }
+        // Add to pool only if cleanup succeeded
         this.releasedPages.push(page)
-        addedToPool = true
         logger.info('releasePage: Added page back to released pool.')
       } catch (error: any) {
         logger.warn(
           `releasePage: Error during cleanup (goto about:blank): ${error.message}. Closing page instead.`
         )
-        try {
-          if (!page.isClosed()) {
-            await page.close({runBeforeUnload: true}) // Attempt graceful close
-            logger.info('releasePage: Closed page directly after goto error.')
-          }
-        } catch (closeError: any) {
-          logger.warn(
-            `releasePage: Error closing page after goto error: ${closeError.message}`
-          )
-        }
+        await this._closePageSafely(page, 'goto about:blank error')
       }
     } else {
-      logger.info(
-        'releasePage: Page was already closed or browser disconnected. Not adding back to pool.'
+      // Page is already closed or browser disconnected
+      logger.warn(
+        'releasePage: Page was already closed or browser disconnected. Ensuring it is fully closed.'
       )
-      // Ensure page is closed if possible
-      try {
-        if (!page.isClosed()) {
-          await page.close({runBeforeUnload: true})
-          logger.info(
-            'releasePage: Closed page that was marked as closed/disconnected.'
-          )
-        }
-      } catch (e: any) {
-        logger.warn(
-          `releasePage: Error closing already closed/disconnected page: ${e.message}`
-        )
-      }
+      await this._closePageSafely(page, 'page closed or browser disconnected')
     }
+  }
 
-    // Notify waiting queue regardless of whether the page was added back or closed
-    // as space might have become available
-    this._notifyWaitQueue()
+  /**
+   * Safely attempts to close a Playwright page, logging any errors.
+   */
+  private async _closePageSafely(page: Page, context: string): Promise<void> {
+    try {
+      if (!page.isClosed()) {
+        logger.info(`releasePage [${context}]: Attempting to close page.`)
+        await page.close({ runBeforeUnload: true }) // Attempt graceful close
+        logger.info(`releasePage [${context}]: Closed page successfully.`)
+      } else {
+        logger.info(`releasePage [${context}]: Page was already closed.`)
+      }
+    } catch (closeError: any) {
+      logger.warn(
+        `releasePage [${context}]: Error closing page: ${closeError.message}`
+      )
+      // Log the error, but don't rethrow. The goal is to release the slot.
+    }
   }
 
   // Helper to notify the wait queue

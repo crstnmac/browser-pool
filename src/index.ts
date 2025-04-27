@@ -3,7 +3,7 @@ import {Hono} from 'hono'
 import {logger} from 'hono/logger'
 import {cors} from 'hono/cors'
 import {BrowserPool} from './BrowserPool.js'
-import handleCookieBanners from './CookieHandlers.js'
+import {handleCookieBanners} from './CookieHandlers.js' // Changed to named import
 import handlePopups from './Popuphandlers.js'
 
 const app = new Hono()
@@ -40,18 +40,19 @@ app.post('/screenshot', async (c) => {
     // Clear cookies if needed
     await page.context().clearCookies()
 
-    await page.goto(url, {waitUntil: 'networkidle'})
-
-    await handlePopups(page)
+    await page.goto(url, {waitUntil: 'domcontentloaded', timeout: 60000})
 
     if (cookieConsent) {
       try {
+        await handlePopups(page)
+
         await handleCookieBanners(page)
       } catch (e) {
         console.warn('Error handling cookie consent:', e)
       }
     }
 
+    // Take screenshot after all tasks
     const screenshot = await page.screenshot({fullPage: true})
     return c.body(screenshot, 200, {
       'Content-Type': 'image/png',

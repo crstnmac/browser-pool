@@ -17,7 +17,7 @@ const consoleFormat = printf(({level, message, timestamp, ...metadata}) => {
 
 // Create the logger
 export const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
+  level: process.env.LOG_LEVEL ?? 'info',
   defaultMeta: {service: 'screenshot-api'},
   transports: [
     // Console transport for development
@@ -66,8 +66,8 @@ export const httpLogger = {
 // Add request context to logger
 export function addRequestLogger(req: any) {
   const requestId =
-    req.header('x-request-id') ||
-    req.header('x-correlation-id') ||
+    req.header('x-request-id') ??
+    req.header('x-correlation-id') ??
     Math.random().toString(36).substring(2, 10)
 
   return {
