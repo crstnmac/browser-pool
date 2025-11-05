@@ -22,6 +22,23 @@ enum UserStatus {
   DELETED
 }
 
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+  TRIALING
+  UNPAID
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
 model User {
   id            String      @id @default(uuid())
   email         String      @unique
@@ -30,6 +47,7 @@ model User {
   plan          UserPlan    @default(FREE)
   status        UserStatus  @default(ACTIVE)
   isAdmin       Boolean     @default(false) @map("is_admin")
+  dodoCustomerId String?    @unique @map("dodo_customer_id") // Dodo Payments customer ID
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @updatedAt @map("updated_at")
 
@@ -37,6 +55,8 @@ model User {
   usageLogs     UsageLog[]
   quotas        Quota[]
   webhooks      Webhook[]
+  subscriptions Subscription[]
+  payments      Payment[]
 
   @@map("users")
 }
@@ -109,4 +129,57 @@ model Webhook {
 
   @@index([userId])
   @@map("webhooks")
+}
+
+model Subscription {
+  id                   String             @id @default(uuid())
+  userId               String             @map("user_id")
+  dodoSubscriptionId   String             @unique @map("dodo_subscription_id") // Dodo Payments subscription ID
+  dodoCustomerId       String             @map("dodo_customer_id")
+  plan                 UserPlan
+  status               SubscriptionStatus @default(ACTIVE)
+  currentPeriodStart   DateTime           @map("current_period_start")
+  currentPeriodEnd     DateTime           @map("current_period_end")
+  cancelAtPeriodEnd    Boolean            @default(false) @map("cancel_at_period_end")
+  canceledAt           DateTime?          @map("canceled_at")
+  trialStart           DateTime?          @map("trial_start")
+  trialEnd             DateTime?          @map("trial_end")
+  createdAt            DateTime           @default(now()) @map("created_at")
+  updatedAt            DateTime           @updatedAt @map("updated_at")
+
+  user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments             Payment[]
+
+  @@index([userId])
+  @@index([dodoSubscriptionId])
+  @@index([status])
+  @@map("subscriptions")
+}
+
+model Payment {
+  id                 String        @id @default(uuid())
+  userId             String        @map("user_id")
+  subscriptionId     String?       @map("subscription_id")
+  dodoPaymentId      String        @unique @map("dodo_payment_id") // Dodo Payments payment ID
+  dodoInvoiceId      String?       @map("dodo_invoice_id")
+  amount             Int           // Amount in cents
+  currency           String        @default("USD")
+  status             PaymentStatus @default(PENDING)
+  plan               UserPlan
+  description        String?
+  receiptUrl         String?       @map("receipt_url")
+  failureReason      String?       @map("failure_reason")
+  paidAt             DateTime?     @map("paid_at")
+  refundedAt         DateTime?     @map("refunded_at")
+  createdAt          DateTime      @default(now()) @map("created_at")
+  updatedAt          DateTime      @updatedAt @map("updated_at")
+
+  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscription       Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([subscriptionId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("payments")
 }

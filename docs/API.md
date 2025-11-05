@@ -264,6 +264,164 @@ Revoke an API key.
 }
 ```
 
+### Subscriptions
+
+#### GET /subscriptions/plans
+
+Get available subscription plans (public endpoint).
+
+**Authentication Required**: No
+
+**Response:** `200 OK`
+```json
+{
+  "plans": [
+    {
+      "id": "FREE",
+      "name": "Free",
+      "price": 0,
+      "currency": "USD",
+      "interval": "month",
+      "features": ["100 screenshots/month", "5 requests/minute"],
+      "quota": 100,
+      "rateLimit": 5
+    },
+    {
+      "id": "PRO",
+      "name": "Pro",
+      "price": 29,
+      "currency": "USD",
+      "interval": "month",
+      "features": ["5,000 screenshots/month", "30 requests/minute"],
+      "quota": 5000,
+      "rateLimit": 30
+    }
+  ]
+}
+```
+
+#### GET /subscriptions
+
+Get user's active subscription.
+
+**Authentication Required**: Yes
+
+**Response:** `200 OK`
+```json
+{
+  "subscription": {
+    "id": "uuid",
+    "plan": "PRO",
+    "status": "ACTIVE",
+    "currentPeriodStart": "2024-01-01T00:00:00Z",
+    "currentPeriodEnd": "2024-02-01T00:00:00Z",
+    "cancelAtPeriodEnd": false
+  }
+}
+```
+
+#### POST /subscriptions/checkout
+
+Create a checkout session for a new subscription.
+
+**Authentication Required**: Yes
+
+**Request Body:**
+```json
+{
+  "plan": "PRO",
+  "trialDays": 7,
+  "successUrl": "https://yourapp.com/success",
+  "cancelUrl": "https://yourapp.com/cancel"
+}
+```
+
+**Response:** `201 Created`
+```json
+{
+  "message": "Checkout session created",
+  "checkoutUrl": "https://checkout.dodo.com/session/abc123",
+  "sessionId": "cs_abc123"
+}
+```
+
+#### POST /subscriptions/upgrade
+
+Upgrade or downgrade subscription.
+
+**Authentication Required**: Yes
+
+**Request Body:**
+```json
+{
+  "plan": "ENTERPRISE"
+}
+```
+
+**Response:** `200 OK`
+```json
+{
+  "message": "Subscription upgraded successfully",
+  "subscription": {
+    "id": "uuid",
+    "plan": "ENTERPRISE",
+    "status": "ACTIVE"
+  }
+}
+```
+
+#### POST /subscriptions/cancel
+
+Cancel subscription at end of billing period.
+
+**Authentication Required**: Yes
+
+**Response:** `200 OK`
+```json
+{
+  "message": "Subscription will be canceled at the end of the billing period",
+  "subscription": {...},
+  "activeUntil": "2024-02-01T00:00:00Z"
+}
+```
+
+#### POST /subscriptions/reactivate
+
+Reactivate a canceled subscription.
+
+**Authentication Required**: Yes
+
+**Response:** `200 OK`
+```json
+{
+  "message": "Subscription reactivated successfully",
+  "subscription": {...}
+}
+```
+
+#### GET /subscriptions/payments
+
+Get payment history.
+
+**Authentication Required**: Yes
+
+**Response:** `200 OK`
+```json
+{
+  "payments": [
+    {
+      "id": "uuid",
+      "amount": 2900,
+      "currency": "USD",
+      "status": "SUCCEEDED",
+      "plan": "PRO",
+      "paidAt": "2024-01-01T00:00:00Z",
+      "receiptUrl": "https://dodo.com/receipts/abc123"
+    }
+  ]
+}
+```
+
 ### Webhooks
 
 #### GET /webhooks

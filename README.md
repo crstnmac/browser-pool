@@ -104,6 +104,44 @@ curl -X POST http://localhost:3000/screenshot \
   -o screenshot.png
 ```
 
+## Subscriptions & Payments
+
+Browser Pool uses **Dodo Payments** for subscription management.
+
+### Upgrade to Pro or Enterprise
+
+```bash
+# Create a checkout session
+curl -X POST http://localhost:3000/subscriptions/checkout \
+  -H "X-API-Key: your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{"plan": "PRO", "trialDays": 7}'
+
+# Response includes checkout URL
+{
+  "checkoutUrl": "https://checkout.dodo.com/session/abc123"
+}
+```
+
+### Manage Subscription
+
+```bash
+# View current subscription
+curl http://localhost:3000/subscriptions \
+  -H "X-API-Key: your_api_key"
+
+# Upgrade plan
+curl -X POST http://localhost:3000/subscriptions/upgrade \
+  -H "X-API-Key: your_api_key" \
+  -d '{"plan": "ENTERPRISE"}'
+
+# Cancel subscription
+curl -X POST http://localhost:3000/subscriptions/cancel \
+  -H "X-API-Key: your_api_key"
+```
+
+For complete subscription setup and testing guide, see [docs/SUBSCRIPTIONS.md](docs/SUBSCRIPTIONS.md).
+
 ## Architecture
 
 See [docs/SAAS_ARCHITECTURE.md](docs/SAAS_ARCHITECTURE.md) for detailed architecture documentation.

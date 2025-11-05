@@ -16,6 +16,8 @@ import authRouter from './routes/auth.js'
 import usersRouter from './routes/users.js'
 import adminRouter from './routes/admin.js'
 import webhooksRouter from './routes/webhooks.js'
+import subscriptionsRouter from './routes/subscriptions.js'
+import dodoWebhooksRouter from './routes/dodo-webhooks.js'
 
 const app = new Hono()
 const browserPool = new BrowserPool(
@@ -58,6 +60,10 @@ app.route('/auth', authRouter)
 app.route('/users', usersRouter)
 app.route('/admin', adminRouter)
 app.route('/webhooks', webhooksRouter)
+app.route('/subscriptions', subscriptionsRouter)
+
+// Dodo Payments webhooks (public, but verified)
+app.route('/dodo-webhooks', dodoWebhooksRouter)
 
 // Screenshot endpoint (protected)
 app.post(
