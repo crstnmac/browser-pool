@@ -3,6 +3,8 @@ import { z } from 'zod'
 import { prisma } from '../db.js'
 import { hashPassword, verifyPassword, generateApiKey, hashApiKey } from '../auth.js'
 import { logger } from '../logger.js'
+import { emailService } from '../email.js'
+import { logAudit } from '../audit.js'
 
 const authRouter = new Hono()
 
@@ -72,6 +74,19 @@ authRouter.post('/register', async (c) => {
         key: hashedKey,
         name: 'Default Key',
       },
+    })
+
+    // Send welcome email
+    await emailService.sendWelcomeEmail(user.email, user.name, rawApiKey)
+
+    // Log audit
+    await logAudit({
+      userId: user.id,
+      action: 'user.registered',
+      resource: 'user',
+      resourceId: user.id,
+      ipAddress: c.req.header('x-forwarded-for'),
+      userAgent: c.req.header('user-agent'),
     })
 
     logger.info('User registered', { userId: user.id, email: user.email })
@@ -147,6 +162,15 @@ authRouter.post('/login', async (c) => {
     const isValid = await verifyPassword(password, user.passwordHash)
 
     if (!isValid) {
+      await logAudit({
+        userId: user.id,
+        action: 'user.login_failed',
+        resource: 'user',
+        resourceId: user.id,
+        details: { reason: 'Invalid password' },
+        ipAddress: c.req.header('x-forwarded-for'),
+        userAgent: c.req.header('user-agent'),
+      })
       return c.json({ error: 'Invalid email or password' }, 401)
     }
 
@@ -154,6 +178,22 @@ authRouter.post('/login', async (c) => {
     if (user.status !== 'ACTIVE') {
       return c.json({ error: 'Account is suspended or deleted' }, 403)
     }
+
+    // Update last login time
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { lastLoginAt: new Date() },
+    })
+
+    // Log audit
+    await logAudit({
+      userId: user.id,
+      action: 'user.login',
+      resource: 'user',
+      resourceId: user.id,
+      ipAddress: c.req.header('x-forwarded-for'),
+      userAgent: c.req.header('user-agent'),
+    })
 
     logger.info('User logged in', { userId: user.id, email: user.email })
 

@@ -18,14 +18,23 @@ import adminRouter from './routes/admin.js'
 import webhooksRouter from './routes/webhooks.js'
 import subscriptionsRouter from './routes/subscriptions.js'
 import dodoWebhooksRouter from './routes/dodo-webhooks.js'
+import accountRouter from './routes/account.js'
+
+// Import error handling
+import { errorHandler, notFoundHandler, requestIdMiddleware } from './errorHandler.js'
 
 const app = new Hono()
+
+// Register error handler
+app.onError(errorHandler)
+
 const browserPool = new BrowserPool(
   parseInt(process.env.BROWSER_POOL_SIZE || '5'),
   parseInt(process.env.BROWSER_IDLE_TIMEOUT || '300000')
 )
 
 // Global middleware
+app.use('*', requestIdMiddleware) // Add request ID to all requests
 app.use('*', honoLogger())
 app.use(
   '*',
@@ -55,6 +64,9 @@ app.get('/health', (c) => {
 
 // Auth routes
 app.route('/auth', authRouter)
+
+// Account management
+app.route('/account', accountRouter)
 
 // Protected routes
 app.route('/users', usersRouter)
@@ -181,6 +193,9 @@ app.post(
     }
   }
 )
+
+// 404 handler (must be last)
+app.notFound(notFoundHandler)
 
 const port = parseInt(process.env.PORT || '3000')
 

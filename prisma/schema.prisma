@@ -40,16 +40,22 @@ enum PaymentStatus {
 }
 
 model User {
-  id            String      @id @default(uuid())
-  email         String      @unique
-  passwordHash  String      @map("password_hash")
-  name          String
-  plan          UserPlan    @default(FREE)
-  status        UserStatus  @default(ACTIVE)
-  isAdmin       Boolean     @default(false) @map("is_admin")
-  dodoCustomerId String?    @unique @map("dodo_customer_id") // Dodo Payments customer ID
-  createdAt     DateTime    @default(now()) @map("created_at")
-  updatedAt     DateTime    @updatedAt @map("updated_at")
+  id                     String      @id @default(uuid())
+  email                  String      @unique
+  passwordHash           String      @map("password_hash")
+  name                   String
+  plan                   UserPlan    @default(FREE)
+  status                 UserStatus  @default(ACTIVE)
+  isAdmin                Boolean     @default(false) @map("is_admin")
+  dodoCustomerId         String?     @unique @map("dodo_customer_id") // Dodo Payments customer ID
+  emailVerified          Boolean     @default(false) @map("email_verified")
+  emailVerificationToken String?     @unique @map("email_verification_token")
+  emailVerificationExpiry DateTime?  @map("email_verification_expiry")
+  passwordResetToken     String?     @unique @map("password_reset_token")
+  passwordResetExpiry    DateTime?   @map("password_reset_expiry")
+  lastLoginAt            DateTime?   @map("last_login_at")
+  createdAt              DateTime    @default(now()) @map("created_at")
+  updatedAt              DateTime    @updatedAt @map("updated_at")
 
   apiKeys       ApiKey[]
   usageLogs     UsageLog[]
@@ -57,6 +63,7 @@ model User {
   webhooks      Webhook[]
   subscriptions Subscription[]
   payments      Payment[]
+  auditLogs     AuditLog[]
 
   @@map("users")
 }
@@ -182,4 +189,23 @@ model Payment {
   @@index([status])
   @@index([createdAt])
   @@map("payments")
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  userId      String?  @map("user_id")
+  action      String   // e.g., "user.login", "user.register", "subscription.created"
+  resource    String?  // e.g., "user", "subscription", "api_key"
+  resourceId  String?  @map("resource_id")
+  details     String?  @db.Text // JSON string with additional details
+  ipAddress   String?  @map("ip_address")
+  userAgent   String?  @map("user_agent")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
 }
