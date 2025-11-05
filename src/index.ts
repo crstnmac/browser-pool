@@ -1,15 +1,16 @@
 import {serve} from '@hono/node-server'
 import {Hono} from 'hono'
-import {logger} from 'hono/logger'
+import {logger as honoLogger} from 'hono/logger'
 import {cors} from 'hono/cors'
 import {BrowserPool} from './BrowserPool.js'
 import {handleCookieBanners} from './CookieHandlers.js' // Changed to named import
 import handlePopups from './Popuphandlers.js'
+import {logger} from './logger.js'
 
 const app = new Hono()
 const browserPool = new BrowserPool(5)
 
-app.use('*', logger())
+app.use('*', honoLogger())
 app.use(
   '*',
   cors({
@@ -48,7 +49,7 @@ app.post('/screenshot', async (c) => {
 
         await handleCookieBanners(page)
       } catch (e) {
-        console.warn('Error handling cookie consent:', e)
+        logger.warn('Error handling cookie consent:', {error: e})
       }
     }
 
@@ -58,7 +59,7 @@ app.post('/screenshot', async (c) => {
       'Content-Type': 'image/png',
     })
   } catch (error) {
-    console.error('Screenshot error:', error)
+    logger.error('Screenshot error:', {error})
     return c.json({error: 'Failed to capture screenshot'}, 500)
   } finally {
     if (page) {
@@ -73,7 +74,7 @@ serve(
     port: 3000,
   },
   (info) => {
-    console.log(`Server is running on http://localhost:${info.port}`)
+    logger.info(`Server is running on http://localhost:${info.port}`)
   }
 )
 
