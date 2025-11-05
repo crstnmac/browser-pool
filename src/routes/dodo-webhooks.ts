@@ -451,14 +451,78 @@ async function handleInvoicePaymentFailed(event: DodoWebhookEvent) {
 
 /**
  * Helper: Determine plan from Dodo subscription
+ * Validates against actual price IDs from environment variables
+ * @throws Error if plan cannot be determined
  */
 function determinePlanFromSubscription(dodoSub: any): 'PRO' | 'ENTERPRISE' {
-  // This would check the price ID or metadata to determine the plan
-  // For now, we'll use a simple check based on plan field
-  if (dodoSub.plan === 'enterprise' || dodoSub.plan === 'ENTERPRISE') {
-    return 'ENTERPRISE'
+  const proPriceId = process.env.DODO_PRICE_ID_PRO
+  const enterprisePriceId = process.env.DODO_PRICE_ID_ENTERPRISE
+
+  if (!proPriceId || !enterprisePriceId) {
+    logger.error('Dodo price IDs not configured in environment variables')
+    throw new Error('Price IDs not configured - cannot determine subscription plan')
   }
-  return 'PRO'
+
+  // Check if subscription has items with price information
+  if (dodoSub.items && Array.isArray(dodoSub.items) && dodoSub.items.length > 0) {
+    const priceId = dodoSub.items[0].price?.id || dodoSub.items[0].price
+
+    if (!priceId) {
+      logger.error('No price ID found in subscription items', {
+        subscriptionId: dodoSub.id,
+        items: dodoSub.items,
+      })
+      throw new Error('No price ID found in subscription - cannot determine plan')
+    }
+
+    // Match against configured price IDs
+    if (priceId === enterprisePriceId) {
+      return 'ENTERPRISE'
+    } else if (priceId === proPriceId) {
+      return 'PRO'
+    } else {
+      logger.error('Unknown price ID in subscription', {
+        subscriptionId: dodoSub.id,
+        priceId,
+        expectedPro: proPriceId,
+        expectedEnterprise: enterprisePriceId,
+      })
+      throw new Error(
+        `Unknown price ID "${priceId}" - does not match PRO or ENTERPRISE plans`
+      )
+    }
+  }
+
+  // Fallback: check metadata if price not in items
+  if (dodoSub.metadata?.plan) {
+    const metadataPlan = dodoSub.metadata.plan.toUpperCase()
+    if (metadataPlan === 'ENTERPRISE') {
+      logger.warn('Using metadata plan (no price ID found)', {
+        subscriptionId: dodoSub.id,
+        plan: 'ENTERPRISE',
+      })
+      return 'ENTERPRISE'
+    } else if (metadataPlan === 'PRO') {
+      logger.warn('Using metadata plan (no price ID found)', {
+        subscriptionId: dodoSub.id,
+        plan: 'PRO',
+      })
+      return 'PRO'
+    }
+  }
+
+  // No valid plan information found
+  logger.error('Cannot determine plan from subscription - no valid price ID or metadata', {
+    subscriptionId: dodoSub.id,
+    hasItems: !!dodoSub.items,
+    hasMetadata: !!dodoSub.metadata,
+    subscriptionData: JSON.stringify(dodoSub),
+  })
+
+  throw new Error(
+    'Cannot determine subscription plan - invalid or missing price information. ' +
+    'Please check Dodo webhook configuration and price IDs.'
+  )
 }
 
 /**
