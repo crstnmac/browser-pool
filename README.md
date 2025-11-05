@@ -1,56 +1,190 @@
-# Browser Pool
+# Browser Pool SaaS
 
-A headless browser pool service for taking screenshots with cookie consent handling.
+A production-ready Screenshot-as-a-Service platform with intelligent cookie consent handling, built for developers.
 
-## Project Setup
+## Features
 
-1. Install dependencies:
+- 🚀 **Fast & Reliable** - Efficient browser pool management
+- 🔐 **Secure Authentication** - API key-based auth with bcrypt hashing
+- 📊 **Usage Analytics** - Track requests, quotas, and performance
+- 💰 **Subscription Plans** - Free, Pro, and Enterprise tiers
+- ⚡ **Rate Limiting** - Per-plan rate limits with quota management
+- 🪝 **Webhooks** - Real-time event notifications
+- 🛡️ **Admin Dashboard** - User management and system analytics
+- 🍪 **Smart Cookie Handling** - Automatic cookie consent banner detection
+- 📈 **Scalable** - Built for horizontal scaling
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- PostgreSQL database
+- Playwright browsers
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd browser-pool
+```
+
+2. Install dependencies:
 ```bash
 npm install
 npx playwright install
 ```
 
-2. Start the development server:
+3. Set up environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your configuration
+```
+
+4. Set up the database:
+```bash
+# Create PostgreSQL database
+createdb browser_pool
+
+# Run migrations
+npx prisma migrate dev
+
+# (Optional) Seed with sample data
+npx prisma db seed
+```
+
+5. Start the development server:
 ```bash
 npm run dev
 ```
 
+## Subscription Plans
+
+### Free Tier
+- 100 screenshots/month
+- 5 requests/minute
+- Standard support
+- Basic features
+
+### Pro Tier - $29/month
+- 5,000 screenshots/month
+- 30 requests/minute
+- Priority support
+- Webhook notifications
+
+### Enterprise Tier - $299/month
+- 100,000 screenshots/month
+- 100 requests/minute
+- Dedicated support
+- Custom features
+- SLA guarantee
+
 ## API Documentation
 
-### Base URL
-`http://localhost:3000`
+Full API documentation is available in [docs/API.md](docs/API.md).
 
-### Endpoints
+### Quick Example
 
-#### GET /
-Basic health check endpoint.
+```bash
+# Register a new user
+curl -X POST http://localhost:3000/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "password": "securepass123",
+    "name": "John Doe"
+  }'
 
-#### POST /screenshot
-Take a screenshot of a webpage.
+# Take a screenshot
+curl -X POST http://localhost:3000/screenshot \
+  -H "X-API-Key: your_api_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://example.com"}' \
+  -o screenshot.png
+```
 
-**Request Body:**
-```json
+## Subscriptions & Payments
+
+Browser Pool uses **Dodo Payments** for subscription management.
+
+### Upgrade to Pro or Enterprise
+
+```bash
+# Create a checkout session
+curl -X POST http://localhost:3000/subscriptions/checkout \
+  -H "X-API-Key: your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{"plan": "PRO", "trialDays": 7}'
+
+# Response includes checkout URL
 {
-  "url": "https://example.com",
-  "cookieConsent": true
+  "checkoutUrl": "https://checkout.dodo.com/session/abc123"
 }
 ```
 
-**Parameters:**
-- `url` (required): The URL of the webpage to screenshot
-- `cookieConsent` (optional): Whether to handle cookie consent banners (default: true)
+### Manage Subscription
 
-**Response:**
-- Success: PNG image
-- Error: JSON with error message
-
-**Example Request:**
 ```bash
-curl -X POST -H "Content-Type: application/json" -d '{"url": "https://example.com"}' http://localhost:3000/screenshot -o screenshot.png
+# View current subscription
+curl http://localhost:3000/subscriptions \
+  -H "X-API-Key: your_api_key"
+
+# Upgrade plan
+curl -X POST http://localhost:3000/subscriptions/upgrade \
+  -H "X-API-Key: your_api_key" \
+  -d '{"plan": "ENTERPRISE"}'
+
+# Cancel subscription
+curl -X POST http://localhost:3000/subscriptions/cancel \
+  -H "X-API-Key: your_api_key"
 ```
 
-## Configuration
+For complete subscription setup and testing guide, see [docs/SUBSCRIPTIONS.md](docs/SUBSCRIPTIONS.md).
 
-Set environment variables in `.env` file:
-```
+## Architecture
+
+See [docs/SAAS_ARCHITECTURE.md](docs/SAAS_ARCHITECTURE.md) for detailed architecture documentation.
+
+### Tech Stack
+
+- **Runtime**: Node.js with TypeScript
+- **Web Framework**: Hono (lightweight & fast)
+- **Database**: PostgreSQL with Prisma ORM
+- **Browser Automation**: Playwright
+- **Authentication**: API key-based with bcrypt
+- **Logging**: Winston
+- **Payments**: Dodo Payments integration
+
+## Environment Variables
+
+```bash
+# Application
+NODE_ENV=development
+PORT=3000
 ORIGIN_URL=http://localhost:3000
+
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/browser_pool
+
+# Authentication
+JWT_SECRET=your-secret-key
+API_KEY_PREFIX=bp_
+
+# Rate Limiting (requests per minute)
+RATE_LIMIT_FREE=5
+RATE_LIMIT_PRO=30
+RATE_LIMIT_ENTERPRISE=100
+
+# Quotas (requests per month)
+QUOTA_FREE=100
+QUOTA_PRO=5000
+QUOTA_ENTERPRISE=100000
+
+# Dodo Payments
+DODO_API_KEY=your-dodo-api-key
+DODO_WEBHOOK_SECRET=your-dodo-webhook-secret
+
+# Browser Pool
+BROWSER_POOL_SIZE=5
+BROWSER_IDLE_TIMEOUT=300000
