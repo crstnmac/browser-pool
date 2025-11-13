@@ -53,6 +53,9 @@ model User {
   emailVerificationExpiry DateTime?  @map("email_verification_expiry")
   passwordResetToken     String?     @unique @map("password_reset_token")
   passwordResetExpiry    DateTime?   @map("password_reset_expiry")
+  passwordResetUsedAt    DateTime?   @map("password_reset_used_at") // Track when token was used
+  failedLoginAttempts    Int         @default(0) @map("failed_login_attempts")
+  lockedUntil            DateTime?   @map("locked_until")
   lastLoginAt            DateTime?   @map("last_login_at")
   createdAt              DateTime    @default(now()) @map("created_at")
   updatedAt              DateTime    @updatedAt @map("updated_at")
@@ -74,7 +77,9 @@ model ApiKey {
   id          String    @id @default(uuid())
   userId      String    @map("user_id")
   key         String    @unique // This will store the hashed API key
+  keyPrefix   String    @map("key_prefix") // First 12 chars of raw key for fast lookup
   name        String    // User-defined label for the key
+  expiresAt   DateTime? @map("expires_at") // Optional expiration date
   lastUsedAt  DateTime? @map("last_used_at")
   createdAt   DateTime  @default(now()) @map("created_at")
   revokedAt   DateTime? @map("revoked_at")
@@ -84,6 +89,7 @@ model ApiKey {
 
   @@index([userId])
   @@index([key])
+  @@index([keyPrefix])
   @@map("api_keys")
 }
 
