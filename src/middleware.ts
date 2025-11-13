@@ -1,8 +1,11 @@
 import { Context, Next } from 'hono'
 import { authenticateApiKey, getRateLimitForPlan, hasQuotaRemaining } from './auth.js'
 import { logger } from './logger.js'
-import { getRedisClient, isRedisConnected } from './redis.js'
+import { isRedisAvailable, checkRateLimit as redisCheckRateLimit, getRedis } from './redis.js'
 import { sanitizeApiKey } from './utils/sanitize.js'
+
+// Simple in-memory rate limiter (fallback when Redis is not available)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 
 /**
  * Middleware to authenticate API key
@@ -29,7 +32,8 @@ export async function authMiddleware(c: Context, next: Next) {
 }
 
 /**
- * Middleware to check rate limits (Redis-based for distributed systems)
+ * Middleware to check rate limits
+ * Uses Redis when available, falls back to in-memory
  */
 export async function rateLimitMiddleware(c: Context, next: Next) {
   const user = c.get('user')
@@ -40,58 +44,86 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
 
   const rateLimit = getRateLimitForPlan(user.plan)
   const windowMs = 60 * 1000 // 1 minute window
-  const currentWindow = Math.floor(Date.now() / windowMs)
 
-  try {
-    // Use Redis if available
-    if (isRedisConnected()) {
-      const redis = getRedisClient()
-      const key = `rate_limit:${user.id}:${currentWindow}`
+  // Try Redis first
+  if (isRedisAvailable()) {
+    try {
+      const result = await redisCheckRateLimit(user.id, rateLimit, windowMs)
 
-      const count = await redis.incr(key)
-
-      if (count === 1) {
-        await redis.expire(key, 60) // Expire after 60 seconds
-      }
-
-      if (count > rateLimit) {
-        const ttl = await redis.ttl(key)
-        logger.warn('Rate limit exceeded', {
+      if (!result.allowed) {
+        const resetIn = Math.ceil((result.resetAt - Date.now()) / 1000)
+        logger.warn('Rate limit exceeded (Redis)', {
           userId: user.id,
           plan: user.plan,
           limit: rateLimit,
-          count,
+          current: result.current,
         })
-
         return c.json(
           {
             error: 'Rate limit exceeded',
             limit: rateLimit,
-            resetIn: ttl,
+            resetIn,
           },
           429
         )
       }
 
+      // Set rate limit headers
       c.header('X-RateLimit-Limit', rateLimit.toString())
-      c.header('X-RateLimit-Remaining', Math.max(0, rateLimit - count).toString())
-      c.header('X-RateLimit-Reset', new Date((currentWindow + 1) * windowMs).toISOString())
-    } else {
-      // Fallback to in-memory (not recommended for production)
-      logger.warn('Redis not connected, using in-memory rate limiting')
-      // In-memory rate limiting code here (existing implementation)
-    }
+      c.header('X-RateLimit-Remaining', Math.max(0, rateLimit - result.current).toString())
+      c.header('X-RateLimit-Reset', new Date(result.resetAt).toISOString())
 
-    await next()
-  } catch (error) {
-    logger.error('Rate limit check failed:', error)
-    // Fail open to prevent Redis outage from breaking API
-    await next()
+      await next()
+      return
+    } catch (error: any) {
+      logger.error('Redis rate limiting failed, falling back to in-memory', error)
+      // Fall through to in-memory rate limiting
+    }
   }
+
+  // Fallback to in-memory rate limiting
+  const now = Date.now()
+  const key = `rate_limit:${user.id}`
+  const record = rateLimitMap.get(key)
+
+  if (!record || now > record.resetAt) {
+    // Create new window
+    rateLimitMap.set(key, {
+      count: 1,
+      resetAt: now + windowMs,
+    })
+  } else if (record.count >= rateLimit) {
+    // Rate limit exceeded
+    const resetIn = Math.ceil((record.resetAt - now) / 1000)
+    logger.warn('Rate limit exceeded (in-memory)', {
+      userId: user.id,
+      plan: user.plan,
+      limit: rateLimit,
+    })
+    return c.json(
+      {
+        error: 'Rate limit exceeded',
+        limit: rateLimit,
+        resetIn,
+      },
+      429
+    )
+  } else {
+    // Increment counter
+    record.count++
+  }
+
+  // Set rate limit headers
+  const currentRecord = rateLimitMap.get(key)!
+  c.header('X-RateLimit-Limit', rateLimit.toString())
+  c.header('X-RateLimit-Remaining', (rateLimit - currentRecord.count).toString())
+  c.header('X-RateLimit-Reset', new Date(currentRecord.resetAt).toISOString())
+
+  await next()
 }
 
 /**
- * IP-based rate limiting (global protection)
+ * IP-based rate limiting (global protection against DoS)
  */
 export async function ipRateLimitMiddleware(c: Context, next: Next) {
   const ip = c.req.header('x-forwarded-for')?.split(',')[0].trim() ||
@@ -100,36 +132,39 @@ export async function ipRateLimitMiddleware(c: Context, next: Next) {
 
   const limit = parseInt(process.env.IP_RATE_LIMIT || '1000') // 1000 requests per minute per IP
   const windowMs = 60 * 1000
-  const currentWindow = Math.floor(Date.now() / windowMs)
 
   try {
-    if (isRedisConnected()) {
-      const redis = getRedisClient()
-      const key = `ip_rate_limit:${ip}:${currentWindow}`
+    // Try Redis first
+    if (isRedisAvailable()) {
+      const redis = getRedis()
+      if (redis) {
+        const currentWindow = Math.floor(Date.now() / windowMs)
+        const key = `ip_rate_limit:${ip}:${currentWindow}`
 
-      const count = await redis.incr(key)
+        const count = await redis.incr(key)
 
-      if (count === 1) {
-        await redis.expire(key, 60)
-      }
+        if (count === 1) {
+          await redis.expire(key, 60)
+        }
 
-      if (count > limit) {
-        logger.warn('IP rate limit exceeded', { ip, count })
-        return c.json({
-          error: 'Too many requests from your IP. Please try again later.'
-        }, 429)
+        if (count > limit) {
+          logger.warn('IP rate limit exceeded', { ip, count })
+          return c.json({
+            error: 'Too many requests from your IP. Please try again later.'
+          }, 429)
+        }
       }
     }
 
     await next()
   } catch (error) {
     logger.error('IP rate limit check failed:', error)
-    await next()
+    await next() // Fail open
   }
 }
 
 /**
- * Authentication endpoints rate limiting (IP-based)
+ * Authentication endpoints rate limiting (IP-based, stricter)
  */
 export async function authRateLimitMiddleware(c: Context, next: Next) {
   const ip = c.req.header('x-forwarded-for')?.split(',')[0].trim() || 'unknown'
@@ -137,33 +172,35 @@ export async function authRateLimitMiddleware(c: Context, next: Next) {
 
   const limit = 10 // 10 auth attempts per IP per 15 minutes
   const windowMs = 15 * 60 * 1000
-  const currentWindow = Math.floor(Date.now() / windowMs)
 
   try {
-    if (isRedisConnected()) {
-      const redis = getRedisClient()
-      const key = `auth_rate_limit:${ip}:${endpoint}:${currentWindow}`
+    if (isRedisAvailable()) {
+      const redis = getRedis()
+      if (redis) {
+        const currentWindow = Math.floor(Date.now() / windowMs)
+        const key = `auth_rate_limit:${ip}:${endpoint}:${currentWindow}`
 
-      const count = await redis.incr(key)
+        const count = await redis.incr(key)
 
-      if (count === 1) {
-        await redis.expire(key, 15 * 60) // 15 minutes
-      }
+        if (count === 1) {
+          await redis.expire(key, 15 * 60) // 15 minutes
+        }
 
-      if (count > limit) {
-        logger.warn('Auth rate limit exceeded', { ip, endpoint, count })
+        if (count > limit) {
+          logger.warn('Auth rate limit exceeded', { ip, endpoint, count })
 
-        return c.json({
-          error: 'Too many authentication attempts. Please try again later.',
-          retryAfter: await redis.ttl(key)
-        }, 429)
+          return c.json({
+            error: 'Too many authentication attempts. Please try again later.',
+            retryAfter: await redis.ttl(key)
+          }, 429)
+        }
       }
     }
 
     await next()
   } catch (error) {
     logger.error('Auth rate limit check failed:', error)
-    await next()
+    await next() // Fail open
   }
 }
 
@@ -296,7 +333,7 @@ export async function requestTimeoutMiddleware(c: Context, next: Next) {
 }
 
 /**
- * Body size limit middleware (simple implementation)
+ * Body size limit middleware
  */
 export async function bodySizeLimitMiddleware(c: Context, next: Next) {
   const contentLength = c.req.header('content-length')
@@ -317,3 +354,15 @@ export async function bodySizeLimitMiddleware(c: Context, next: Next) {
 
   await next()
 }
+
+/**
+ * Clean up expired rate limit records periodically
+ */
+setInterval(() => {
+  const now = Date.now()
+  for (const [key, record] of rateLimitMap.entries()) {
+    if (now > record.resetAt) {
+      rateLimitMap.delete(key)
+    }
+  }
+}, 60 * 1000) // Clean up every minute

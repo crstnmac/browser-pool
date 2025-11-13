@@ -1,94 +1,186 @@
 import Redis from 'ioredis'
 import { logger } from './logger.js'
 
-let redis: Redis | null = null
+/**
+ * Redis client for distributed rate limiting and caching
+ */
+
+let redisClient: Redis | null = null
 
 /**
- * Get or create Redis client
+ * Initialize Redis client
  */
-export function getRedisClient(): Redis {
-  if (!redis) {
-    const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379'
+export function initRedis(): Redis | null {
+  const redisUrl = process.env.REDIS_URL
 
-    redis = new Redis(redisUrl, {
+  if (!redisUrl) {
+    logger.warn('REDIS_URL not configured, falling back to in-memory rate limiting')
+    return null
+  }
+
+  try {
+    redisClient = new Redis(redisUrl, {
       maxRetriesPerRequest: 3,
-      enableReadyCheck: true,
       retryStrategy(times) {
         const delay = Math.min(times * 50, 2000)
         return delay
       },
       reconnectOnError(err) {
-        const targetError = 'READONLY'
-        if (err.message.includes(targetError)) {
-          // Reconnect on READONLY errors
-          return true
-        }
-        logger.error('Redis connection error:', err)
-        return false
+        const targetErrors = ['READONLY', 'ECONNRESET', 'ETIMEDOUT']
+        return targetErrors.some(targetError => err.message.includes(targetError))
       },
     })
 
-    redis.on('connect', () => {
-      logger.info('Redis connected')
+    redisClient.on('connect', () => {
+      logger.info('Redis connected successfully')
     })
 
-    redis.on('ready', () => {
-      logger.info('Redis ready')
+    redisClient.on('error', (error) => {
+      logger.error('Redis connection error:', error)
     })
 
-    redis.on('error', (err) => {
-      logger.error('Redis error:', err)
-    })
-
-    redis.on('close', () => {
+    redisClient.on('close', () => {
       logger.warn('Redis connection closed')
     })
 
-    redis.on('reconnecting', () => {
+    redisClient.on('reconnecting', () => {
       logger.info('Redis reconnecting...')
     })
-  }
 
-  return redis
-}
-
-/**
- * Check if Redis is connected
- */
-export function isRedisConnected(): boolean {
-  return redis !== null && redis.status === 'ready'
-}
-
-/**
- * Disconnect Redis client
- */
-export async function disconnectRedis(): Promise<void> {
-  if (redis) {
-    try {
-      await redis.quit()
-      logger.info('Redis disconnected gracefully')
-    } catch (error) {
-      logger.error('Error disconnecting Redis:', error)
-      // Force disconnect if graceful quit fails
-      redis.disconnect()
-    }
-    redis = null
+    return redisClient
+  } catch (error: any) {
+    logger.error('Failed to initialize Redis:', error)
+    return null
   }
 }
 
 /**
- * Ping Redis to check health
+ * Get Redis client instance
  */
-export async function pingRedis(): Promise<boolean> {
-  if (!redis) {
-    return false
+export function getRedis(): Redis | null {
+  return redisClient
+}
+
+/**
+ * Check if Redis is available
+ */
+export function isRedisAvailable(): boolean {
+  return redisClient !== null && redisClient.status === 'ready'
+}
+
+/**
+ * Rate limiting with Redis using sliding window counter
+ */
+export async function checkRateLimit(
+  userId: string,
+  limit: number,
+  windowMs: number
+): Promise<{ allowed: boolean; current: number; resetAt: number }> {
+  if (!isRedisAvailable()) {
+    throw new Error('Redis not available')
   }
+
+  const key = `rate_limit:${userId}`
+  const now = Date.now()
+  const windowStart = now - windowMs
 
   try {
-    const result = await redis.ping()
-    return result === 'PONG'
-  } catch (error) {
-    logger.error('Redis ping failed:', error)
-    return false
+    // Use Redis sorted set for sliding window
+    const pipeline = redisClient!.pipeline()
+
+    // Remove old entries outside the window
+    pipeline.zremrangebyscore(key, 0, windowStart)
+
+    // Count requests in current window
+    pipeline.zcard(key)
+
+    // Add current request
+    pipeline.zadd(key, now, `${now}:${Math.random()}`)
+
+    // Set expiry on the key
+    pipeline.expire(key, Math.ceil(windowMs / 1000))
+
+    const results = await pipeline.exec()
+
+    if (!results) {
+      throw new Error('Redis pipeline failed')
+    }
+
+    // Get count after removing old entries
+    const count = results[1][1] as number
+    const allowed = count < limit
+    const resetAt = now + windowMs
+
+    return {
+      allowed,
+      current: count + 1, // Include current request
+      resetAt,
+    }
+  } catch (error: any) {
+    logger.error('Error checking rate limit with Redis:', error)
+    throw error
+  }
+}
+
+/**
+ * Get current rate limit status
+ */
+export async function getRateLimitStatus(
+  userId: string,
+  windowMs: number
+): Promise<{ current: number; resetAt: number } | null> {
+  if (!isRedisAvailable()) {
+    return null
+  }
+
+  const key = `rate_limit:${userId}`
+  const now = Date.now()
+  const windowStart = now - windowMs
+
+  try {
+    // Remove old entries and get count
+    await redisClient!.zremrangebyscore(key, 0, windowStart)
+    const count = await redisClient!.zcard(key)
+
+    return {
+      current: count,
+      resetAt: now + windowMs,
+    }
+  } catch (error: any) {
+    logger.error('Error getting rate limit status:', error)
+    return null
+  }
+}
+
+/**
+ * Clear rate limit for a user (useful for testing or admin overrides)
+ */
+export async function clearRateLimit(userId: string): Promise<void> {
+  if (!isRedisAvailable()) {
+    return
+  }
+
+  const key = `rate_limit:${userId}`
+
+  try {
+    await redisClient!.del(key)
+    logger.info('Rate limit cleared', { userId })
+  } catch (error: any) {
+    logger.error('Error clearing rate limit:', error)
+    throw error
+  }
+}
+
+/**
+ * Gracefully close Redis connection
+ */
+export async function closeRedis(): Promise<void> {
+  if (redisClient) {
+    try {
+      await redisClient.quit()
+      logger.info('Redis connection closed gracefully')
+    } catch (error: any) {
+      logger.error('Error closing Redis connection:', error)
+    }
   }
 }
