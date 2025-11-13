@@ -32,6 +32,12 @@ import scheduledRouter from './routes/scheduled.js'
 // Import scheduler
 import {initScheduler} from './scheduler.js'
 
+// Import job queue
+import {initQueues, closeQueues} from './queue.js'
+
+// Import OpenAPI documentation
+import {createOpenAPIApp} from './openapi.js'
+
 // Import error handling
 import { errorHandler, notFoundHandler, requestIdMiddleware } from './errorHandler.js'
 
@@ -42,6 +48,9 @@ app.onError(errorHandler)
 
 // Initialize Redis for distributed rate limiting (optional)
 initRedis()
+
+// Initialize job queues (requires Redis)
+initQueues()
 
 const browserPool = new BrowserPool(
   parseInt(process.env.BROWSER_POOL_SIZE || '5'),
@@ -63,13 +72,18 @@ app.use(
   })
 )
 
+// Mount OpenAPI documentation
+const openAPIApp = createOpenAPIApp()
+app.route('/', openAPIApp)
+
 // Public routes
 app.get('/', (c) => {
   return c.json({
     name: 'Browser Pool SaaS',
     version: '1.0.0',
     description: 'Screenshot-as-a-Service with cookie consent handling',
-    docs: '/api/docs',
+    docs: '/docs',
+    openapi: '/openapi.json',
   })
 })
 
@@ -447,6 +461,10 @@ async function shutdown() {
     // Close browser pool
     await browserPool.close()
     logger.info('Browser pool closed')
+
+    // Close job queues
+    await closeQueues()
+    logger.info('Job queues closed')
 
     // Close Redis connection
     await closeRedis()
