@@ -1,9 +1,9 @@
 import { Context, Next } from 'hono'
 import { authenticateApiKey, getRateLimitForPlan, hasQuotaRemaining } from './auth.js'
 import { logger } from './logger.js'
+import { isRedisAvailable, checkRateLimit as redisCheckRateLimit } from './redis.js'
 
-// Simple in-memory rate limiter
-// In production, use Redis for distributed rate limiting
+// Simple in-memory rate limiter (fallback when Redis is not available)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 
 /**
@@ -32,6 +32,7 @@ export async function authMiddleware(c: Context, next: Next) {
 
 /**
  * Middleware to check rate limits
+ * Uses Redis when available, falls back to in-memory
  */
 export async function rateLimitMiddleware(c: Context, next: Next) {
   const user = c.get('user')
@@ -41,9 +42,46 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
   }
 
   const rateLimit = getRateLimitForPlan(user.plan)
-  const now = Date.now()
   const windowMs = 60 * 1000 // 1 minute window
 
+  // Try Redis first
+  if (isRedisAvailable()) {
+    try {
+      const result = await redisCheckRateLimit(user.id, rateLimit, windowMs)
+
+      if (!result.allowed) {
+        const resetIn = Math.ceil((result.resetAt - Date.now()) / 1000)
+        logger.warn('Rate limit exceeded (Redis)', {
+          userId: user.id,
+          plan: user.plan,
+          limit: rateLimit,
+          current: result.current,
+        })
+        return c.json(
+          {
+            error: 'Rate limit exceeded',
+            limit: rateLimit,
+            resetIn,
+          },
+          429
+        )
+      }
+
+      // Set rate limit headers
+      c.header('X-RateLimit-Limit', rateLimit.toString())
+      c.header('X-RateLimit-Remaining', Math.max(0, rateLimit - result.current).toString())
+      c.header('X-RateLimit-Reset', new Date(result.resetAt).toISOString())
+
+      await next()
+      return
+    } catch (error: any) {
+      logger.error('Redis rate limiting failed, falling back to in-memory', error)
+      // Fall through to in-memory rate limiting
+    }
+  }
+
+  // Fallback to in-memory rate limiting
+  const now = Date.now()
   const key = `rate_limit:${user.id}`
   const record = rateLimitMap.get(key)
 
@@ -56,7 +94,7 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
   } else if (record.count >= rateLimit) {
     // Rate limit exceeded
     const resetIn = Math.ceil((record.resetAt - now) / 1000)
-    logger.warn('Rate limit exceeded', {
+    logger.warn('Rate limit exceeded (in-memory)', {
       userId: user.id,
       plan: user.plan,
       limit: rateLimit,

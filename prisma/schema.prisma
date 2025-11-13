@@ -63,7 +63,9 @@ model User {
   webhooks      Webhook[]
   subscriptions Subscription[]
   payments      Payment[]
-  auditLogs     AuditLog[]
+  auditLogs            AuditLog[]
+  screenshots          Screenshot[]
+  scheduledScreenshots ScheduledScreenshot[]
 
   @@map("users")
 }
@@ -208,4 +210,49 @@ model AuditLog {
   @@index([action])
   @@index([createdAt])
   @@map("audit_logs")
+}
+
+model Screenshot {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  url         String   // The URL that was screenshotted
+  imageData   Bytes    @map("image_data") // Binary screenshot data
+  format      String   @default("png") // png or jpeg
+  fileSize    Int      @map("file_size") // Size in bytes
+  metadata    String?  @db.Text // JSON with screenshot options (viewport, device, etc.)
+  createdAt   DateTime @default(now()) @map("created_at")
+  expiresAt   DateTime? @map("expires_at") // Optional expiration date
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([expiresAt])
+  @@map("screenshots")
+}
+
+model ScheduledScreenshot {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  name            String   // User-friendly name for this schedule
+  url             String   // The URL to screenshot
+  cronExpression  String   @map("cron_expression") // Cron expression (e.g., "0 0 * * *")
+  options         String?  @db.Text // JSON with screenshot options
+  isActive        Boolean  @default(true) @map("is_active")
+  saveHistory     Boolean  @default(true) @map("save_history") // Save screenshots to history
+  webhookOnComplete Boolean @default(false) @map("webhook_on_complete") // Trigger webhook on completion
+  lastRunAt       DateTime? @map("last_run_at")
+  nextRunAt       DateTime? @map("next_run_at")
+  runCount        Int      @default(0) @map("run_count")
+  failureCount    Int      @default(0) @map("failure_count")
+  lastError       String?  @map("last_error")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isActive])
+  @@index([nextRunAt])
+  @@map("scheduled_screenshots")
 }
