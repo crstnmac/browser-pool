@@ -75,5 +75,9 @@ export async function requestIdMiddleware(c: Context, next: () => Promise<void>)
 }
 
 function generateRequestId(): string {
-  return `req_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`
+  // SECURITY: Use crypto.randomBytes instead of Math.random() for unpredictable IDs
+  const timestamp = Date.now()
+  const crypto = require('crypto')
+  const randomBytes = crypto.randomBytes(12).toString('base64url')
+  return `req_${timestamp}_${randomBytes}`
 }

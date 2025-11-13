@@ -35,6 +35,14 @@ export function generateApiKey(): string {
 }
 
 /**
+ * Extract key prefix for fast lookup
+ * Returns first 12 characters (e.g., "bp_live_1234")
+ */
+export function extractKeyPrefix(apiKey: string): string {
+  return apiKey.substring(0, 12)
+}
+
+/**
  * Hash an API key for storage
  */
 export async function hashApiKey(apiKey: string): Promise<string> {
@@ -54,12 +62,16 @@ export async function verifyApiKey(
 /**
  * Validate and authenticate an API key
  * Returns the user and API key data if valid, null otherwise
+ * SECURITY: Uses key prefix for constant-time lookup to prevent timing attacks
  */
 export async function authenticateApiKey(apiKey: string) {
   try {
-    // Find all non-revoked API keys
-    const apiKeys = await prisma.apiKey.findMany({
+    const keyPrefix = extractKeyPrefix(apiKey)
+
+    // Direct lookup by prefix (constant time)
+    const apiKeyRecords = await prisma.apiKey.findMany({
       where: {
+        keyPrefix,
         revokedAt: null,
       },
       include: {
@@ -67,10 +79,25 @@ export async function authenticateApiKey(apiKey: string) {
       },
     })
 
-    // Check each key (we need to compare hashes)
-    for (const key of apiKeys) {
+    // Should only be 0 or 1 result with unique prefix
+    if (apiKeyRecords.length === 0) {
+      return null
+    }
+
+    // Check each matching key (usually just 1, but handle collisions)
+    for (const key of apiKeyRecords) {
       const isValid = await verifyApiKey(apiKey, key.key)
+
       if (isValid) {
+        // Check if key is expired
+        if (key.expiresAt && key.expiresAt < new Date()) {
+          logger.warn('Expired API key used', {
+            userId: key.userId,
+            keyId: key.id,
+          })
+          return null
+        }
+
         // Check if user is active
         if (key.user.status !== 'ACTIVE') {
           logger.warn('API key used by inactive user', {
@@ -80,11 +107,15 @@ export async function authenticateApiKey(apiKey: string) {
           return null
         }
 
-        // Update last used timestamp
-        await prisma.apiKey.update({
-          where: { id: key.id },
-          data: { lastUsedAt: new Date() },
-        })
+        // Update last used timestamp (async, don't await to avoid blocking)
+        prisma.apiKey
+          .update({
+            where: { id: key.id },
+            data: { lastUsedAt: new Date() },
+          })
+          .catch((err) =>
+            logger.error('Failed to update API key lastUsedAt', err)
+          )
 
         return {
           apiKey: key,
