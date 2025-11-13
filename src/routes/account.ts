@@ -7,6 +7,7 @@ import { hashPassword, verifyPassword } from '../auth.js'
 import { emailService } from '../email.js'
 import { logger } from '../logger.js'
 import { logAuditFromContext, logAudit } from '../audit.js'
+import { dodoPayments } from '../dodo.js'
 
 const accountRouter = new Hono()
 
@@ -517,10 +518,26 @@ accountRouter.delete('/', authMiddleware, async (c) => {
       },
     })
 
-    // TODO: Cancel subscriptions in Dodo Payments
-    // for (const sub of activeSubscriptions) {
-    //   await dodoPayments.cancelSubscription(sub.dodoSubscriptionId, false)
-    // }
+    // Cancel subscriptions in Dodo Payments immediately (not at period end)
+    for (const sub of activeSubscriptions) {
+      if (sub.dodoSubscriptionId) {
+        try {
+          await dodoPayments.cancelSubscription(sub.dodoSubscriptionId, false)
+          logger.info('Cancelled subscription in Dodo Payments', {
+            userId: user.id,
+            subscriptionId: sub.dodoSubscriptionId,
+          })
+        } catch (error: any) {
+          logger.error('Failed to cancel subscription in Dodo Payments', {
+            userId: user.id,
+            subscriptionId: sub.dodoSubscriptionId,
+            error: error.message,
+          })
+          // Continue with account deletion even if Dodo cancellation fails
+          // The local subscription will still be deleted via cascade
+        }
+      }
+    }
 
     await logAudit({
       userId: user.id,
