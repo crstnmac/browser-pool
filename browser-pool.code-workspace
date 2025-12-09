@@ -1,0 +1,47 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "backend",
+      "path": "src"
+    },
+    {
+      "name": "frontend",
+      "path": "frontend"
+    }
+  ],
+  "settings": {
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "typescript.useModuleResolution": "node",
+    "typescript.workspace.symbolsInWorkspaceSymbolsScope": true,
+    "typescript.check.npmIsInstalled": false,
+    "typescript.preferences.importModuleSpecifierEnding": "js",
+    "bun.runtime": "bun",
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.bun": true,
+      "**/.turbo": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/frontend/dist": true,
+      "**/.next": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "biomejs.biome",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "ms-vscode.vscode-typescript-next",
+      "prisma.prisma",
+      "eamodio.gitlens"
+    ]
+  }
+}

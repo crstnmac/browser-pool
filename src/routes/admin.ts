@@ -1,10 +1,11 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
+import type { HonoBindings } from '../types.js'
 import { prisma } from '../db.js'
 import { authMiddleware, adminMiddleware } from '../middleware.js'
 import { logger } from '../logger.js'
 
-const adminRouter = new Hono()
+const adminRouter = new Hono<HonoBindings>()
 
 // Apply auth and admin middleware to all routes
 adminRouter.use('*', authMiddleware, adminMiddleware)
@@ -61,8 +62,8 @@ adminRouter.get('/users', async (c) => {
         pages: Math.ceil(total / limit),
       },
     })
-  } catch (error: any) {
-    logger.error('Error fetching users:', error)
+  } catch (error: unknown) {
+    logger.error('Error fetching users:', { error })
     return c.json({ error: 'Internal server error' }, 500)
   }
 })
@@ -116,8 +117,8 @@ adminRouter.get('/users/:id', async (c) => {
       user,
       recentLogs,
     })
-  } catch (error: any) {
-    logger.error('Error fetching user details:', error)
+  } catch (error: unknown) {
+    logger.error('Error fetching user details:', { error })
     return c.json({ error: 'Internal server error' }, 500)
   }
 })
@@ -159,18 +160,20 @@ adminRouter.patch('/users/:id', async (c) => {
       data: updates,
     })
 
+    const adminUser = c.get('user')
+
     logger.info('User updated by admin', {
       userId,
       updates,
-      adminId: c.get('user').id,
+      adminId: adminUser?.id ?? 'unknown',
     })
 
     return c.json({
       message: 'User updated successfully',
       user: updatedUser,
     })
-  } catch (error: any) {
-    logger.error('Error updating user:', error)
+  } catch (error: unknown) {
+    logger.error('Error updating user:', { error })
     return c.json({ error: 'Internal server error' }, 500)
   }
 })
@@ -268,8 +271,8 @@ adminRouter.get('/analytics', async (c) => {
         avgResponseTime: avgResponseTime._avg.responseTimeMs?.toFixed(2) + 'ms' || 'N/A',
       },
     })
-  } catch (error: any) {
-    logger.error('Error fetching analytics:', error)
+  } catch (error: unknown) {
+    logger.error('Error fetching analytics:', { error })
     return c.json({ error: 'Internal server error' }, 500)
   }
 })
@@ -304,12 +307,12 @@ adminRouter.get('/health', async (c) => {
       uptime: process.uptime(),
       memory: process.memoryUsage(),
     })
-  } catch (error: any) {
-    logger.error('Error checking health:', error)
+  } catch (error: unknown) {
+    logger.error('Error checking health:', { error })
     return c.json(
       {
         status: 'unhealthy',
-        error: error.message,
+        error: error instanceof Error ? error.message : 'Internal server error',
       },
       500
     )

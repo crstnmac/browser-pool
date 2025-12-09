@@ -1,11 +1,12 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
 import crypto from 'crypto'
+import type { HonoBindings } from '../types.js'
 import { prisma } from '../db.js'
 import { authMiddleware } from '../middleware.js'
 import { logger } from '../logger.js'
 
-const webhooksRouter = new Hono()
+const webhooksRouter = new Hono<HonoBindings>()
 
 // Apply auth middleware to all routes
 webhooksRouter.use('*', authMiddleware)

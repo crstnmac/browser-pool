@@ -1,13 +1,14 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
 import cron from 'node-cron'
+import type { HonoBindings } from '../types.js'
 import { prisma } from '../db.js'
 import { authMiddleware } from '../middleware.js'
 import { logger } from '../logger.js'
 import { scheduleScreenshot, cancelScheduledScreenshot } from '../scheduler.js'
 import { screenshotOptionsSchema } from '../screenshot-options.js'
 
-const scheduledRouter = new Hono()
+const scheduledRouter = new Hono<HonoBindings>()
 
 const createScheduleSchema = z.object({
   name: z.string().min(1, 'Name is required'),

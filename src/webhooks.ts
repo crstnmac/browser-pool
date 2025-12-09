@@ -8,8 +8,11 @@ export type WebhookEvent =
   | 'quota.warning'
   | 'screenshot.completed'
   | 'screenshot.failed'
+  | 'screenshot.bulk_completed'
   | 'apikey.created'
   | 'apikey.revoked'
+  | 'scheduled_screenshot.completed'
+  | 'scheduled_screenshot.failed'
 
 export interface WebhookPayload {
   event: WebhookEvent

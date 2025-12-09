@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    image: browser-pool-dev:latest
+    volumes:
+      - ..:/workspaces/browser-pool
+    working_dir: /workspaces/browser-pool
+    user: developer
+    init: true
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/browser_pool?schema=public
+      REDIS_URL: redis://redis:6379
+      ORIGIN_URL: http://localhost:5173,http://localhost:3000
+    ports:
+      - "3000:3000"
+      - "5173:5173"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    networks:
+      - browser-pool-network
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: browser-pool-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: browser_pool
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - browser-pool-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: browser-pool-redis
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - browser-pool-network
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  browser-pool-network:
+    driver: bridge

@@ -1,4 +1,4 @@
-import { Context, Next } from 'hono'
+import type { Context, Next } from 'hono'
 import { authenticateApiKey, getRateLimitForPlan, hasQuotaRemaining } from './auth.js'
 import { logger } from './logger.js'
 import { isRedisAvailable, checkRateLimit as redisCheckRateLimit, getRedis } from './redis.js'
@@ -127,8 +127,8 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
  */
 export async function ipRateLimitMiddleware(c: Context, next: Next) {
   const ip = c.req.header('x-forwarded-for')?.split(',')[0].trim() ||
-             c.req.header('x-real-ip') ||
-             'unknown'
+    c.req.header('x-real-ip') ||
+    'unknown'
 
   const limit = parseInt(process.env.IP_RATE_LIMIT || '1000') // 1000 requests per minute per IP
   const windowMs = 60 * 1000
@@ -260,7 +260,7 @@ export async function securityHeadersMiddleware(c: Context, next: Next) {
   // Skip CSP for binary responses
   const contentType = c.res.headers.get('content-type') || ''
   const isBinary = contentType.includes('image/') ||
-                   contentType.includes('application/octet-stream')
+    contentType.includes('application/octet-stream')
 
   // Always set these headers
   c.header('X-Frame-Options', 'DENY')
@@ -297,8 +297,8 @@ export async function securityHeadersMiddleware(c: Context, next: Next) {
  */
 export async function httpsEnforcementMiddleware(c: Context, next: Next) {
   const proto = c.req.header('x-forwarded-proto') ||
-                c.req.header('x-forwarded-protocol') ||
-                'http'
+    c.req.header('x-forwarded-protocol') ||
+    'http'
 
   if (process.env.NODE_ENV === 'production' && proto !== 'https') {
     const host = c.req.header('host')

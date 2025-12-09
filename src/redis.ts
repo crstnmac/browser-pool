@@ -1,16 +1,17 @@
-import Redis from 'ioredis'
+import type { Redis as RedisType } from 'ioredis'
+import { Redis } from 'ioredis'
 import { logger } from './logger.js'
 
 /**
  * Redis client for distributed rate limiting and caching
  */
 
-let redisClient: Redis | null = null
+let redisClient: RedisType | null = null
 
 /**
  * Initialize Redis client
  */
-export function initRedis(): Redis | null {
+export function initRedis(): RedisType | null {
   const redisUrl = process.env.REDIS_URL
 
   if (!redisUrl) {
@@ -21,29 +22,29 @@ export function initRedis(): Redis | null {
   try {
     redisClient = new Redis(redisUrl, {
       maxRetriesPerRequest: 3,
-      retryStrategy(times) {
+      retryStrategy(times: number) {
         const delay = Math.min(times * 50, 2000)
         return delay
       },
-      reconnectOnError(err) {
+      reconnectOnError(err: Error) {
         const targetErrors = ['READONLY', 'ECONNRESET', 'ETIMEDOUT']
         return targetErrors.some(targetError => err.message.includes(targetError))
       },
     })
 
-    redisClient.on('connect', () => {
+    redisClient!.on('connect', () => {
       logger.info('Redis connected successfully')
     })
 
-    redisClient.on('error', (error) => {
+    redisClient!.on('error', (error) => {
       logger.error('Redis connection error:', error)
     })
 
-    redisClient.on('close', () => {
+    redisClient!.on('close', () => {
       logger.warn('Redis connection closed')
     })
 
-    redisClient.on('reconnecting', () => {
+    redisClient!.on('reconnecting', () => {
       logger.info('Redis reconnecting...')
     })
 
@@ -57,7 +58,7 @@ export function initRedis(): Redis | null {
 /**
  * Get Redis client instance
  */
-export function getRedis(): Redis | null {
+export function getRedis(): RedisType | null {
   return redisClient
 }
 

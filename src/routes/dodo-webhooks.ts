@@ -1,11 +1,12 @@
 import { Hono } from 'hono'
+import type { HonoBindings } from '../types.js'
 import { prisma } from '../db.js'
-import { dodoPayments, DodoWebhookEvent } from '../dodo.js'
+import { dodoPayments, type DodoWebhookEvent } from '../dodo.js'
 import { logger } from '../logger.js'
 import { getQuotaForPlan } from '../auth.js'
 import { triggerWebhooks } from '../webhooks.js'
 
-const dodoWebhooksRouter = new Hono()
+const dodoWebhooksRouter = new Hono<HonoBindings>()
 
 /**
  * POST /dodo-webhooks

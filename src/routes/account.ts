@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
 import crypto from 'crypto'
+import type { HonoBindings } from '../types.js'
 import { prisma } from '../db.js'
 import { authMiddleware } from '../middleware.js'
 import { hashPassword, verifyPassword } from '../auth.js'
@@ -9,7 +10,7 @@ import { logger } from '../logger.js'
 import { logAuditFromContext, logAudit } from '../audit.js'
 import { dodoPayments } from '../dodo.js'
 
-const accountRouter = new Hono()
+const accountRouter = new Hono<HonoBindings>()
 
 const requestPasswordResetSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -262,7 +263,7 @@ accountRouter.post('/request-email-verification', authMiddleware, async (c) => {
     // Send verification email
     await emailService.sendEmailVerification(
       user.email,
-      user.name,
+      user.name || '',
       verificationToken
     )
 
@@ -360,7 +361,7 @@ accountRouter.patch('/profile', authMiddleware, async (c) => {
       )
     }
 
-    const updates = validation.data
+    const updates = validation.data as any
 
     // If email is being changed, require re-verification
     if (updates.email && updates.email !== user.email) {

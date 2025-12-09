@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { type AxiosInstance } from 'axios'
 import crypto from 'crypto'
 import { logger } from './logger.js'
 

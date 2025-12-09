@@ -1,24 +1,19 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "target": "ESNext",
     "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "types": [
-      "node"
-    ],
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
     "outDir": "./dist",
+    "rootDir": "./src",
     "composite": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true
   },
-  "exclude": ["node_modules", "dist", "frontend"],
-  "references": [
-    { "path": "./tsconfig.backend.json" },
-    { "path": "./frontend" }
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "frontend", "dist"]
 }

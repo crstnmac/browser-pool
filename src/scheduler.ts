@@ -84,7 +84,7 @@ async function executeScheduledScreenshot(
         data: {
           userId: schedule.userId,
           url: schedule.url,
-          imageData: screenshot,
+          imageData: new Uint8Array(screenshot),
           format: options.format || 'png',
           fileSize: screenshot.length,
           metadata: JSON.stringify(options),

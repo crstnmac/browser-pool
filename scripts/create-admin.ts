@@ -43,6 +43,7 @@ async function createAdmin() {
         userId: user.id,
         key: hashedKey,
         name: 'Admin Key',
+        keyPrefix: rawApiKey.substring(0, 12),
       },
     })
 

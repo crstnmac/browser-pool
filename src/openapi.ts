@@ -618,7 +618,7 @@ export function createOpenAPIApp() {
         },
       },
     },
-  })
+  } as any)
 
   // Swagger UI
   app.get('/docs', swaggerUI({ url: '/openapi.json' }))

@@ -1,0 +1,34 @@
+# Bun workspace configuration for Browser Pool monorepo
+# Defines the workspace structure with backend and frontend packages
+
+[workspace]
+# Root package at .
+root = "."
+
+# Workspace members - subdirectories that are npm packages
+members = ["frontend"]
+
+# Global install location (uses Bun's default)
+# install.cacheDir = ".bun/install/cache"
+
+[install]
+# Use exact versions from package.json
+exact = true
+
+# Production dependencies should be installed
+production = true
+
+# Allow updating lockfile
+frozen = false
+
+[build]
+# Target for build outputs
+target = "browser"
+
+[dev]
+# Port for the development server
+port = 3000
+
+[define]
+# Environment variables accessible at compile time
+"process.env.NODE_ENV" = "\"development\""

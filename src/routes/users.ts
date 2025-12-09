@@ -1,11 +1,12 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
+import type { HonoBindings } from '../types.js'
 import { prisma } from '../db.js'
 import { authMiddleware } from '../middleware.js'
 import { generateApiKey, hashApiKey, getCurrentQuota } from '../auth.js'
 import { logger } from '../logger.js'
 
-const usersRouter = new Hono()
+const usersRouter = new Hono<HonoBindings>()
 
 // Apply auth middleware to all routes
 usersRouter.use('*', authMiddleware)
@@ -52,6 +53,23 @@ usersRouter.get('/usage', async (c) => {
     const user = c.get('user')
     const quota = await getCurrentQuota(user.id)
 
+    // Get total usage statistics
+    const [totalScreenshots, totalApiCalls] = await Promise.all([
+      prisma.usageLog.count({
+        where: {
+          userId: user.id,
+          endpoint: {
+            in: ['/screenshot', '/screenshot/bulk'],
+          },
+        },
+      }),
+      prisma.usageLog.count({
+        where: {
+          userId: user.id,
+        },
+      }),
+    ])
+
     // Get usage logs for current month
     const usageLogs = await prisma.usageLog.findMany({
       where: {
@@ -68,12 +86,14 @@ usersRouter.get('/usage', async (c) => {
     })
 
     return c.json({
-      quota: {
-        used: quota.requestsMade,
-        limit: quota.requestsLimit,
-        remaining: quota.requestsLimit - quota.requestsMade,
-        periodStart: quota.periodStart,
-        periodEnd: quota.periodEnd,
+      currentPeriod: {
+        screenshotsUsed: quota.requestsMade,
+        screenshotsLimit: quota.requestsLimit,
+        resetDate: quota.periodEnd.toISOString(),
+      },
+      total: {
+        totalScreenshots,
+        totalApiCalls,
       },
       recentRequests: usageLogs,
     })
@@ -144,6 +164,7 @@ usersRouter.post('/api-keys', async (c) => {
       data: {
         userId: user.id,
         key: hashedKey,
+        keyPrefix: rawApiKey.substring(0, 12),
         name,
       },
     })

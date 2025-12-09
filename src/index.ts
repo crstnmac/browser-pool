@@ -2,6 +2,7 @@ import {serve} from '@hono/node-server'
 import {Hono} from 'hono'
 import {logger as honoLogger} from 'hono/logger'
 import {cors} from 'hono/cors'
+import type { HonoBindings } from './types.js'
 import {BrowserPool} from './BrowserPool.js'
 import {handleCookieBanners} from './CookieHandlers.js'
 import handlePopups from './Popuphandlers.js'
@@ -41,7 +42,7 @@ import {createOpenAPIApp} from './openapi.js'
 // Import error handling
 import { errorHandler, notFoundHandler, requestIdMiddleware } from './errorHandler.js'
 
-const app = new Hono()
+const app = new Hono<HonoBindings>()
 
 // Register error handler
 app.onError(errorHandler)
@@ -63,12 +64,19 @@ initScheduler(browserPool)
 // Global middleware
 app.use('*', requestIdMiddleware) // Add request ID to all requests
 app.use('*', honoLogger())
+// Configure CORS - allow frontend origin in development
+const allowedOrigins = process.env.ORIGIN_URL 
+  ? process.env.ORIGIN_URL.split(',').map(o => o.trim())
+  : ['http://localhost:5173', 'http://localhost:3000']
+
 app.use(
   '*',
   cors({
-    origin: String(process.env.ORIGIN_URL || '*'),
+    origin: allowedOrigins,
     maxAge: 600,
     credentials: true,
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowHeaders: ['Content-Type', 'Authorization', 'X-API-Key'],
   })
 )
 
@@ -118,6 +126,10 @@ app.post(
   async (c) => {
     const user = c.get('user')
     const apiKey = c.get('apiKey')
+
+    if (!apiKey) {
+      return c.json({ error: 'API key required' }, 401)
+    }
 
     try {
       const body = await c.req.json()
@@ -285,6 +297,10 @@ app.post(
     let statusCode = 200
     let errorMessage: string | undefined
 
+    if (!apiKey) {
+      return c.json({ error: 'API key required' }, 401)
+    }
+
     const {url, cookieConsent = true, options, saveHistory = false} = await c.req.json()
 
     if (!url) {
@@ -370,7 +386,7 @@ app.post(
             data: {
               userId: user.id,
               url,
-              imageData: screenshot,
+              imageData: new Uint8Array(screenshot),
               format: screenshotOpts.format,
               fileSize: screenshot.length,
               metadata: JSON.stringify(screenshotOpts),
@@ -400,7 +416,8 @@ app.post(
         headers['X-Screenshot-Id'] = screenshotId
       }
 
-      return c.body(screenshot, 200, headers)
+      // Convert Buffer to Uint8Array for Hono
+      return c.body(new Uint8Array(screenshot), 200, headers)
     } catch (error: any) {
       statusCode = 500
       errorMessage = error.message
@@ -418,7 +435,7 @@ app.post(
       await prisma.usageLog.create({
         data: {
           userId: user.id,
-          apiKeyId: apiKey.id,
+          apiKeyId: apiKey!.id,
           endpoint: '/screenshot',
           urlRequested: url,
           statusCode,

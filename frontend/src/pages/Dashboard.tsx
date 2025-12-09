@@ -13,7 +13,7 @@ export function DashboardPage() {
   const { data: screenshots } = useScreenshots(1, 5)
   const navigate = useNavigate()
 
-  const usagePercentage = usage
+  const usagePercentage = usage?.currentPeriod
     ? (usage.currentPeriod.screenshotsUsed / usage.currentPeriod.screenshotsLimit) * 100
     : 0
 
@@ -48,10 +48,10 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {usage?.currentPeriod.screenshotsUsed || 0}
+              {usage?.currentPeriod?.screenshotsUsed || 0}
             </div>
             <p className="text-xs text-muted-foreground">
-              of {usage?.currentPeriod.screenshotsLimit || 0} this month
+              of {usage?.currentPeriod?.screenshotsLimit || 0} this month
             </p>
           </CardContent>
         </Card>
@@ -63,7 +63,7 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {usage?.total.totalApiCalls || 0}
+              {usage?.total?.totalApiCalls || 0}
             </div>
             <p className="text-xs text-muted-foreground">All time</p>
           </CardContent>
@@ -76,7 +76,7 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {usage?.currentPeriod.resetDate
+              {usage?.currentPeriod?.resetDate
                 ? format(new Date(usage.currentPeriod.resetDate), 'd')
                 : '30'}
             </div>
@@ -96,7 +96,7 @@ export function DashboardPage() {
         <CardContent className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span>
-              {usage?.currentPeriod.screenshotsUsed || 0} / {usage?.currentPeriod.screenshotsLimit || 0} screenshots
+              {usage?.currentPeriod?.screenshotsUsed || 0} / {usage?.currentPeriod?.screenshotsLimit || 0} screenshots
             </span>
             <span className="text-muted-foreground">
               {usagePercentage.toFixed(1)}%

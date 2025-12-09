@@ -1,9 +1,9 @@
-import { Queue, Worker, QueueEvents } from 'bullmq'
-import { logger } from './logger.js'
-import { getRedis } from './redis.js'
-import { emailService } from './email.js'
+import crypto from 'node:crypto'
 import axios from 'axios'
-import crypto from 'crypto'
+import { Queue, Worker, QueueEvents } from 'bullmq'
+import { emailService } from './email.js'
+import { getRedis } from './redis.js'
+import { logger } from './logger.js'
 
 /**
  * Background job queue using BullMQ
@@ -29,10 +29,8 @@ export function initQueues(): void {
     return
   }
 
-  const connection = {
-    host: process.env.REDIS_URL?.split('://')[1]?.split(':')[0] || 'localhost',
-    port: parseInt(process.env.REDIS_URL?.split(':')[2] || '6379'),
-  }
+  const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379'
+  const connection = { url: redisUrl }
 
   try {
     // Email queue
@@ -73,7 +71,8 @@ export function initQueues(): void {
                 job.data.email,
                 job.data.name,
                 job.data.current,
-                job.data.limit
+                job.data.limit,
+                job.data.percentage
               )
               break
 
@@ -83,7 +82,6 @@ export function initQueues(): void {
                 job.data.name,
                 job.data.amount,
                 job.data.plan,
-                job.data.receiptUrl
               )
               break
 
@@ -91,7 +89,6 @@ export function initQueues(): void {
               await emailService.sendPaymentFailed(
                 job.data.email,
                 job.data.name,
-                job.data.amount,
                 job.data.reason
               )
               break

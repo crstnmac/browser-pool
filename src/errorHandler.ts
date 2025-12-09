@@ -1,4 +1,5 @@
-import { Context } from 'hono'
+import { randomBytes } from 'crypto'
+import type { Context } from 'hono'
 import { logger } from './logger.js'
 
 /**
@@ -77,7 +78,6 @@ export async function requestIdMiddleware(c: Context, next: () => Promise<void>)
 function generateRequestId(): string {
   // SECURITY: Use crypto.randomBytes instead of Math.random() for unpredictable IDs
   const timestamp = Date.now()
-  const crypto = require('crypto')
-  const randomBytes = crypto.randomBytes(12).toString('base64url')
-  return `req_${timestamp}_${randomBytes}`
+  const id = randomBytes(12).toString('base64url')
+  return `req_${timestamp}_${id}`
 }

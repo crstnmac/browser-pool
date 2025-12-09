@@ -31,6 +31,7 @@ async function seed() {
         userId: admin.id,
         key: adminHashedKey,
         name: 'Admin API Key',
+        keyPrefix: adminRawKey.substring(0, 12),
       },
     })
 
@@ -87,6 +88,7 @@ async function seed() {
           userId: user.id,
           key: hashedKey,
           name: 'Test API Key',
+          keyPrefix: rawKey.substring(0, 12),
         },
       })
 

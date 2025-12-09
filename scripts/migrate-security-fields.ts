@@ -23,11 +23,11 @@ async function migrateSecurityFields() {
     const users = await prisma.user.findMany({
       where: {
         OR: [
-          { failedLoginAttempts: null },
-          { lockedUntil: null },
+          { failedLoginAttempts: { gt: 0 } },
+          { lockedUntil: { not: undefined } },
         ]
       }
-    })
+    } as any)
 
     for (const user of users) {
       await prisma.user.update({
@@ -48,7 +48,7 @@ async function migrateSecurityFields() {
     console.log('   📝 Option 2: Generate new keys automatically (notify users)\n')
 
     const apiKeys = await prisma.apiKey.findMany({
-      where: { keyPrefix: null },
+      where: { keyPrefix: '' },
       include: { user: true }
     })
 

@@ -1,19 +1,20 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
+import type { HonoBindings } from '../types.js'
 import { prisma } from '../db.js'
 import { authMiddleware } from '../middleware.js'
 import { dodoPayments } from '../dodo.js'
 import { logger } from '../logger.js'
 import { getQuotaForPlan } from '../auth.js'
 
-const subscriptionsRouter = new Hono()
+const subscriptionsRouter = new Hono<HonoBindings>()
 
 // Apply auth middleware to all routes
 subscriptionsRouter.use('*', authMiddleware)
 
 const createCheckoutSchema = z.object({
   plan: z.enum(['PRO', 'ENTERPRISE'], {
-    errorMap: () => ({ message: 'Plan must be PRO or ENTERPRISE' }),
+    message: 'Plan must be PRO or ENTERPRISE',
   }),
   trialDays: z.number().min(0).max(30).optional(),
   successUrl: z.string().url().optional(),
@@ -130,7 +131,7 @@ subscriptionsRouter.post('/checkout', async (c) => {
     if (!dodoCustomerId) {
       const dodoCustomer = await dodoPayments.createCustomer(
         user.email,
-        user.name,
+        user.name || '',
         { userId: user.id }
       )
       dodoCustomerId = dodoCustomer.id

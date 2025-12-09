@@ -1,12 +1,13 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
+import type { HonoBindings } from '../types.js'
 import { prisma } from '../db.js'
 import { hashPassword, verifyPassword, generateApiKey, hashApiKey } from '../auth.js'
 import { logger } from '../logger.js'
 import { emailService } from '../email.js'
 import { logAudit } from '../audit.js'
 
-const authRouter = new Hono()
+const authRouter = new Hono<HonoBindings>()
 
 // Validation schemas
 const registerSchema = z.object({
@@ -72,6 +73,7 @@ authRouter.post('/register', async (c) => {
       data: {
         userId: user.id,
         key: hashedKey,
+        keyPrefix: rawApiKey.substring(0, 12),
         name: 'Default Key',
       },
     })
@@ -197,6 +199,47 @@ authRouter.post('/login', async (c) => {
 
     logger.info('User logged in', { userId: user.id, email: user.email })
 
+    // Get or create an API key for frontend use
+    // Since we can't return raw keys from the database (they're hashed),
+    // we'll create a new "session" key if the user has no active keys
+    let apiKeyForFrontend: string | null = null
+    
+    if (user.apiKeys.length === 0) {
+      // Create a new API key for the user
+      const rawApiKey = generateApiKey()
+      const hashedKey = await hashApiKey(rawApiKey)
+      
+      await prisma.apiKey.create({
+        data: {
+          userId: user.id,
+          key: hashedKey,
+          keyPrefix: rawApiKey.substring(0, 12),
+          name: 'Session Key',
+        },
+      })
+      
+      apiKeyForFrontend = rawApiKey
+      logger.info('Created new API key for user on login', { userId: user.id })
+    } else {
+      // User has API keys, but we can't return the raw key since it's hashed
+      // For now, we'll create a new session key for frontend use
+      // In a production system, you might want to use session-based auth instead
+      const rawApiKey = generateApiKey()
+      const hashedKey = await hashApiKey(rawApiKey)
+      
+      await prisma.apiKey.create({
+        data: {
+          userId: user.id,
+          key: hashedKey,
+          keyPrefix: rawApiKey.substring(0, 12),
+          name: 'Session Key',
+        },
+      })
+      
+      apiKeyForFrontend = rawApiKey
+      logger.info('Created session API key for user on login', { userId: user.id })
+    }
+
     return c.json({
       message: 'Login successful',
       user: {
@@ -206,8 +249,9 @@ authRouter.post('/login', async (c) => {
         plan: user.plan,
         isAdmin: user.isAdmin,
       },
+      apiKey: apiKeyForFrontend,
       apiKeys: user.apiKeys,
-      note: 'Use the API keys listed above for authentication. If you need a new key, use the /api-keys endpoint.',
+      note: 'Use the API key above for authentication. If you need additional keys, use the /api-keys endpoint.',
     })
   } catch (error: any) {
     logger.error('Login error:', error)

@@ -1,9 +1,10 @@
 import { Hono } from 'hono'
+import type { HonoBindings } from '../types.js'
 import { prisma } from '../db.js'
 import { authMiddleware } from '../middleware.js'
 import { logger } from '../logger.js'
 
-const screenshotsRouter = new Hono()
+const screenshotsRouter = new Hono<HonoBindings>()
 
 /**
  * GET /screenshots
