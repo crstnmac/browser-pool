@@ -8,16 +8,22 @@ if [ ! -f /workspaces/browser-pool/.env ]; then
   cp /workspaces/browser-pool/.env.example /workspaces/browser-pool/.env
 fi
 
-# Source the environment variables
-set -a
-source /workspaces/browser-pool/.env
-set +a
-
-# Default connection info for compose services if not provided
+# Set database connection defaults for devcontainer services
 export PGHOST=${PGHOST:-postgres}
 export PGUSER=${PGUSER:-postgres}
 export PGPASSWORD=${PGPASSWORD:-postgres}
 export PGDATABASE=${PGDATABASE:-browser_pool}
+
+# Set DATABASE_URL for Prisma
+export DATABASE_URL="postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:5432/${PGDATABASE}?schema=public"
+
+# Source the environment variables (this will override DATABASE_URL if set in .env)
+set -a
+source /workspaces/browser-pool/.env
+set +a
+
+# Re-apply DATABASE_URL to ensure it uses the devcontainer service name
+export DATABASE_URL="postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:5432/${PGDATABASE}?schema=public"
 
 # Install dependencies with bun workspace
 echo "📦 Installing dependencies..."
