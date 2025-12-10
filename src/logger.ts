@@ -1,4 +1,5 @@
 import winston from 'winston'
+import { safeStringify } from './utils/sanitize.js'
 // Configure log formats
 const {combine, timestamp, printf, colorize, json} = winston.format
 
@@ -8,9 +9,13 @@ const consoleFormat = printf(({level, message, timestamp, ...metadata}) => {
   if (
     metadata &&
     Object.keys(metadata).length > 0 &&
-    JSON.stringify(metadata) !== '{"service":"screenshot-api"}'
+    safeStringify(metadata) !== '{"service":"screenshot-api"}'
   ) {
-    metaStr = JSON.stringify(metadata)
+    try {
+      metaStr = safeStringify(metadata)
+    } catch (error) {
+      metaStr = '[Unable to stringify metadata]'
+    }
   }
   return `${timestamp} [${level}]: ${message} ${metaStr}`
 })

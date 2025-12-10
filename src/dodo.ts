@@ -77,13 +77,20 @@ class DodoPaymentsClient {
   constructor() {
     this.apiKey = process.env.DODO_API_KEY || ''
     this.webhookSecret = process.env.DODO_WEBHOOK_SECRET || ''
+    const apiUrl = process.env.DODO_API_URL || 'https://api.dodo.com/v1'
 
     if (!this.apiKey) {
-      logger.warn('DODO_API_KEY not configured')
+      logger.warn('DODO_API_KEY not configured - Dodo Payments features will not work')
     }
 
+    logger.info('Dodo Payments client initialized', {
+      apiUrl,
+      hasApiKey: !!this.apiKey,
+      hasWebhookSecret: !!this.webhookSecret,
+    })
+
     this.client = axios.create({
-      baseURL: process.env.DODO_API_URL || 'https://api.dodo.com/v1',
+      baseURL: apiUrl,
       headers: {
         'Authorization': `Bearer ${this.apiKey}`,
         'Content-Type': 'application/json',
@@ -102,7 +109,16 @@ class DodoPaymentsClient {
         return config
       },
       (error) => {
-        logger.error('Dodo API Request Error:', error)
+        // Safely extract error information to avoid circular references
+        const errorInfo = {
+          message: error.message,
+          code: error.code,
+          config: error.config ? {
+            method: error.config.method,
+            url: error.config.url,
+          } : undefined,
+        }
+        logger.error('Dodo API Request Error:', errorInfo)
         return Promise.reject(error)
       }
     )
@@ -116,11 +132,19 @@ class DodoPaymentsClient {
         return response
       },
       (error) => {
-        logger.error('Dodo API Response Error:', {
-          status: error.response?.status,
-          data: error.response?.data,
+        // Safely extract error information to avoid circular references
+        const errorInfo = {
           message: error.message,
-        })
+          code: error.code,
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          config: error.config ? {
+            method: error.config.method,
+            url: error.config.url,
+          } : undefined,
+        }
+        logger.error('Dodo API Response Error:', errorInfo)
         return Promise.reject(error)
       }
     )
@@ -135,6 +159,10 @@ class DodoPaymentsClient {
     metadata?: Record<string, any>
   ): Promise<DodoCustomer> {
     try {
+      if (!this.apiKey) {
+        throw new Error('DODO_API_KEY is not configured. Please set DODO_API_KEY environment variable.')
+      }
+
       const response = await this.client.post('/customers', {
         email,
         name,
@@ -142,8 +170,40 @@ class DodoPaymentsClient {
       })
       return response.data
     } catch (error: any) {
-      logger.error('Error creating Dodo customer:', error)
-      throw new Error(`Failed to create customer: ${error.message}`)
+      const errorMessage = error?.response?.data?.message || error?.message || 'Unknown error'
+      const errorCode = error?.code || error?.response?.status
+      
+      logger.error('Error creating Dodo customer:', {
+        message: errorMessage,
+        code: errorCode,
+        apiUrl: this.client.defaults.baseURL,
+        hasApiKey: !!this.apiKey,
+      })
+
+      // Provide more helpful error messages
+      if (error.code === 'ECONNREFUSED' || error.code === 'ENOTFOUND' || error.code === 'EAI_AGAIN') {
+        const dnsError = error.code === 'ENOTFOUND' || error.code === 'EAI_AGAIN'
+        const errorDetail = dnsError
+          ? `DNS resolution failed for ${this.client.defaults.baseURL}. The hostname cannot be resolved.`
+          : `Connection refused to ${this.client.defaults.baseURL}.`
+        
+        throw new Error(
+          `Cannot connect to Dodo Payments API: ${errorDetail} ` +
+          `Please check:\n` +
+          `1. DODO_API_URL environment variable (currently: ${this.client.defaults.baseURL})\n` +
+          `2. Network connectivity and DNS resolution from the container\n` +
+          `3. If running in a container, ensure DNS is properly configured\n` +
+          `4. If using a local/mock service, update DODO_API_URL to point to the correct host (e.g., http://host.docker.internal:PORT or service name)`
+        )
+      }
+
+      if (error.response?.status === 401) {
+        throw new Error(
+          'Invalid Dodo Payments API key. Please check DODO_API_KEY environment variable.'
+        )
+      }
+
+      throw new Error(`Failed to create customer: ${errorMessage}`)
     }
   }
 
@@ -202,8 +262,42 @@ class DodoPaymentsClient {
       })
       return response.data
     } catch (error: any) {
-      logger.error('Error creating checkout session:', error)
-      throw new Error(`Failed to create checkout session: ${error.message}`)
+      // Safely extract error information to avoid circular references
+      const errorMessage = error?.response?.data?.message || error?.message || 'Unknown error'
+      const errorCode = error?.code || error?.response?.status
+      
+      logger.error('Error creating checkout session:', {
+        message: errorMessage,
+        code: errorCode,
+        status: error?.response?.status,
+        apiUrl: this.client.defaults.baseURL,
+        hasApiKey: !!this.apiKey,
+      })
+
+      // Provide more helpful error messages
+      if (error.code === 'ECONNREFUSED' || error.code === 'ENOTFOUND' || error.code === 'EAI_AGAIN') {
+        const dnsError = error.code === 'ENOTFOUND' || error.code === 'EAI_AGAIN'
+        const errorDetail = dnsError
+          ? `DNS resolution failed for ${this.client.defaults.baseURL}. The hostname cannot be resolved.`
+          : `Connection refused to ${this.client.defaults.baseURL}.`
+        
+        throw new Error(
+          `Cannot connect to Dodo Payments API: ${errorDetail} ` +
+          `Please check:\n` +
+          `1. DODO_API_URL environment variable (currently: ${this.client.defaults.baseURL})\n` +
+          `2. Network connectivity and DNS resolution from the container\n` +
+          `3. If running in a container, ensure DNS is properly configured\n` +
+          `4. If using a local/mock service, update DODO_API_URL to point to the correct host (e.g., http://host.docker.internal:PORT or service name)`
+        )
+      }
+
+      if (error.response?.status === 401) {
+        throw new Error(
+          'Invalid Dodo Payments API key. Please check DODO_API_KEY environment variable.'
+        )
+      }
+
+      throw new Error(`Failed to create checkout session: ${errorMessage}`)
     }
   }
 

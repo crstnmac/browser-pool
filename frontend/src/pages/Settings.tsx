@@ -55,10 +55,10 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-8">
+      <div className="space-y-1">
+        <h1 className="instrument-serif-regular text-4xl md:text-5xl font-normal tracking-tight">Settings</h1>
+        <p className="text-muted-foreground text-lg">
           Manage your account settings and preferences
         </p>
       </div>
@@ -70,20 +70,20 @@ export function SettingsPage() {
         </TabsList>
 
         <TabsContent value="profile">
-          <Card>
-            <CardHeader>
-              <CardTitle>Profile Information</CardTitle>
-              <CardDescription>
+          <Card className="border-border/40">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-xl font-semibold">Profile Information</CardTitle>
+              <CardDescription className="text-base">
                 Update your account profile information
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={profileForm.handleSubmit(onProfileSubmit)} className="space-y-4">
+              <form onSubmit={profileForm.handleSubmit(onProfileSubmit)} className="space-y-5">
                 <div className="space-y-2">
                   <Label htmlFor="name">Name</Label>
                   <Input id="name" {...profileForm.register('name')} />
                   {profileForm.formState.errors.name && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-base text-destructive">
                       {profileForm.formState.errors.name.message}
                     </p>
                   )}
@@ -92,12 +92,12 @@ export function SettingsPage() {
                   <Label htmlFor="email">Email</Label>
                   <Input id="email" type="email" {...profileForm.register('email')} />
                   {profileForm.formState.errors.email && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-base text-destructive">
                       {profileForm.formState.errors.email.message}
                     </p>
                   )}
                 </div>
-                <Button type="submit" disabled={updateProfileMutation.isPending}>
+                <Button type="submit" disabled={updateProfileMutation.isPending} className="h-10">
                   {updateProfileMutation.isPending ? 'Saving...' : 'Save Changes'}
                 </Button>
               </form>
@@ -106,15 +106,15 @@ export function SettingsPage() {
         </TabsContent>
 
         <TabsContent value="security">
-          <Card>
-            <CardHeader>
-              <CardTitle>Change Password</CardTitle>
-              <CardDescription>
+          <Card className="border-border/40">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-xl font-semibold">Change Password</CardTitle>
+              <CardDescription className="text-base">
                 Update your password to keep your account secure
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)} className="space-y-4">
+              <form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)} className="space-y-5">
                 <div className="space-y-2">
                   <Label htmlFor="currentPassword">Current Password</Label>
                   <Input
@@ -131,7 +131,7 @@ export function SettingsPage() {
                     {...passwordForm.register('newPassword')}
                   />
                   {passwordForm.formState.errors.newPassword && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-base text-destructive">
                       {passwordForm.formState.errors.newPassword.message}
                     </p>
                   )}
@@ -144,12 +144,12 @@ export function SettingsPage() {
                     {...passwordForm.register('confirmPassword')}
                   />
                   {passwordForm.formState.errors.confirmPassword && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-base text-destructive">
                       {passwordForm.formState.errors.confirmPassword.message}
                     </p>
                   )}
                 </div>
-                <Button type="submit" disabled={changePasswordMutation.isPending}>
+                <Button type="submit" disabled={changePasswordMutation.isPending} className="h-10">
                   {changePasswordMutation.isPending ? 'Updating...' : 'Update Password'}
                 </Button>
               </form>

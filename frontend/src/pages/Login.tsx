@@ -50,25 +50,26 @@ export function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <div className="flex items-center justify-center mb-4">
-            <Camera className="h-12 w-12 text-primary" />
+    <div className="min-h-screen flex items-center justify-center bg-background p-6">
+      <Card className="w-full max-w-md border-border/40">
+        <CardHeader className="space-y-2 pb-6">
+          <div className="flex items-center justify-center mb-2">
+            <Camera className="h-10 w-10 text-foreground" />
           </div>
-          <CardTitle className="text-2xl text-center">Welcome back</CardTitle>
-          <CardDescription className="text-center">
+          <CardTitle className="instrument-serif-regular text-2xl font-normal text-center tracking-tight">Welcome back</CardTitle>
+          <CardDescription className="text-center text-sm">
             Enter your credentials to access your account
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm font-medium">Email</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="name@example.com"
+                className="h-10"
                 {...register('email')}
               />
               {errors.email && (
@@ -77,10 +78,10 @@ export function LoginPage() {
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-sm font-medium">Password</Label>
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-primary hover:underline"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Forgot password?
                 </Link>
@@ -88,6 +89,7 @@ export function LoginPage() {
               <Input
                 id="password"
                 type="password"
+                className="h-10"
                 {...register('password')}
               />
               {errors.password && (
@@ -95,13 +97,13 @@ export function LoginPage() {
               )}
             </div>
           </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
+          <CardFooter className="flex flex-col space-y-4 pt-6">
+            <Button type="submit" className="w-full h-10" disabled={isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
             <p className="text-sm text-center text-muted-foreground">
               Don't have an account?{' '}
-              <Link to="/register" className="text-primary hover:underline">
+              <Link to="/register" className="text-foreground font-medium hover:underline">
                 Sign up
               </Link>
             </p>

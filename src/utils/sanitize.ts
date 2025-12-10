@@ -53,8 +53,9 @@ function sanitizeValue(value: any): any {
 
 /**
  * Recursively sanitize object for logging
+ * Handles circular references by tracking visited objects
  */
-export function sanitizeForLogging(data: any): any {
+export function sanitizeForLogging(data: any, visited: WeakSet<any> = new WeakSet()): any {
   if (data === null || data === undefined) {
     return data
   }
@@ -63,8 +64,23 @@ export function sanitizeForLogging(data: any): any {
     return data
   }
 
+  // Handle circular references
+  if (visited.has(data)) {
+    return '[Circular]'
+  }
+  visited.add(data)
+
+  // Handle Error objects specially
+  if (data instanceof Error) {
+    return {
+      name: data.name,
+      message: data.message,
+      stack: data.stack,
+    }
+  }
+
   if (Array.isArray(data)) {
-    return data.map(item => sanitizeForLogging(item))
+    return data.map(item => sanitizeForLogging(item, visited))
   }
 
   const sanitized: any = {}
@@ -73,7 +89,7 @@ export function sanitizeForLogging(data: any): any {
     if (isSensitiveKey(key)) {
       sanitized[key] = '***REDACTED***'
     } else if (typeof value === 'object' && value !== null) {
-      sanitized[key] = sanitizeForLogging(value)
+      sanitized[key] = sanitizeForLogging(value, visited)
     } else {
       sanitized[key] = value
     }
@@ -159,4 +175,32 @@ export function sanitizeURL(url: string): string {
     // If not a valid URL, return as-is
     return url
   }
+}
+
+/**
+ * Safely stringify an object, handling circular references
+ */
+export function safeStringify(obj: any, space?: number): string {
+  const seen = new WeakSet()
+  
+  return JSON.stringify(obj, (key, value) => {
+    // Handle circular references
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return '[Circular]'
+      }
+      seen.add(value)
+    }
+    
+    // Handle Error objects specially
+    if (value instanceof Error) {
+      return {
+        name: value.name,
+        message: value.message,
+        stack: value.stack,
+      }
+    }
+    
+    return value
+  }, space)
 }

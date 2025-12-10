@@ -63,17 +63,17 @@ export function ScreenshotsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Screenshots</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="instrument-serif-regular text-4xl md:text-5xl font-normal tracking-tight">Screenshots</h1>
+          <p className="text-muted-foreground text-lg">
             Manage and view your captured screenshots
           </p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="h-10">
               <Plus className="mr-2 h-4 w-4" />
               New Screenshot
             </Button>
@@ -95,7 +95,7 @@ export function ScreenshotsPage() {
                     {...register('url')}
                   />
                   {errors.url && (
-                    <p className="text-sm text-destructive">{errors.url.message}</p>
+                    <p className="text-base text-destructive">{errors.url.message}</p>
                   )}
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -128,44 +128,44 @@ export function ScreenshotsPage() {
       </div>
 
       {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+        <div className="flex items-center justify-center py-16">
+          <div className="animate-spin rounded-full h-10 w-10 border-2 border-border border-t-foreground"></div>
         </div>
       ) : screenshotsData && screenshotsData.screenshots.length > 0 ? (
         <>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {screenshotsData.screenshots.map((screenshot) => (
-              <Card key={screenshot.id} className="overflow-hidden">
-                <div className="aspect-video w-full overflow-hidden bg-muted">
+              <Card key={screenshot.id} className="overflow-hidden border-border/40">
+                <div className="aspect-video w-full overflow-hidden bg-muted/50">
                   <img
                     src={screenshot.url}
                     alt="Screenshot"
                     className="h-full w-full object-cover"
                   />
                 </div>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base truncate">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-lg font-medium truncate">
                     {screenshot.fullUrl}
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-sm">
                     {format(new Date(screenshot.createdAt), 'PPp')}
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-3">
+                <CardContent className="space-y-4">
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary">
+                    <Badge variant="secondary" className="text-sm">
                       {screenshot.width}x{screenshot.height}
                     </Badge>
-                    <Badge variant="secondary">{screenshot.format}</Badge>
+                    <Badge variant="secondary" className="text-sm">{screenshot.format}</Badge>
                     {screenshot.cookiesHandled && (
-                      <Badge variant="outline">Cookies</Badge>
+                      <Badge variant="outline" className="text-sm">Cookies</Badge>
                     )}
                   </div>
                   <div className="flex gap-2">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1"
+                      className="flex-1 h-9"
                       asChild
                     >
                       <a href={screenshot.url} download target="_blank" rel="noopener noreferrer">
@@ -176,6 +176,7 @@ export function ScreenshotsPage() {
                     <Button
                       variant="destructive"
                       size="sm"
+                      className="h-9"
                       onClick={() => handleDelete(screenshot.id)}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -187,19 +188,21 @@ export function ScreenshotsPage() {
           </div>
 
           {/* Pagination */}
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-4 pt-4">
             <Button
               variant="outline"
+              className="h-10"
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
             >
               Previous
             </Button>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-base text-muted-foreground">
               Page {page} of {screenshotsData.pages}
             </span>
             <Button
               variant="outline"
+              className="h-10"
               onClick={() => setPage(p => p + 1)}
               disabled={page >= screenshotsData.pages}
             >
@@ -208,11 +211,11 @@ export function ScreenshotsPage() {
           </div>
         </>
       ) : (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
+        <Card className="border-border/40">
+          <CardContent className="flex flex-col items-center justify-center py-16">
             <Camera className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No screenshots yet</h3>
-            <p className="text-muted-foreground text-center mb-4">
+            <h3 className="text-xl font-semibold text-foreground mb-2">No screenshots yet</h3>
+            <p className="text-muted-foreground text-center text-base mb-6">
               Start capturing screenshots by clicking the button above
             </p>
           </CardContent>

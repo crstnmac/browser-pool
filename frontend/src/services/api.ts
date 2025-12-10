@@ -26,6 +26,35 @@ import type {
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
+// Safe localStorage access helper
+const safeLocalStorage = {
+  getItem: (key: string): string | null => {
+    if (typeof window === 'undefined') return null
+    try {
+      return localStorage.getItem(key)
+    } catch (error) {
+      console.warn('localStorage.getItem failed:', error)
+      return null
+    }
+  },
+  setItem: (key: string, value: string): void => {
+    if (typeof window === 'undefined') return
+    try {
+      localStorage.setItem(key, value)
+    } catch (error) {
+      console.warn('localStorage.setItem failed:', error)
+    }
+  },
+  removeItem: (key: string): void => {
+    if (typeof window === 'undefined') return
+    try {
+      localStorage.removeItem(key)
+    } catch (error) {
+      console.warn('localStorage.removeItem failed:', error)
+    }
+  },
+}
+
 const apiClient = axios.create({
   baseURL: API_URL,
   headers: {
@@ -37,7 +66,7 @@ const apiClient = axios.create({
 // Request interceptor to add auth token
 apiClient.interceptors.request.use(
   (config) => {
-    const apiKey = localStorage.getItem('apiKey')
+    const apiKey = safeLocalStorage.getItem('apiKey')
     if (apiKey) {
       config.headers['X-API-Key'] = apiKey
     }
@@ -51,8 +80,10 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError<ApiError>) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('apiKey')
-      window.location.href = '/login'
+      safeLocalStorage.removeItem('apiKey')
+      if (typeof window !== 'undefined') {
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(error)
   }
@@ -68,13 +99,13 @@ export const authApi = {
   login: async (data: LoginRequest) => {
     const response = await apiClient.post<{ apiKey: string; user: User }>('/auth/login', data)
     if (response.data.apiKey) {
-      localStorage.setItem('apiKey', response.data.apiKey)
+      safeLocalStorage.setItem('apiKey', response.data.apiKey)
     }
     return response.data
   },
 
   logout: () => {
-    localStorage.removeItem('apiKey')
+    safeLocalStorage.removeItem('apiKey')
   },
 
   requestPasswordReset: async (email: string) => {
@@ -236,17 +267,49 @@ export const subscriptionsApi = {
   },
 
   getPlans: async () => {
-    const response = await apiClient.get<SubscriptionPlan[]>('/subscriptions/plans')
-    return response.data
+    const response = await apiClient.get<{ plans: Array<{
+      id: string
+      name: string
+      price: number
+      currency: string
+      interval: string
+      features: string[]
+      quota: number
+      rateLimit: number
+    }> }>('/subscriptions/plans')
+    
+    // Extract plans array from response
+    const backendPlans = response.data.plans || []
+    
+    // Transform backend plan format to match SubscriptionPlan interface
+    return backendPlans.map((plan): SubscriptionPlan => {
+      const planId = plan.id as 'FREE' | 'PRO' | 'ENTERPRISE'
+      const isProOrEnterprise = planId === 'PRO' || planId === 'ENTERPRISE'
+      
+      return {
+        name: planId,
+        displayName: plan.name,
+        price: plan.price,
+        currency: plan.currency,
+        interval: plan.interval as 'month' | 'year',
+        features: {
+          screenshotsPerMonth: plan.quota,
+          rateLimit: plan.rateLimit,
+          webhooks: isProOrEnterprise,
+          scheduledScreenshots: isProOrEnterprise,
+          priority: planId === 'ENTERPRISE',
+        },
+      }
+    })
   },
 
   createCheckout: async (planId: string) => {
-    const response = await apiClient.post<{ checkoutUrl: string }>('/subscriptions/checkout', { planId })
+    const response = await apiClient.post<{ checkoutUrl: string }>('/subscriptions/checkout', { plan: planId })
     return response.data
   },
 
   upgrade: async (planId: string) => {
-    const response = await apiClient.post<Subscription>('/subscriptions/upgrade', { planId })
+    const response = await apiClient.post<Subscription>('/subscriptions/upgrade', { plan: planId })
     return response.data
   },
 

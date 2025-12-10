@@ -41,6 +41,7 @@ import {createOpenAPIApp} from './openapi.js'
 
 // Import error handling
 import { errorHandler, notFoundHandler, requestIdMiddleware } from './errorHandler.js'
+import type { Page } from 'playwright'
 
 const app = new Hono<HonoBindings>()
 
@@ -173,10 +174,10 @@ app.post(
       const results = await Promise.allSettled(
         urls.map(async (url: string) => {
           const startTime = Date.now()
-          let page
+          let page: Page | undefined
 
           try {
-            page = await browserPool.requirePage()
+            page = await browserPool.requirePage() as Page
 
             await page.context().clearCookies()
 
@@ -315,7 +316,7 @@ app.post(
       return c.json({error: 'Invalid screenshot options', details: error.issues}, 400)
     }
 
-    let page
+    let page: Page | undefined;
     try {
       page = await browserPool.requirePage()
 

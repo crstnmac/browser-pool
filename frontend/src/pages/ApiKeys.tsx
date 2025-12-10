@@ -41,17 +41,17 @@ export function ApiKeysPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">API Keys</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="instrument-serif-regular text-4xl md:text-5xl font-normal tracking-tight">API Keys</h1>
+          <p className="text-muted-foreground text-lg">
             Manage your API keys for authentication
           </p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="h-10">
               <Plus className="mr-2 h-4 w-4" />
               Create API Key
             </Button>
@@ -67,7 +67,7 @@ export function ApiKeysPage() {
                 </DialogHeader>
                 <div className="space-y-4 py-4">
                   <div className="flex items-center gap-2">
-                    <Input value={newApiKey} readOnly className="font-mono text-sm" />
+                    <Input value={newApiKey} readOnly className="font-mono text-base" />
                     <Button size="icon" onClick={() => handleCopy(newApiKey)}>
                       {copiedKey === newApiKey ? (
                         <Check className="h-4 w-4" />
@@ -120,18 +120,19 @@ export function ApiKeysPage() {
       {apiKeys && apiKeys.length > 0 ? (
         <div className="grid gap-4">
           {apiKeys.map((key) => (
-            <Card key={key.id}>
-              <CardHeader>
+            <Card key={key.id} className="border-border/40">
+              <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-lg">{key.name}</CardTitle>
-                    <CardDescription className="font-mono mt-1">
+                  <div className="space-y-1">
+                    <CardTitle className="text-xl font-semibold">{key.name}</CardTitle>
+                    <CardDescription className="font-mono text-sm mt-1">
                       {key.keyPrefix}...
                     </CardDescription>
                   </div>
                   <Button
                     variant="destructive"
                     size="icon"
+                    className="h-9 w-9"
                     onClick={() => handleDelete(key.id)}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -139,21 +140,21 @@ export function ApiKeysPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex flex-wrap items-center gap-4 text-base text-muted-foreground">
                   <div>
-                    Created: {format(new Date(key.createdAt), 'PPp')}
+                    Created: <span className="text-foreground font-medium">{format(new Date(key.createdAt), 'PPp')}</span>
                   </div>
                   {key.lastUsed && (
                     <div>
-                      Last used: {format(new Date(key.lastUsed), 'PPp')}
+                      Last used: <span className="text-foreground font-medium">{format(new Date(key.lastUsed), 'PPp')}</span>
                     </div>
                   )}
                   {key.expiresAt ? (
-                    <Badge variant="outline">
+                    <Badge variant="outline" className="text-sm">
                       Expires: {format(new Date(key.expiresAt), 'PP')}
                     </Badge>
                   ) : (
-                    <Badge variant="secondary">Never expires</Badge>
+                    <Badge variant="secondary" className="text-sm">Never expires</Badge>
                   )}
                 </div>
               </CardContent>
@@ -161,11 +162,11 @@ export function ApiKeysPage() {
           ))}
         </div>
       ) : (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
+        <Card className="border-border/40">
+          <CardContent className="flex flex-col items-center justify-center py-16">
             <Key className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No API keys yet</h3>
-            <p className="text-muted-foreground text-center mb-4">
+            <h3 className="text-xl font-semibold text-foreground mb-2">No API keys yet</h3>
+            <p className="text-muted-foreground text-center text-base mb-6">
               Create your first API key to start using the API
             </p>
           </CardContent>

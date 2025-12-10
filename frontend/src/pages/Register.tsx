@@ -59,24 +59,25 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <div className="flex items-center justify-center mb-4">
-            <Camera className="h-12 w-12 text-primary" />
+    <div className="min-h-screen flex items-center justify-center bg-background p-6">
+      <Card className="w-full max-w-md border-border/40">
+        <CardHeader className="space-y-2 pb-6">
+          <div className="flex items-center justify-center mb-2">
+            <Camera className="h-10 w-10 text-foreground" />
           </div>
-          <CardTitle className="text-2xl text-center">Create an account</CardTitle>
-          <CardDescription className="text-center">
+          <CardTitle className="instrument-serif-regular text-2xl font-normal text-center tracking-tight">Create an account</CardTitle>
+          <CardDescription className="text-center text-sm">
             Get started with your free account
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name" className="text-sm font-medium">Name</Label>
               <Input
                 id="name"
                 placeholder="John Doe"
+                className="h-10"
                 {...register('name')}
               />
               {errors.name && (
@@ -84,11 +85,12 @@ export function RegisterPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm font-medium">Email</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="name@example.com"
+                className="h-10"
                 {...register('email')}
               />
               {errors.email && (
@@ -96,10 +98,11 @@ export function RegisterPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-sm font-medium">Password</Label>
               <Input
                 id="password"
                 type="password"
+                className="h-10"
                 {...register('password')}
               />
               {errors.password && (
@@ -107,10 +110,11 @@ export function RegisterPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirm Password</Label>
               <Input
                 id="confirmPassword"
                 type="password"
+                className="h-10"
                 {...register('confirmPassword')}
               />
               {errors.confirmPassword && (
@@ -118,13 +122,13 @@ export function RegisterPage() {
               )}
             </div>
           </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
+          <CardFooter className="flex flex-col space-y-4 pt-6">
+            <Button type="submit" className="w-full h-10" disabled={isLoading}>
               {isLoading ? 'Creating account...' : 'Create account'}
             </Button>
             <p className="text-sm text-center text-muted-foreground">
               Already have an account?{' '}
-              <Link to="/login" className="text-primary hover:underline">
+              <Link to="/login" className="text-foreground font-medium hover:underline">
                 Sign in
               </Link>
             </p>

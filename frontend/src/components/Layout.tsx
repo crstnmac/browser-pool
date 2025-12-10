@@ -39,19 +39,19 @@ export function Layout() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center px-4">
-          <Link to="/dashboard" className="flex items-center space-x-2">
-            <Camera className="h-6 w-6" />
-            <span className="font-bold text-xl">Browser Pool</span>
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-20 items-center px-6 lg:px-8">
+          <Link to="/dashboard" className="flex items-center gap-3">
+            <Camera className="h-5 w-5 text-foreground" />
+            <span className="handjet-display font-semibold text-lg tracking-tight">Browser Pool</span>
           </Link>
 
-          <div className="flex flex-1 items-center justify-end space-x-4">
+          <div className="flex flex-1 items-center justify-end">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback>
+                <Button variant="ghost" className="relative h-9 w-9 rounded-full">
+                  <Avatar className="h-9 w-9">
+                    <AvatarFallback className="text-xs font-medium">
                       {user?.name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}
                     </AvatarFallback>
                   </Avatar>
@@ -59,10 +59,10 @@ export function Layout() {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
-                  <div className="flex flex-col space-y-1">
+                  <div className="flex flex-col gap-1.5">
                     <p className="text-sm font-medium leading-none">{user?.name || 'User'}</p>
                     <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
-                    <Badge variant="secondary" className="w-fit mt-1">
+                    <Badge variant="secondary" className="w-fit mt-1.5 text-xs">
                       {user?.plan}
                     </Badge>
                   </div>
@@ -84,15 +84,15 @@ export function Layout() {
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] w-64 flex-col border-r bg-background md:flex">
-          <nav className="flex-1 space-y-1 p-4">
+        <aside className="sticky top-20 hidden h-[calc(100vh-5rem)] w-64 flex-col border-r border-border/40 bg-background md:flex">
+          <nav className="flex-1 space-y-0.5 p-4">
             {navigation.map((item) => {
               const Icon = item.icon
               return (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                 >
                   <Icon className="h-4 w-4" />
                   {item.name}
@@ -103,8 +103,10 @@ export function Layout() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
-          <Outlet />
+        <main className="flex-1 p-8 lg:p-12">
+          <div className="mx-auto max-w-7xl">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>
