@@ -38,14 +38,21 @@ cd /workspaces/browser-pool
 
 # Wait for PostgreSQL to be ready
 echo "⏳ Waiting for PostgreSQL to be ready..."
-for i in {1..30}; do
-  if psql -U "$PGUSER" -h "$PGHOST" -c "SELECT 1" > /dev/null 2>&1; then
-    echo "✅ PostgreSQL is ready"
-    break
+MAX_ATTEMPTS=60
+ATTEMPT=0
+while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
+  if pg_isready -h "$PGHOST" -p 5432 -U "$PGUSER" > /dev/null 2>&1; then
+    # Double-check with actual connection
+    if PGPASSWORD="$PGPASSWORD" psql -U "$PGUSER" -h "$PGHOST" -d postgres -c "SELECT 1" > /dev/null 2>&1; then
+      echo "✅ PostgreSQL is ready"
+      break
+    fi
   fi
-  if [ $i -eq 30 ]; then
-    echo "⚠️  PostgreSQL did not become ready in time"
-    exit 1
+  ATTEMPT=$((ATTEMPT + 1))
+  if [ $ATTEMPT -eq $MAX_ATTEMPTS ]; then
+    echo "⚠️  PostgreSQL did not become ready in time (waited ${MAX_ATTEMPTS}s)"
+    echo "ℹ️  This is non-fatal - you can continue setup manually"
+    break
   fi
   sleep 1
 done
@@ -77,6 +84,6 @@ echo "📝 Next steps:"
 echo "   1. Run 'bun run dev' to start both frontend and backend"
 echo "   2. Backend API: http://localhost:3000"
 echo "   3. Frontend: http://localhost:5173"
-echo "   4. Database: postgresql://postgres:@localhost:5432/browser_pool"
-echo "   5. Redis: redis://localhost:6379"
+echo "   4. Database: postgresql://postgres:@localhost:5433/browser_pool"
+echo "   5. Redis: redis://localhost:6380"
 echo ""

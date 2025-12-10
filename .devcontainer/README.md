@@ -20,8 +20,8 @@ This directory contains the development container configuration for Browser Pool
 
 ## Services Included
 
-- **PostgreSQL 16 (compose service)**: Database (port 5432)
-- **Redis 7 (compose service)**: Cache and job queue (port 6379)
+- **PostgreSQL 16 (compose service)**: Database (port 5433)
+- **Redis 7 (compose service)**: Cache and job queue (port 6380)
 - **Bun Runtime**: Latest version with Node 20
 - **Git & GitHub CLI**: For version control
 
@@ -31,8 +31,8 @@ This directory contains the development container configuration for Browser Pool
 |------|---------|---------|
 | 3000 | Backend | Hono API server |
 | 5173 | Frontend | Vite dev server |
-| 5432 | PostgreSQL | Database |
-| 6379 | Redis | Cache/queue |
+| 5433 | PostgreSQL | Database |
+| 6380 | Redis | Cache/queue |
 
 ## Commands
 

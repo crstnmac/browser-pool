@@ -29,7 +29,7 @@ export function initQueues(): void {
     return
   }
 
-  const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379'
+  const redisUrl = process.env.REDIS_URL || 'redis://localhost:6380'
   const connection = { url: redisUrl }
 
   try {
