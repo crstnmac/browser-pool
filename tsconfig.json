@@ -1,22 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "strict": true,
+
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "outDir": "./dist",
     "composite": true,
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "target": "ES2023",
+    "strict": true,
+    "esModuleInterop": true
   },
-  "exclude": ["node_modules", "dist", "frontend"],
+  "exclude": ["node_modules", "dist", "frontend", "prisma/generated"],
   "references": [
     { "path": "./tsconfig.backend.json" },
     { "path": "./frontend" }

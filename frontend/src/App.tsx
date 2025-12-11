@@ -12,12 +12,13 @@ import { LoginPage } from './pages/Login'
 import { RegisterPage } from './pages/Register'
 import { DashboardPage } from './pages/Dashboard'
 import { ScreenshotsPage } from './pages/Screenshots'
-import { ApiKeysPage } from './pages/ApiKeys'
-import { SubscriptionPage } from './pages/Subscription'
 import { WebhooksPage } from './pages/Webhooks'
 import { ScheduledPage } from './pages/Scheduled'
 import { SettingsPage } from './pages/Settings'
 import { AdminPage } from './pages/Admin'
+import { OrganizationsPage } from './pages/Organizations'
+import { CreateOrganizationPage } from './pages/CreateOrganization'
+import { OrganizationDetailPage } from './pages/OrganizationDetail'
 
 function App() {
   return (
@@ -34,11 +35,14 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/screenshots" element={<ScreenshotsPage />} />
-              <Route path="/api-keys" element={<ApiKeysPage />} />
-              <Route path="/subscription" element={<SubscriptionPage />} />
               <Route path="/webhooks" element={<WebhooksPage />} />
               <Route path="/scheduled" element={<ScheduledPage />} />
               <Route path="/settings" element={<SettingsPage />} />
+
+              {/* Organization routes */}
+              <Route path="/organizations" element={<OrganizationsPage />} />
+              <Route path="/organizations/create" element={<CreateOrganizationPage />} />
+              <Route path="/organizations/:slug" element={<OrganizationDetailPage />} />
 
               {/* Admin routes */}
               <Route element={<AdminRoute />}>

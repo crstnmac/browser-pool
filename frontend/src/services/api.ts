@@ -1,59 +1,19 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import type {
-  User,
-  ApiKey,
   Screenshot,
   Webhook,
   UsageStats,
-  Subscription,
-  Payment,
-  SubscriptionPlan,
   CreateScreenshotRequest,
   BulkScreenshotRequest,
   CreateWebhookRequest,
   UpdateWebhookRequest,
-  CreateApiKeyRequest,
-  RegisterRequest,
-  LoginRequest,
-  ChangePasswordRequest,
-  UpdateProfileRequest,
   ScheduledScreenshot,
   CreateScheduledScreenshotRequest,
   AdminUser,
   AdminAnalytics,
-  ApiError,
 } from '@/types/api'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
-
-// Safe localStorage access helper
-const safeLocalStorage = {
-  getItem: (key: string): string | null => {
-    if (typeof window === 'undefined') return null
-    try {
-      return localStorage.getItem(key)
-    } catch (error) {
-      console.warn('localStorage.getItem failed:', error)
-      return null
-    }
-  },
-  setItem: (key: string, value: string): void => {
-    if (typeof window === 'undefined') return
-    try {
-      localStorage.setItem(key, value)
-    } catch (error) {
-      console.warn('localStorage.setItem failed:', error)
-    }
-  },
-  removeItem: (key: string): void => {
-    if (typeof window === 'undefined') return
-    try {
-      localStorage.removeItem(key)
-    } catch (error) {
-      console.warn('localStorage.removeItem failed:', error)
-    }
-  },
-}
 
 const apiClient = axios.create({
   baseURL: API_URL,
@@ -63,119 +23,10 @@ const apiClient = axios.create({
   withCredentials: true,
 })
 
-// Request interceptor to add auth token
-apiClient.interceptors.request.use(
-  (config) => {
-    const apiKey = safeLocalStorage.getItem('apiKey')
-    if (apiKey) {
-      config.headers['X-API-Key'] = apiKey
-    }
-    return config
-  },
-  (error) => Promise.reject(error)
-)
-
-// Response interceptor for error handling
-apiClient.interceptors.response.use(
-  (response) => response,
-  (error: AxiosError<ApiError>) => {
-    if (error.response?.status === 401) {
-      safeLocalStorage.removeItem('apiKey')
-      if (typeof window !== 'undefined') {
-        window.location.href = '/login'
-      }
-    }
-    return Promise.reject(error)
-  }
-)
-
-// Auth API
-export const authApi = {
-  register: async (data: RegisterRequest) => {
-    const response = await apiClient.post<{ message: string }>('/auth/register', data)
-    return response.data
-  },
-
-  login: async (data: LoginRequest) => {
-    const response = await apiClient.post<{ apiKey: string; user: User }>('/auth/login', data)
-    if (response.data.apiKey) {
-      safeLocalStorage.setItem('apiKey', response.data.apiKey)
-    }
-    return response.data
-  },
-
-  logout: () => {
-    safeLocalStorage.removeItem('apiKey')
-  },
-
-  requestPasswordReset: async (email: string) => {
-    const response = await apiClient.post<{ message: string }>('/account/request-password-reset', { email })
-    return response.data
-  },
-
-  resetPassword: async (token: string, password: string) => {
-    const response = await apiClient.post<{ message: string }>('/account/reset-password', { token, password })
-    return response.data
-  },
-
-  verifyEmail: async (token: string) => {
-    const response = await apiClient.post<{ message: string }>('/account/verify-email', { token })
-    return response.data
-  },
-
-  requestEmailVerification: async () => {
-    const response = await apiClient.post<{ message: string }>('/account/request-email-verification')
-    return response.data
-  },
-}
-
 // User API
 export const userApi = {
-  getProfile: async () => {
-    const response = await apiClient.get<User>('/users/me')
-    return response.data
-  },
-
   getUsage: async () => {
     const response = await apiClient.get<UsageStats>('/users/usage')
-    return response.data
-  },
-
-  updateProfile: async (data: UpdateProfileRequest) => {
-    const response = await apiClient.patch<User>('/account/profile', data)
-    return response.data
-  },
-
-  changePassword: async (data: ChangePasswordRequest) => {
-    const response = await apiClient.post<{ message: string }>('/account/change-password', data)
-    return response.data
-  },
-
-  exportData: async () => {
-    const response = await apiClient.get<any>('/account/export')
-    return response.data
-  },
-
-  deleteAccount: async (password: string) => {
-    const response = await apiClient.delete<{ message: string }>('/account', { data: { password } })
-    return response.data
-  },
-}
-
-// API Keys API
-export const apiKeysApi = {
-  list: async () => {
-    const response = await apiClient.get<ApiKey[]>('/users/api-keys')
-    return response.data
-  },
-
-  create: async (data: CreateApiKeyRequest) => {
-    const response = await apiClient.post<{ apiKey: string; key: ApiKey }>('/users/api-keys', data)
-    return response.data
-  },
-
-  delete: async (id: string) => {
-    const response = await apiClient.delete<{ message: string }>(`/users/api-keys/${id}`)
     return response.data
   },
 }
@@ -254,81 +105,6 @@ export const webhooksApi = {
   },
 }
 
-// Subscriptions API
-export const subscriptionsApi = {
-  getCurrent: async () => {
-    const response = await apiClient.get<Subscription>('/subscriptions')
-    return response.data
-  },
-
-  getHistory: async () => {
-    const response = await apiClient.get<Subscription[]>('/subscriptions/history')
-    return response.data
-  },
-
-  getPlans: async () => {
-    const response = await apiClient.get<{ plans: Array<{
-      id: string
-      name: string
-      price: number
-      currency: string
-      interval: string
-      features: string[]
-      quota: number
-      rateLimit: number
-    }> }>('/subscriptions/plans')
-    
-    // Extract plans array from response
-    const backendPlans = response.data.plans || []
-    
-    // Transform backend plan format to match SubscriptionPlan interface
-    return backendPlans.map((plan): SubscriptionPlan => {
-      const planId = plan.id as 'FREE' | 'PRO' | 'ENTERPRISE'
-      const isProOrEnterprise = planId === 'PRO' || planId === 'ENTERPRISE'
-      
-      return {
-        name: planId,
-        displayName: plan.name,
-        price: plan.price,
-        currency: plan.currency,
-        interval: plan.interval as 'month' | 'year',
-        features: {
-          screenshotsPerMonth: plan.quota,
-          rateLimit: plan.rateLimit,
-          webhooks: isProOrEnterprise,
-          scheduledScreenshots: isProOrEnterprise,
-          priority: planId === 'ENTERPRISE',
-        },
-      }
-    })
-  },
-
-  createCheckout: async (planId: string) => {
-    const response = await apiClient.post<{ checkoutUrl: string }>('/subscriptions/checkout', { plan: planId })
-    return response.data
-  },
-
-  upgrade: async (planId: string) => {
-    const response = await apiClient.post<Subscription>('/subscriptions/upgrade', { plan: planId })
-    return response.data
-  },
-
-  cancel: async () => {
-    const response = await apiClient.post<{ message: string }>('/subscriptions/cancel')
-    return response.data
-  },
-
-  reactivate: async () => {
-    const response = await apiClient.post<Subscription>('/subscriptions/reactivate')
-    return response.data
-  },
-
-  getPayments: async () => {
-    const response = await apiClient.get<Payment[]>('/subscriptions/payments')
-    return response.data
-  },
-}
-
 // Scheduled Screenshots API
 export const scheduledScreenshotsApi = {
   list: async () => {
@@ -372,18 +148,13 @@ export const adminApi = {
     return response.data
   },
 
-  updateUser: async (id: string, data: { plan?: string; subscriptionStatus?: string }) => {
-    const response = await apiClient.patch<AdminUser>(`/admin/users/${id}`, data)
-    return response.data
-  },
-
   getAnalytics: async () => {
     const response = await apiClient.get<AdminAnalytics>('/admin/analytics')
     return response.data
   },
 
   getHealth: async () => {
-    const response = await apiClient.get<any>('/admin/health')
+    const response = await apiClient.get<Record<string, unknown>>('/admin/health')
     return response.data
   },
 }

@@ -76,23 +76,6 @@ export function initQueues(): void {
               )
               break
 
-            case 'payment_success':
-              await emailService.sendPaymentSuccess(
-                job.data.email,
-                job.data.name,
-                job.data.amount,
-                job.data.plan,
-              )
-              break
-
-            case 'payment_failed':
-              await emailService.sendPaymentFailed(
-                job.data.email,
-                job.data.name,
-                job.data.reason
-              )
-              break
-
             default:
               logger.warn('Unknown email type', { type: job.data.type })
           }

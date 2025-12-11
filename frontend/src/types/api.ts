@@ -1,25 +1,13 @@
 export type Plan = 'FREE' | 'PRO' | 'ENTERPRISE'
 
-export type SubscriptionStatus = 'active' | 'canceled' | 'past_due' | 'trialing'
-
 export interface User {
   id: string
   email: string
   name: string | null
   plan: Plan
-  subscriptionStatus: SubscriptionStatus | null
   emailVerified: boolean
   createdAt: string
   updatedAt: string
-}
-
-export interface ApiKey {
-  id: string
-  name: string
-  keyPrefix: string
-  lastUsed: string | null
-  expiresAt: string | null
-  createdAt: string
 }
 
 export interface Screenshot {
@@ -58,40 +46,6 @@ export interface UsageStats {
   }
 }
 
-export interface Subscription {
-  id: string
-  plan: Plan
-  status: SubscriptionStatus
-  currentPeriodStart: string
-  currentPeriodEnd: string
-  cancelAtPeriodEnd: boolean
-  trialEnd: string | null
-}
-
-export interface Payment {
-  id: string
-  amount: number
-  currency: string
-  status: 'succeeded' | 'failed' | 'pending'
-  createdAt: string
-  receiptUrl: string | null
-}
-
-export interface SubscriptionPlan {
-  name: Plan
-  displayName: string
-  price: number
-  currency: string
-  interval: 'month' | 'year'
-  features: {
-    screenshotsPerMonth: number
-    rateLimit: number
-    webhooks: boolean
-    scheduledScreenshots: boolean
-    priority: boolean
-  }
-}
-
 export interface CreateScreenshotRequest {
   url: string
   format?: 'png' | 'jpeg'
@@ -125,14 +79,8 @@ export interface UpdateWebhookRequest {
   active?: boolean
 }
 
-export interface CreateApiKeyRequest {
-  name: string
-  expiresAt?: string
-}
-
 export interface AuthResponse {
   user: User
-  apiKeys: ApiKey[]
 }
 
 export interface RegisterRequest {
@@ -190,7 +138,6 @@ export interface AdminUser {
   email: string
   name: string | null
   plan: Plan
-  subscriptionStatus: SubscriptionStatus | null
   emailVerified: boolean
   createdAt: string
   updatedAt: string

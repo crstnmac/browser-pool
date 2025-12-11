@@ -1,5 +1,4 @@
 import { Hono } from 'hono'
-import { z } from 'zod'
 import type { HonoBindings } from '../types.js'
 import { prisma } from '../db.js'
 import { authMiddleware, adminMiddleware } from '../middleware.js'
@@ -9,12 +8,6 @@ const adminRouter = new Hono<HonoBindings>()
 
 // Apply auth and admin middleware to all routes
 adminRouter.use('*', authMiddleware, adminMiddleware)
-
-const updateUserSchema = z.object({
-  plan: z.enum(['FREE', 'PRO', 'ENTERPRISE']).optional(),
-  status: z.enum(['ACTIVE', 'SUSPENDED', 'DELETED']).optional(),
-  isAdmin: z.boolean().optional(),
-})
 
 /**
  * GET /admin/users
@@ -119,61 +112,6 @@ adminRouter.get('/users/:id', async (c) => {
     })
   } catch (error: unknown) {
     logger.error('Error fetching user details:', { error })
-    return c.json({ error: 'Internal server error' }, 500)
-  }
-})
-
-/**
- * PATCH /admin/users/:id
- * Update user information
- */
-adminRouter.patch('/users/:id', async (c) => {
-  try {
-    const userId = c.req.param('id')
-    const body = await c.req.json()
-    const validation = updateUserSchema.safeParse(body)
-
-    if (!validation.success) {
-      return c.json(
-        {
-          error: 'Validation failed',
-          details: validation.error.issues,
-        },
-        400
-      )
-    }
-
-    const updates = validation.data
-
-    // Check if user exists
-    const existingUser = await prisma.user.findUnique({
-      where: { id: userId },
-    })
-
-    if (!existingUser) {
-      return c.json({ error: 'User not found' }, 404)
-    }
-
-    // Update user
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: updates,
-    })
-
-    const adminUser = c.get('user')
-
-    logger.info('User updated by admin', {
-      userId,
-      updates,
-      adminId: adminUser?.id ?? 'unknown',
-    })
-
-    return c.json({
-      message: 'User updated successfully',
-      user: updatedUser,
-    })
-  } catch (error: unknown) {
-    logger.error('Error updating user:', { error })
     return c.json({ error: 'Internal server error' }, 500)
   }
 })

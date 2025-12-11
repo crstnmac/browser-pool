@@ -9,7 +9,7 @@ import handlePopups from './Popuphandlers.js'
 import {logger} from './logger.js'
 import {prisma} from './db.js'
 import {authMiddleware, rateLimitMiddleware, quotaMiddleware} from './middleware.js'
-import {incrementQuota} from './auth.js'
+import {incrementQuota, authHandler} from './auth.js'
 import {triggerWebhooks, checkAndTriggerQuotaWarning} from './webhooks.js'
 import {initRedis, closeRedis} from './redis.js'
 import {
@@ -20,15 +20,12 @@ import {
 } from './screenshot-options.js'
 
 // Import routes
-import authRouter from './routes/auth.js'
 import usersRouter from './routes/users.js'
 import adminRouter from './routes/admin.js'
 import webhooksRouter from './routes/webhooks.js'
-import subscriptionsRouter from './routes/subscriptions.js'
-import dodoWebhooksRouter from './routes/dodo-webhooks.js'
-import accountRouter from './routes/account.js'
 import screenshotsRouter from './routes/screenshots.js'
 import scheduledRouter from './routes/scheduled.js'
+import organizationsRouter from './routes/organizations.js'
 
 // Import scheduler
 import {initScheduler} from './scheduler.js'
@@ -103,22 +100,18 @@ app.get('/health', (c) => {
   })
 })
 
-// Auth routes
-app.route('/auth', authRouter)
-
-// Account management
-app.route('/account', accountRouter)
+// Better Auth handler (all methods)
+app.on(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], '/api/auth/*', (c) =>
+  authHandler(c.req.raw)
+)
 
 // Protected routes
 app.route('/users', usersRouter)
 app.route('/admin', adminRouter)
 app.route('/webhooks', webhooksRouter)
-app.route('/subscriptions', subscriptionsRouter)
 app.route('/screenshots', screenshotsRouter)
 app.route('/scheduled', scheduledRouter)
-
-// Dodo Payments webhooks (public, but verified)
-app.route('/dodo-webhooks', dodoWebhooksRouter)
+app.route('/organizations', organizationsRouter)
 
 // Bulk screenshot endpoint (protected)
 app.post(
@@ -126,11 +119,6 @@ app.post(
   authMiddleware,
   async (c) => {
     const user = c.get('user')
-    const apiKey = c.get('apiKey')
-
-    if (!apiKey) {
-      return c.json({ error: 'API key required' }, 401)
-    }
 
     try {
       const body = await c.req.json()
@@ -205,7 +193,6 @@ app.post(
             await prisma.usageLog.create({
               data: {
                 userId: user.id,
-                apiKeyId: apiKey.id,
                 endpoint: '/screenshot/bulk',
                 urlRequested: url,
                 statusCode: 200,
@@ -226,7 +213,6 @@ app.post(
             await prisma.usageLog.create({
               data: {
                 userId: user.id,
-                apiKeyId: apiKey.id,
                 endpoint: '/screenshot/bulk',
                 urlRequested: url,
                 statusCode: 500,
@@ -294,13 +280,8 @@ app.post(
   async (c) => {
     const startTime = Date.now()
     const user = c.get('user')
-    const apiKey = c.get('apiKey')
     let statusCode = 200
     let errorMessage: string | undefined
-
-    if (!apiKey) {
-      return c.json({ error: 'API key required' }, 401)
-    }
 
     const {url, cookieConsent = true, options, saveHistory = false} = await c.req.json()
 
@@ -371,7 +352,6 @@ app.post(
       await prisma.usageLog.create({
         data: {
           userId: user.id,
-          apiKeyId: apiKey.id,
           endpoint: '/screenshot',
           urlRequested: url,
           statusCode: 200,
@@ -436,7 +416,6 @@ app.post(
       await prisma.usageLog.create({
         data: {
           userId: user.id,
-          apiKeyId: apiKey!.id,
           endpoint: '/screenshot',
           urlRequested: url,
           statusCode,

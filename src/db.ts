@@ -1,32 +1,34 @@
-import { PrismaClient } from '@prisma/client'
 import { logger } from './logger.js'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from './generated/prisma/client.js'
 
-// PrismaClient is attached to the `global` object in development to prevent
-// exhausting your database connection limit.
-const globalForPrisma = global as unknown as { prisma: PrismaClient }
+const connectionString = process.env.DATABASE_URL
+if (!connectionString) {
+  throw new Error('DATABASE_URL is required to initialize Prisma')
+}
 
-export const prisma =
-  globalForPrisma.prisma ||
-  new PrismaClient({
-    log: [
-      {
-        emit: 'event',
-        level: 'query',
-      },
-      {
-        emit: 'event',
-        level: 'error',
-      },
-      {
-        emit: 'event',
-        level: 'info',
-      },
-      {
-        emit: 'event',
-        level: 'warn',
-      },
-    ],
-  })
+const adapter = new PrismaPg({ connectionString })
+const prisma = new PrismaClient({
+  adapter,
+  log: [
+    {
+      emit: 'event',
+      level: 'query',
+    },
+    {
+      emit: 'event',
+      level: 'error',
+    },
+    {
+      emit: 'event',
+      level: 'info',
+    },
+    {
+      emit: 'event',
+      level: 'warn',
+    },
+  ],
+})
 
 // Log Prisma queries in development
 if (process.env.NODE_ENV !== 'production') {
@@ -55,8 +57,4 @@ prisma.$on('warn', (e: any) => {
   logger.warn('Prisma Warning:', e)
 })
 
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma
-}
-
-export default prisma
+export { prisma }

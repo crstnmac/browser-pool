@@ -1,5 +1,5 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
-import { Camera, Key, Webhook, Settings, LayoutDashboard, CreditCard, Calendar, Shield } from 'lucide-react'
+import { Camera, Webhook, Settings, LayoutDashboard, Calendar, Shield, Building2 } from 'lucide-react'
 import { useUser, useLogout } from '@/hooks/use-api'
 import { Button } from '@/components/ui/button'
 import {
@@ -25,10 +25,9 @@ export function Layout() {
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Screenshots', href: '/screenshots', icon: Camera },
-    { name: 'API Keys', href: '/api-keys', icon: Key },
     { name: 'Webhooks', href: '/webhooks', icon: Webhook },
     { name: 'Scheduled', href: '/scheduled', icon: Calendar },
-    { name: 'Subscription', href: '/subscription', icon: CreditCard },
+    { name: 'Organizations', href: '/organizations', icon: Building2 },
     { name: 'Settings', href: '/settings', icon: Settings },
   ]
 

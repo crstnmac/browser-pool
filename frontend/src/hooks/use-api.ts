@@ -1,12 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { useNavigate } from 'react-router-dom'
 import {
-  authApi,
+  signIn,
+  signUp,
+  signOut,
+  useSession,
+} from '@/lib/auth'
+import {
   userApi,
-  apiKeysApi,
   screenshotsApi,
   webhooksApi,
-  subscriptionsApi,
   scheduledScreenshotsApi,
   adminApi,
 } from '@/services/api'
@@ -14,47 +18,54 @@ import type { UpdateWebhookRequest } from '@/types/api'
 
 // Auth hooks
 export const useLogin = () => {
-  const queryClient = useQueryClient()
+  const navigate = useNavigate()
   return useMutation({
-    mutationFn: authApi.login,
-    onSuccess: (data) => {
-      queryClient.setQueryData(['user'], data.user)
+    mutationFn: ({ email, password }: { email: string; password: string }) =>
+      signIn.email({ email, password }),
+    onSuccess: () => {
       toast.success('Logged in successfully')
+      navigate('/dashboard')
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Login failed')
+      toast.error(error.message || 'Login failed')
     },
   })
 }
 
 export const useRegister = () => {
   return useMutation({
-    mutationFn: authApi.register,
+    mutationFn: ({ email, password, name }: { email: string; password: string; name: string }) =>
+      signUp.email({ email, password, name }),
     onSuccess: () => {
       toast.success('Registration successful! Please check your email to verify your account.')
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Registration failed')
+      toast.error(error.message || 'Registration failed')
     },
   })
 }
 
 export const useLogout = () => {
-  const queryClient = useQueryClient()
-  return () => {
-    authApi.logout()
-    queryClient.clear()
-    window.location.href = '/login'
+  const navigate = useNavigate()
+  return async () => {
+    try {
+      await signOut()
+      navigate('/login')
+    } catch (error) {
+      toast.error('Failed to logout')
+    }
   }
 }
 
 // User hooks
 export const useUser = () => {
-  return useQuery({
-    queryKey: ['user'],
-    queryFn: userApi.getProfile,
-    retry: false,
-  })
+  const { data: session, isPending } = useSession()
+
+  return {
+    data: session?.user,
+    isLoading: isPending,
+    error: !session?.user ? new Error('No user session') : null,
+  }
 }
 
 export const useUsage = () => {
@@ -64,67 +75,6 @@ export const useUsage = () => {
   })
 }
 
-export const useUpdateProfile = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: userApi.updateProfile,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] })
-      toast.success('Profile updated successfully')
-    },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to update profile')
-    },
-  })
-}
-
-export const useChangePassword = () => {
-  return useMutation({
-    mutationFn: userApi.changePassword,
-    onSuccess: () => {
-      toast.success('Password changed successfully')
-    },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to change password')
-    },
-  })
-}
-
-// API Keys hooks
-export const useApiKeys = () => {
-  return useQuery({
-    queryKey: ['apiKeys'],
-    queryFn: apiKeysApi.list,
-  })
-}
-
-export const useCreateApiKey = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: apiKeysApi.create,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['apiKeys'] })
-      toast.success('API key created successfully')
-    },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to create API key')
-    },
-  })
-}
-
-export const useDeleteApiKey = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: apiKeysApi.delete,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['apiKeys'] })
-      toast.success('API key deleted successfully')
-    },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to delete API key')
-    },
-  })
-}
 
 // Screenshots hooks
 export const useScreenshots = (page = 1, limit = 20) => {
@@ -253,70 +203,6 @@ export const useTestWebhook = () => {
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message || 'Failed to test webhook')
-    },
-  })
-}
-
-// Subscriptions hooks
-export const useSubscription = () => {
-  return useQuery({
-    queryKey: ['subscription'],
-    queryFn: subscriptionsApi.getCurrent,
-  })
-}
-
-export const useSubscriptionPlans = () => {
-  return useQuery({
-    queryKey: ['subscriptionPlans'],
-    queryFn: subscriptionsApi.getPlans,
-  })
-}
-
-export const usePayments = () => {
-  return useQuery({
-    queryKey: ['payments'],
-    queryFn: subscriptionsApi.getPayments,
-  })
-}
-
-export const useCreateCheckout = () => {
-  return useMutation({
-    mutationFn: subscriptionsApi.createCheckout,
-    onSuccess: (data) => {
-      window.location.href = data.checkoutUrl
-    },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to create checkout session')
-    },
-  })
-}
-
-export const useCancelSubscription = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: subscriptionsApi.cancel,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['subscription'] })
-      queryClient.invalidateQueries({ queryKey: ['user'] })
-      toast.success('Subscription cancelled successfully')
-    },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to cancel subscription')
-    },
-  })
-}
-
-export const useReactivateSubscription = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: subscriptionsApi.reactivate,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['subscription'] })
-      queryClient.invalidateQueries({ queryKey: ['user'] })
-      toast.success('Subscription reactivated successfully')
-    },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to reactivate subscription')
     },
   })
 }

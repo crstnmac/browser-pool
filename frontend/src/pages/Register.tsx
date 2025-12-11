@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { Camera } from 'lucide-react'
-import { useRegister } from '@/hooks/use-api'
+import { signUp } from '@/lib/auth'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -31,8 +31,8 @@ type RegisterFormData = z.infer<typeof registerSchema>
 
 export function RegisterPage() {
   const navigate = useNavigate()
-  const registerMutation = useRegister()
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const {
     register,
@@ -44,15 +44,24 @@ export function RegisterPage() {
 
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true)
+    setError(null)
+
     try {
-      await registerMutation.mutateAsync({
+      const response = await signUp.email({
         name: data.name,
         email: data.email,
         password: data.password,
       })
+
+      if (response.error) {
+        setError(response.error.message || 'Failed to create account')
+        return
+      }
+
+      // Successfully registered, redirect to login
       navigate('/login')
-    } catch (error) {
-      // Error is handled by the mutation
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
       setIsLoading(false)
     }
@@ -123,6 +132,11 @@ export function RegisterPage() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4 pt-6">
+            {error && (
+              <div className="w-full p-3 rounded-md bg-destructive/10 border border-destructive/30">
+                <p className="text-sm text-destructive">{error}</p>
+              </div>
+            )}
             <Button type="submit" className="w-full h-10" disabled={isLoading}>
               {isLoading ? 'Creating account...' : 'Create account'}
             </Button>

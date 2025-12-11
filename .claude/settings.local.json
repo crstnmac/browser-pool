@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(bun run build:*)"
+      "Bash(bun run build:*)",
+      "mcp__better-auth__search",
+      "mcp__better-auth__list_files",
+      "WebSearch",
+      "mcp__better-auth__chat",
+      "mcp__better-auth__get_file",
+      "Bash(npx prisma generate:*)"
     ],
     "deny": [],
     "ask": []

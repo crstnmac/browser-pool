@@ -14,7 +14,7 @@ export function createOpenAPIApp() {
     info: {
       version: '1.0.0',
       title: 'Browser Pool SaaS API',
-      description: 'Screenshot-as-a-Service with cookie consent handling, subscription management, and advanced features',
+      description: 'Screenshot-as-a-Service with cookie consent handling and advanced features',
       contact: {
         name: 'API Support',
         email: 'support@browserpool.com',
@@ -146,21 +146,6 @@ export function createOpenAPIApp() {
             createdAt: { type: 'string', format: 'date-time' },
           },
         },
-        Subscription: {
-          type: 'object',
-          properties: {
-            id: { type: 'string', format: 'uuid' },
-            plan: { type: 'string', enum: ['PRO', 'ENTERPRISE'] },
-            status: {
-              type: 'string',
-              enum: ['ACTIVE', 'PAST_DUE', 'CANCELED', 'INCOMPLETE', 'TRIALING'],
-            },
-            currentPeriodStart: { type: 'string', format: 'date-time' },
-            currentPeriodEnd: { type: 'string', format: 'date-time' },
-            cancelAtPeriodEnd: { type: 'boolean' },
-            createdAt: { type: 'string', format: 'date-time' },
-          },
-        },
       },
     },
     tags: [
@@ -169,7 +154,6 @@ export function createOpenAPIApp() {
       { name: 'Screenshots History', description: 'Screenshot history management' },
       { name: 'Scheduled Screenshots', description: 'Cron-based scheduled screenshots' },
       { name: 'Webhooks', description: 'User-defined webhook management' },
-      { name: 'Subscriptions', description: 'Subscription and billing management' },
       { name: 'Account', description: 'User account management' },
       { name: 'Admin', description: 'Administrative endpoints' },
     ],
@@ -547,70 +531,6 @@ export function createOpenAPIApp() {
               content: {
                 'application/json': {
                   schema: { $ref: '#/components/schemas/Webhook' },
-                },
-              },
-            },
-          },
-        },
-      },
-      '/subscriptions': {
-        get: {
-          tags: ['Subscriptions'],
-          summary: 'Get user subscriptions',
-          security: [{ ApiKeyAuth: [] }],
-          responses: {
-            '200': {
-              description: 'Subscriptions list',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'object',
-                    properties: {
-                      subscriptions: {
-                        type: 'array',
-                        items: { $ref: '#/components/schemas/Subscription' },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-      '/subscriptions/checkout': {
-        post: {
-          tags: ['Subscriptions'],
-          summary: 'Create checkout session',
-          security: [{ ApiKeyAuth: [] }],
-          requestBody: {
-            required: true,
-            content: {
-              'application/json': {
-                schema: {
-                  type: 'object',
-                  required: ['plan'],
-                  properties: {
-                    plan: { type: 'string', enum: ['PRO', 'ENTERPRISE'] },
-                    successUrl: { type: 'string', format: 'uri' },
-                    cancelUrl: { type: 'string', format: 'uri' },
-                  },
-                },
-              },
-            },
-          },
-          responses: {
-            '200': {
-              description: 'Checkout session created',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'object',
-                    properties: {
-                      checkoutUrl: { type: 'string', format: 'uri' },
-                      sessionId: { type: 'string' },
-                    },
-                  },
                 },
               },
             },

@@ -1,32 +1,23 @@
 import type { Context, Next } from 'hono'
-import { authenticateApiKey, getRateLimitForPlan, hasQuotaRemaining } from './auth.js'
+import { auth, getRateLimitForPlan, hasQuotaRemaining } from './auth.js'
 import { logger } from './logger.js'
 import { isRedisAvailable, checkRateLimit as redisCheckRateLimit, getRedis } from './redis.js'
-import { sanitizeApiKey } from './utils/sanitize.js'
 
 // Simple in-memory rate limiter (fallback when Redis is not available)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
 
 /**
- * Middleware to authenticate API key
+ * Middleware to authenticate Better Auth session (cookie-based).
  */
 export async function authMiddleware(c: Context, next: Next) {
-  const apiKey = c.req.header('X-API-Key') || c.req.header('Authorization')?.replace('Bearer ', '')
+  const session = await auth.api.getSession({ headers: c.req.raw.headers })
 
-  if (!apiKey) {
-    return c.json({ error: 'API key is required. Provide it in X-API-Key or Authorization header.' }, 401)
+  if (!session?.user) {
+    return c.json({ error: 'Unauthorized' }, 401)
   }
 
-  const auth = await authenticateApiKey(apiKey)
-
-  if (!auth) {
-    logger.warn('Invalid API key attempted', { apiKeyPrefix: sanitizeApiKey(apiKey) })
-    return c.json({ error: 'Invalid or revoked API key' }, 401)
-  }
-
-  // Attach user and apiKey to context
-  c.set('user', auth.user)
-  c.set('apiKey', auth.apiKey)
+  c.set('user', session.user)
+  c.set('session', session.session)
 
   await next()
 }

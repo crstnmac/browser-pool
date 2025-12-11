@@ -16,8 +16,6 @@ const SENSITIVE_KEYS = [
   'credit_card',
   'creditcard',
   'ssn',
-  'dodo_api_key',
-  'dodo_webhook_secret',
   'jwt_secret',
   'smtp_pass',
 ]
