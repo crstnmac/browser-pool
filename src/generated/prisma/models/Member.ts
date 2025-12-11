@@ -232,19 +232,19 @@ export type MemberScalarWhereWithAggregatesInput = {
 }
 
 export type MemberCreateInput = {
-  id?: string
+  id: string
   role?: string
-  createdAt?: Date | string
+  createdAt: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput
   user: Prisma.UserCreateNestedOneWithoutMembersInput
 }
 
 export type MemberUncheckedCreateInput = {
-  id?: string
+  id: string
   organizationId: string
   userId: string
   role?: string
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type MemberUpdateInput = {
@@ -264,11 +264,11 @@ export type MemberUncheckedUpdateInput = {
 }
 
 export type MemberCreateManyInput = {
-  id?: string
+  id: string
   organizationId: string
   userId: string
   role?: string
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type MemberUpdateManyMutationInput = {
@@ -404,17 +404,17 @@ export type MemberUncheckedUpdateManyWithoutOrganizationNestedInput = {
 }
 
 export type MemberCreateWithoutUserInput = {
-  id?: string
+  id: string
   role?: string
-  createdAt?: Date | string
+  createdAt: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput
 }
 
 export type MemberUncheckedCreateWithoutUserInput = {
-  id?: string
+  id: string
   organizationId: string
   role?: string
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type MemberCreateOrConnectWithoutUserInput = {
@@ -455,17 +455,17 @@ export type MemberScalarWhereInput = {
 }
 
 export type MemberCreateWithoutOrganizationInput = {
-  id?: string
+  id: string
   role?: string
-  createdAt?: Date | string
+  createdAt: Date | string
   user: Prisma.UserCreateNestedOneWithoutMembersInput
 }
 
 export type MemberUncheckedCreateWithoutOrganizationInput = {
-  id?: string
+  id: string
   userId: string
   role?: string
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type MemberCreateOrConnectWithoutOrganizationInput = {
@@ -495,10 +495,10 @@ export type MemberUpdateManyWithWhereWithoutOrganizationInput = {
 }
 
 export type MemberCreateManyUserInput = {
-  id?: string
+  id: string
   organizationId: string
   role?: string
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type MemberUpdateWithoutUserInput = {
@@ -523,10 +523,10 @@ export type MemberUncheckedUpdateManyWithoutUserInput = {
 }
 
 export type MemberCreateManyOrganizationInput = {
-  id?: string
+  id: string
   userId: string
   role?: string
-  createdAt?: Date | string
+  createdAt: Date | string
 }
 
 export type MemberUpdateWithoutOrganizationInput = {

@@ -268,7 +268,7 @@ export type InvitationScalarWhereWithAggregatesInput = {
 }
 
 export type InvitationCreateInput = {
-  id?: string
+  id: string
   email: string
   role?: string | null
   status?: string
@@ -279,7 +279,7 @@ export type InvitationCreateInput = {
 }
 
 export type InvitationUncheckedCreateInput = {
-  id?: string
+  id: string
   organizationId: string
   email: string
   role?: string | null
@@ -312,7 +312,7 @@ export type InvitationUncheckedUpdateInput = {
 }
 
 export type InvitationCreateManyInput = {
-  id?: string
+  id: string
   organizationId: string
   email: string
   role?: string | null
@@ -470,7 +470,7 @@ export type InvitationUncheckedUpdateManyWithoutOrganizationNestedInput = {
 }
 
 export type InvitationCreateWithoutUserInput = {
-  id?: string
+  id: string
   email: string
   role?: string | null
   status?: string
@@ -480,7 +480,7 @@ export type InvitationCreateWithoutUserInput = {
 }
 
 export type InvitationUncheckedCreateWithoutUserInput = {
-  id?: string
+  id: string
   organizationId: string
   email: string
   role?: string | null
@@ -530,7 +530,7 @@ export type InvitationScalarWhereInput = {
 }
 
 export type InvitationCreateWithoutOrganizationInput = {
-  id?: string
+  id: string
   email: string
   role?: string | null
   status?: string
@@ -540,7 +540,7 @@ export type InvitationCreateWithoutOrganizationInput = {
 }
 
 export type InvitationUncheckedCreateWithoutOrganizationInput = {
-  id?: string
+  id: string
   email: string
   role?: string | null
   status?: string
@@ -576,7 +576,7 @@ export type InvitationUpdateManyWithWhereWithoutOrganizationInput = {
 }
 
 export type InvitationCreateManyUserInput = {
-  id?: string
+  id: string
   organizationId: string
   email: string
   role?: string | null
@@ -616,7 +616,7 @@ export type InvitationUncheckedUpdateManyWithoutUserInput = {
 }
 
 export type InvitationCreateManyOrganizationInput = {
-  id?: string
+  id: string
   email: string
   role?: string | null
   status?: string

@@ -54,19 +54,14 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  VerificationToken: 'VerificationToken',
-  CodeToken: 'CodeToken',
-  ApiKey: 'ApiKey',
-  UsageLog: 'UsageLog',
-  Quota: 'Quota',
-  Webhook: 'Webhook',
-  AuditLog: 'AuditLog',
-  Screenshot: 'Screenshot',
-  ScheduledScreenshot: 'ScheduledScreenshot',
   Verification: 'Verification',
   Organization: 'Organization',
   Member: 'Member',
-  Invitation: 'Invitation'
+  Invitation: 'Invitation',
+  Webhook: 'Webhook',
+  AuditLog: 'AuditLog',
+  Screenshot: 'Screenshot',
+  ScheduledScreenshot: 'ScheduledScreenshot'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -87,23 +82,12 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  email: 'email',
   name: 'name',
-  plan: 'plan',
-  status: 'status',
-  isAdmin: 'isAdmin',
+  email: 'email',
   emailVerified: 'emailVerified',
-  emailVerificationToken: 'emailVerificationToken',
-  emailVerificationExpiry: 'emailVerificationExpiry',
-  passwordResetToken: 'passwordResetToken',
-  passwordResetExpiry: 'passwordResetExpiry',
-  passwordResetUsedAt: 'passwordResetUsedAt',
-  failedLoginAttempts: 'failedLoginAttempts',
-  lockedUntil: 'lockedUntil',
-  lastLoginAt: 'lastLoginAt',
+  image: 'image',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  image: 'image'
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -111,13 +95,13 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const SessionScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  token: 'token',
   expiresAt: 'expiresAt',
+  token: 'token',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
+  userId: 'userId',
   activeOrganizationId: 'activeOrganizationId'
 } as const
 
@@ -126,93 +110,70 @@ export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeo
 
 export const AccountScalarFieldEnum = {
   id: 'id',
+  accountId: 'accountId',
+  providerId: 'providerId',
   userId: 'userId',
-  provider: 'provider',
-  providerAccountId: 'providerAccountId',
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
   idToken: 'idToken',
-  scope: 'scope',
-  tokenType: 'tokenType',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt',
-  accountId: 'accountId',
-  providerId: 'providerId',
   accessTokenExpiresAt: 'accessTokenExpiresAt',
   refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  scope: 'scope',
   password: 'password',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
 
 
-export const VerificationTokenScalarFieldEnum = {
+export const VerificationScalarFieldEnum = {
   id: 'id',
-  idToken: 'idToken',
-  email: 'email',
+  identifier: 'identifier',
+  value: 'value',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  userId: 'userId'
+  updatedAt: 'updatedAt'
 } as const
 
-export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
-export const CodeTokenScalarFieldEnum = {
+export const OrganizationScalarFieldEnum = {
   id: 'id',
-  token: 'token',
-  email: 'email',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  userId: 'userId'
-} as const
-
-export type CodeTokenScalarFieldEnum = (typeof CodeTokenScalarFieldEnum)[keyof typeof CodeTokenScalarFieldEnum]
-
-
-export const ApiKeyScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  key: 'key',
-  keyPrefix: 'keyPrefix',
   name: 'name',
-  expiresAt: 'expiresAt',
-  lastUsedAt: 'lastUsedAt',
+  slug: 'slug',
+  logo: 'logo',
   createdAt: 'createdAt',
-  revokedAt: 'revokedAt'
+  metadata: 'metadata'
 } as const
 
-export type ApiKeyScalarFieldEnum = (typeof ApiKeyScalarFieldEnum)[keyof typeof ApiKeyScalarFieldEnum]
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
 
 
-export const UsageLogScalarFieldEnum = {
+export const MemberScalarFieldEnum = {
   id: 'id',
+  organizationId: 'organizationId',
   userId: 'userId',
-  endpoint: 'endpoint',
-  urlRequested: 'urlRequested',
-  statusCode: 'statusCode',
-  responseTimeMs: 'responseTimeMs',
-  errorMessage: 'errorMessage',
+  role: 'role',
   createdAt: 'createdAt'
 } as const
 
-export type UsageLogScalarFieldEnum = (typeof UsageLogScalarFieldEnum)[keyof typeof UsageLogScalarFieldEnum]
+export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum]
 
 
-export const QuotaScalarFieldEnum = {
+export const InvitationScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  periodStart: 'periodStart',
-  periodEnd: 'periodEnd',
-  requestsMade: 'requestsMade',
-  requestsLimit: 'requestsLimit',
-  createdAt: 'createdAt'
+  organizationId: 'organizationId',
+  email: 'email',
+  role: 'role',
+  status: 'status',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  inviterId: 'inviterId'
 } as const
 
-export type QuotaScalarFieldEnum = (typeof QuotaScalarFieldEnum)[keyof typeof QuotaScalarFieldEnum]
+export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
 
 
 export const WebhookScalarFieldEnum = {
@@ -280,55 +241,6 @@ export const ScheduledScreenshotScalarFieldEnum = {
 } as const
 
 export type ScheduledScreenshotScalarFieldEnum = (typeof ScheduledScreenshotScalarFieldEnum)[keyof typeof ScheduledScreenshotScalarFieldEnum]
-
-
-export const VerificationScalarFieldEnum = {
-  id: 'id',
-  identifier: 'identifier',
-  value: 'value',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
-
-
-export const OrganizationScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  slug: 'slug',
-  logo: 'logo',
-  createdAt: 'createdAt',
-  metadata: 'metadata'
-} as const
-
-export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
-
-
-export const MemberScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  userId: 'userId',
-  role: 'role',
-  createdAt: 'createdAt'
-} as const
-
-export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum]
-
-
-export const InvitationScalarFieldEnum = {
-  id: 'id',
-  organizationId: 'organizationId',
-  email: 'email',
-  role: 'role',
-  status: 'status',
-  expiresAt: 'expiresAt',
-  createdAt: 'createdAt',
-  inviterId: 'inviterId'
-} as const
-
-export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
 
 
 export const SortOrder = {

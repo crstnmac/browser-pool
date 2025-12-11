@@ -55,30 +55,25 @@ export type Session = Prisma.SessionModel
  */
 export type Account = Prisma.AccountModel
 /**
- * Model VerificationToken
+ * Model Verification
  * 
  */
-export type VerificationToken = Prisma.VerificationTokenModel
+export type Verification = Prisma.VerificationModel
 /**
- * Model CodeToken
+ * Model Organization
  * 
  */
-export type CodeToken = Prisma.CodeTokenModel
+export type Organization = Prisma.OrganizationModel
 /**
- * Model ApiKey
+ * Model Member
  * 
  */
-export type ApiKey = Prisma.ApiKeyModel
+export type Member = Prisma.MemberModel
 /**
- * Model UsageLog
+ * Model Invitation
  * 
  */
-export type UsageLog = Prisma.UsageLogModel
-/**
- * Model Quota
- * 
- */
-export type Quota = Prisma.QuotaModel
+export type Invitation = Prisma.InvitationModel
 /**
  * Model Webhook
  * 
@@ -99,23 +94,3 @@ export type Screenshot = Prisma.ScreenshotModel
  * 
  */
 export type ScheduledScreenshot = Prisma.ScheduledScreenshotModel
-/**
- * Model Verification
- * 
- */
-export type Verification = Prisma.VerificationModel
-/**
- * Model Organization
- * 
- */
-export type Organization = Prisma.OrganizationModel
-/**
- * Model Member
- * 
- */
-export type Member = Prisma.MemberModel
-/**
- * Model Invitation
- * 
- */
-export type Invitation = Prisma.InvitationModel

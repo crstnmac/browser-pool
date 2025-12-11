@@ -20,154 +20,70 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
-  _avg: UserAvgAggregateOutputType | null
-  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
 
-export type UserAvgAggregateOutputType = {
-  failedLoginAttempts: number | null
-}
-
-export type UserSumAggregateOutputType = {
-  failedLoginAttempts: number | null
-}
-
 export type UserMinAggregateOutputType = {
   id: string | null
-  email: string | null
   name: string | null
-  plan: $Enums.UserPlan | null
-  status: $Enums.UserStatus | null
-  isAdmin: boolean | null
+  email: string | null
   emailVerified: boolean | null
-  emailVerificationToken: string | null
-  emailVerificationExpiry: Date | null
-  passwordResetToken: string | null
-  passwordResetExpiry: Date | null
-  passwordResetUsedAt: Date | null
-  failedLoginAttempts: number | null
-  lockedUntil: Date | null
-  lastLoginAt: Date | null
+  image: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  image: string | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
-  email: string | null
   name: string | null
-  plan: $Enums.UserPlan | null
-  status: $Enums.UserStatus | null
-  isAdmin: boolean | null
+  email: string | null
   emailVerified: boolean | null
-  emailVerificationToken: string | null
-  emailVerificationExpiry: Date | null
-  passwordResetToken: string | null
-  passwordResetExpiry: Date | null
-  passwordResetUsedAt: Date | null
-  failedLoginAttempts: number | null
-  lockedUntil: Date | null
-  lastLoginAt: Date | null
+  image: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  image: string | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
-  email: number
   name: number
-  plan: number
-  status: number
-  isAdmin: number
+  email: number
   emailVerified: number
-  emailVerificationToken: number
-  emailVerificationExpiry: number
-  passwordResetToken: number
-  passwordResetExpiry: number
-  passwordResetUsedAt: number
-  failedLoginAttempts: number
-  lockedUntil: number
-  lastLoginAt: number
+  image: number
   createdAt: number
   updatedAt: number
-  image: number
   _all: number
 }
 
 
-export type UserAvgAggregateInputType = {
-  failedLoginAttempts?: true
-}
-
-export type UserSumAggregateInputType = {
-  failedLoginAttempts?: true
-}
-
 export type UserMinAggregateInputType = {
   id?: true
-  email?: true
   name?: true
-  plan?: true
-  status?: true
-  isAdmin?: true
+  email?: true
   emailVerified?: true
-  emailVerificationToken?: true
-  emailVerificationExpiry?: true
-  passwordResetToken?: true
-  passwordResetExpiry?: true
-  passwordResetUsedAt?: true
-  failedLoginAttempts?: true
-  lockedUntil?: true
-  lastLoginAt?: true
+  image?: true
   createdAt?: true
   updatedAt?: true
-  image?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
-  email?: true
   name?: true
-  plan?: true
-  status?: true
-  isAdmin?: true
+  email?: true
   emailVerified?: true
-  emailVerificationToken?: true
-  emailVerificationExpiry?: true
-  passwordResetToken?: true
-  passwordResetExpiry?: true
-  passwordResetUsedAt?: true
-  failedLoginAttempts?: true
-  lockedUntil?: true
-  lastLoginAt?: true
+  image?: true
   createdAt?: true
   updatedAt?: true
-  image?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
-  email?: true
   name?: true
-  plan?: true
-  status?: true
-  isAdmin?: true
+  email?: true
   emailVerified?: true
-  emailVerificationToken?: true
-  emailVerificationExpiry?: true
-  passwordResetToken?: true
-  passwordResetExpiry?: true
-  passwordResetUsedAt?: true
-  failedLoginAttempts?: true
-  lockedUntil?: true
-  lastLoginAt?: true
+  image?: true
   createdAt?: true
   updatedAt?: true
-  image?: true
   _all?: true
 }
 
@@ -209,18 +125,6 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: UserAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: UserSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -251,34 +155,19 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
-  _avg?: UserAvgAggregateInputType
-  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
 
 export type UserGroupByOutputType = {
   id: string
-  email: string
   name: string
-  plan: $Enums.UserPlan
-  status: $Enums.UserStatus
-  isAdmin: boolean
+  email: string
   emailVerified: boolean
-  emailVerificationToken: string | null
-  emailVerificationExpiry: Date | null
-  passwordResetToken: string | null
-  passwordResetExpiry: Date | null
-  passwordResetUsedAt: Date | null
-  failedLoginAttempts: number
-  lockedUntil: Date | null
-  lastLoginAt: Date | null
+  image: string | null
   createdAt: Date
   updatedAt: Date
-  image: string | null
   _count: UserCountAggregateOutputType | null
-  _avg: UserAvgAggregateOutputType | null
-  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -303,133 +192,72 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
-  plan?: Prisma.EnumUserPlanFilter<"User"> | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFilter<"User"> | boolean
+  email?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
-  emailVerificationToken?: Prisma.StringNullableFilter<"User"> | string | null
-  emailVerificationExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
-  passwordResetExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  passwordResetUsedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  failedLoginAttempts?: Prisma.IntFilter<"User"> | number
-  lockedUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  image?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  image?: Prisma.StringNullableFilter<"User"> | string | null
-  accounts?: Prisma.AccountListRelationFilter
-  apiKeys?: Prisma.ApiKeyListRelationFilter
-  auditLogs?: Prisma.AuditLogListRelationFilter
-  codeTokens?: Prisma.CodeTokenListRelationFilter
-  quotas?: Prisma.QuotaListRelationFilter
-  scheduledScreenshots?: Prisma.ScheduledScreenshotListRelationFilter
-  screenshots?: Prisma.ScreenshotListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
-  usageLogs?: Prisma.UsageLogListRelationFilter
-  verificationTokens?: Prisma.VerificationTokenListRelationFilter
-  webhooks?: Prisma.WebhookListRelationFilter
+  accounts?: Prisma.AccountListRelationFilter
   members?: Prisma.MemberListRelationFilter
   invitations?: Prisma.InvitationListRelationFilter
+  webhooks?: Prisma.WebhookListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
+  screenshots?: Prisma.ScreenshotListRelationFilter
+  scheduledScreenshots?: Prisma.ScheduledScreenshotListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  plan?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  isAdmin?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  emailVerificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
-  emailVerificationExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordResetExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordResetUsedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
-  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
-  lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  image?: Prisma.SortOrderInput | Prisma.SortOrder
-  accounts?: Prisma.AccountOrderByRelationAggregateInput
-  apiKeys?: Prisma.ApiKeyOrderByRelationAggregateInput
-  auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
-  codeTokens?: Prisma.CodeTokenOrderByRelationAggregateInput
-  quotas?: Prisma.QuotaOrderByRelationAggregateInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotOrderByRelationAggregateInput
-  screenshots?: Prisma.ScreenshotOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
-  usageLogs?: Prisma.UsageLogOrderByRelationAggregateInput
-  verificationTokens?: Prisma.VerificationTokenOrderByRelationAggregateInput
-  webhooks?: Prisma.WebhookOrderByRelationAggregateInput
+  accounts?: Prisma.AccountOrderByRelationAggregateInput
   members?: Prisma.MemberOrderByRelationAggregateInput
   invitations?: Prisma.InvitationOrderByRelationAggregateInput
+  webhooks?: Prisma.WebhookOrderByRelationAggregateInput
+  auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
+  screenshots?: Prisma.ScreenshotOrderByRelationAggregateInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
-  emailVerificationToken?: string
-  passwordResetToken?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
-  plan?: Prisma.EnumUserPlanFilter<"User"> | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFilter<"User"> | boolean
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
-  emailVerificationExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  passwordResetExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  passwordResetUsedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  failedLoginAttempts?: Prisma.IntFilter<"User"> | number
-  lockedUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  image?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  image?: Prisma.StringNullableFilter<"User"> | string | null
-  accounts?: Prisma.AccountListRelationFilter
-  apiKeys?: Prisma.ApiKeyListRelationFilter
-  auditLogs?: Prisma.AuditLogListRelationFilter
-  codeTokens?: Prisma.CodeTokenListRelationFilter
-  quotas?: Prisma.QuotaListRelationFilter
-  scheduledScreenshots?: Prisma.ScheduledScreenshotListRelationFilter
-  screenshots?: Prisma.ScreenshotListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
-  usageLogs?: Prisma.UsageLogListRelationFilter
-  verificationTokens?: Prisma.VerificationTokenListRelationFilter
-  webhooks?: Prisma.WebhookListRelationFilter
+  accounts?: Prisma.AccountListRelationFilter
   members?: Prisma.MemberListRelationFilter
   invitations?: Prisma.InvitationListRelationFilter
-}, "id" | "email" | "emailVerificationToken" | "passwordResetToken">
+  webhooks?: Prisma.WebhookListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
+  screenshots?: Prisma.ScreenshotListRelationFilter
+  scheduledScreenshots?: Prisma.ScheduledScreenshotListRelationFilter
+}, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  plan?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  isAdmin?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  emailVerificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
-  emailVerificationExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordResetExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordResetUsedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
-  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
-  lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  image?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
-  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
-  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -437,293 +265,144 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
-  email?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
-  plan?: Prisma.EnumUserPlanWithAggregatesFilter<"User"> | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
-  isAdmin?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  email?: Prisma.StringWithAggregatesFilter<"User"> | string
   emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  emailVerificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  emailVerificationExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-  passwordResetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  passwordResetExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-  passwordResetUsedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-  failedLoginAttempts?: Prisma.IntWithAggregatesFilter<"User"> | number
-  lockedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-  lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   members?: Prisma.MemberCreateNestedManyWithoutUserInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   members?: Prisma.MemberUpdateManyWithoutUserNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  plan?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  isAdmin?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  emailVerificationToken?: Prisma.SortOrder
-  emailVerificationExpiry?: Prisma.SortOrder
-  passwordResetToken?: Prisma.SortOrder
-  passwordResetExpiry?: Prisma.SortOrder
-  passwordResetUsedAt?: Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
-  lockedUntil?: Prisma.SortOrder
-  lastLoginAt?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  image?: Prisma.SortOrder
-}
-
-export type UserAvgOrderByAggregateInput = {
-  failedLoginAttempts?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  plan?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  isAdmin?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  emailVerificationToken?: Prisma.SortOrder
-  emailVerificationExpiry?: Prisma.SortOrder
-  passwordResetToken?: Prisma.SortOrder
-  passwordResetExpiry?: Prisma.SortOrder
-  passwordResetUsedAt?: Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
-  lockedUntil?: Prisma.SortOrder
-  lastLoginAt?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  image?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  plan?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  isAdmin?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
-  emailVerificationToken?: Prisma.SortOrder
-  emailVerificationExpiry?: Prisma.SortOrder
-  passwordResetToken?: Prisma.SortOrder
-  passwordResetExpiry?: Prisma.SortOrder
-  passwordResetUsedAt?: Prisma.SortOrder
-  failedLoginAttempts?: Prisma.SortOrder
-  lockedUntil?: Prisma.SortOrder
-  lastLoginAt?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  image?: Prisma.SortOrder
-}
-
-export type UserSumOrderByAggregateInput = {
-  failedLoginAttempts?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -740,32 +419,12 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
-export type EnumUserPlanFieldUpdateOperationsInput = {
-  set?: $Enums.UserPlan
-}
-
-export type EnumUserStatusFieldUpdateOperationsInput = {
-  set?: $Enums.UserStatus
-}
-
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -800,78 +459,32 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
-export type UserCreateNestedOneWithoutVerificationTokensInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutVerificationTokensInput, Prisma.UserUncheckedCreateWithoutVerificationTokensInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerificationTokensInput
+export type UserCreateNestedOneWithoutMembersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMembersInput, Prisma.UserUncheckedCreateWithoutMembersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMembersInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutVerificationTokensNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutVerificationTokensInput, Prisma.UserUncheckedCreateWithoutVerificationTokensInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerificationTokensInput
-  upsert?: Prisma.UserUpsertWithoutVerificationTokensInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
+export type UserUpdateOneRequiredWithoutMembersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMembersInput, Prisma.UserUncheckedCreateWithoutMembersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMembersInput
+  upsert?: Prisma.UserUpsertWithoutMembersInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVerificationTokensInput, Prisma.UserUpdateWithoutVerificationTokensInput>, Prisma.UserUncheckedUpdateWithoutVerificationTokensInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMembersInput, Prisma.UserUpdateWithoutMembersInput>, Prisma.UserUncheckedUpdateWithoutMembersInput>
 }
 
-export type UserCreateNestedOneWithoutCodeTokensInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCodeTokensInput, Prisma.UserUncheckedCreateWithoutCodeTokensInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCodeTokensInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneWithoutCodeTokensNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCodeTokensInput, Prisma.UserUncheckedCreateWithoutCodeTokensInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCodeTokensInput
-  upsert?: Prisma.UserUpsertWithoutCodeTokensInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCodeTokensInput, Prisma.UserUpdateWithoutCodeTokensInput>, Prisma.UserUncheckedUpdateWithoutCodeTokensInput>
-}
-
-export type UserCreateNestedOneWithoutApiKeysInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutApiKeysInput, Prisma.UserUncheckedCreateWithoutApiKeysInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutApiKeysInput
+export type UserCreateNestedOneWithoutInvitationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutInvitationsInput, Prisma.UserUncheckedCreateWithoutInvitationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvitationsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutApiKeysNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutApiKeysInput, Prisma.UserUncheckedCreateWithoutApiKeysInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutApiKeysInput
-  upsert?: Prisma.UserUpsertWithoutApiKeysInput
+export type UserUpdateOneRequiredWithoutInvitationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutInvitationsInput, Prisma.UserUncheckedCreateWithoutInvitationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvitationsInput
+  upsert?: Prisma.UserUpsertWithoutInvitationsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutApiKeysInput, Prisma.UserUpdateWithoutApiKeysInput>, Prisma.UserUncheckedUpdateWithoutApiKeysInput>
-}
-
-export type UserCreateNestedOneWithoutUsageLogsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutUsageLogsInput, Prisma.UserUncheckedCreateWithoutUsageLogsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUsageLogsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutUsageLogsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutUsageLogsInput, Prisma.UserUncheckedCreateWithoutUsageLogsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUsageLogsInput
-  upsert?: Prisma.UserUpsertWithoutUsageLogsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUsageLogsInput, Prisma.UserUpdateWithoutUsageLogsInput>, Prisma.UserUncheckedUpdateWithoutUsageLogsInput>
-}
-
-export type UserCreateNestedOneWithoutQuotasInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutQuotasInput, Prisma.UserUncheckedCreateWithoutQuotasInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutQuotasInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutQuotasNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutQuotasInput, Prisma.UserUncheckedCreateWithoutQuotasInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutQuotasInput
-  upsert?: Prisma.UserUpsertWithoutQuotasInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutQuotasInput, Prisma.UserUpdateWithoutQuotasInput>, Prisma.UserUncheckedUpdateWithoutQuotasInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInvitationsInput, Prisma.UserUpdateWithoutInvitationsInput>, Prisma.UserUncheckedUpdateWithoutInvitationsInput>
 }
 
 export type UserCreateNestedOneWithoutWebhooksInput = {
@@ -932,98 +545,38 @@ export type UserUpdateOneRequiredWithoutScheduledScreenshotsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutScheduledScreenshotsInput, Prisma.UserUpdateWithoutScheduledScreenshotsInput>, Prisma.UserUncheckedUpdateWithoutScheduledScreenshotsInput>
 }
 
-export type UserCreateNestedOneWithoutMembersInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutMembersInput, Prisma.UserUncheckedCreateWithoutMembersInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMembersInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutMembersNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutMembersInput, Prisma.UserUncheckedCreateWithoutMembersInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMembersInput
-  upsert?: Prisma.UserUpsertWithoutMembersInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMembersInput, Prisma.UserUpdateWithoutMembersInput>, Prisma.UserUncheckedUpdateWithoutMembersInput>
-}
-
-export type UserCreateNestedOneWithoutInvitationsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutInvitationsInput, Prisma.UserUncheckedCreateWithoutInvitationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvitationsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutInvitationsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutInvitationsInput, Prisma.UserUncheckedCreateWithoutInvitationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvitationsInput
-  upsert?: Prisma.UserUpsertWithoutInvitationsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInvitationsInput, Prisma.UserUpdateWithoutInvitationsInput>, Prisma.UserUncheckedUpdateWithoutInvitationsInput>
-}
-
 export type UserCreateWithoutSessionsInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
   members?: Prisma.MemberCreateNestedManyWithoutUserInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -1044,134 +597,70 @@ export type UserUpdateToOneWithWhereWithoutSessionsInput = {
 
 export type UserUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
   members?: Prisma.MemberUpdateManyWithoutUserNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
   members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
   members?: Prisma.MemberCreateNestedManyWithoutUserInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -1192,1466 +681,70 @@ export type UserUpdateToOneWithWhereWithoutAccountsInput = {
 
 export type UserUpdateWithoutAccountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
   members?: Prisma.MemberUpdateManyWithoutUserNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
   webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutVerificationTokensInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutVerificationTokensInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutVerificationTokensInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutVerificationTokensInput, Prisma.UserUncheckedCreateWithoutVerificationTokensInput>
-}
-
-export type UserUpsertWithoutVerificationTokensInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutVerificationTokensInput, Prisma.UserUncheckedUpdateWithoutVerificationTokensInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutVerificationTokensInput, Prisma.UserUncheckedCreateWithoutVerificationTokensInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutVerificationTokensInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutVerificationTokensInput, Prisma.UserUncheckedUpdateWithoutVerificationTokensInput>
-}
-
-export type UserUpdateWithoutVerificationTokensInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutVerificationTokensInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
   screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutCodeTokensInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutCodeTokensInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutCodeTokensInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCodeTokensInput, Prisma.UserUncheckedCreateWithoutCodeTokensInput>
-}
-
-export type UserUpsertWithoutCodeTokensInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutCodeTokensInput, Prisma.UserUncheckedUpdateWithoutCodeTokensInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutCodeTokensInput, Prisma.UserUncheckedCreateWithoutCodeTokensInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutCodeTokensInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutCodeTokensInput, Prisma.UserUncheckedUpdateWithoutCodeTokensInput>
-}
-
-export type UserUpdateWithoutCodeTokensInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutCodeTokensInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
   scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutApiKeysInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutApiKeysInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutApiKeysInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutApiKeysInput, Prisma.UserUncheckedCreateWithoutApiKeysInput>
-}
-
-export type UserUpsertWithoutApiKeysInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutApiKeysInput, Prisma.UserUncheckedUpdateWithoutApiKeysInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutApiKeysInput, Prisma.UserUncheckedCreateWithoutApiKeysInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutApiKeysInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutApiKeysInput, Prisma.UserUncheckedUpdateWithoutApiKeysInput>
-}
-
-export type UserUpdateWithoutApiKeysInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutApiKeysInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutUsageLogsInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutUsageLogsInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutUsageLogsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutUsageLogsInput, Prisma.UserUncheckedCreateWithoutUsageLogsInput>
-}
-
-export type UserUpsertWithoutUsageLogsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutUsageLogsInput, Prisma.UserUncheckedUpdateWithoutUsageLogsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutUsageLogsInput, Prisma.UserUncheckedCreateWithoutUsageLogsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutUsageLogsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutUsageLogsInput, Prisma.UserUncheckedUpdateWithoutUsageLogsInput>
-}
-
-export type UserUpdateWithoutUsageLogsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutUsageLogsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutQuotasInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutQuotasInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutQuotasInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutQuotasInput, Prisma.UserUncheckedCreateWithoutQuotasInput>
-}
-
-export type UserUpsertWithoutQuotasInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutQuotasInput, Prisma.UserUncheckedUpdateWithoutQuotasInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutQuotasInput, Prisma.UserUncheckedCreateWithoutQuotasInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutQuotasInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutQuotasInput, Prisma.UserUncheckedUpdateWithoutQuotasInput>
-}
-
-export type UserUpdateWithoutQuotasInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutQuotasInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutWebhooksInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutWebhooksInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutWebhooksInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutWebhooksInput, Prisma.UserUncheckedCreateWithoutWebhooksInput>
-}
-
-export type UserUpsertWithoutWebhooksInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutWebhooksInput, Prisma.UserUncheckedUpdateWithoutWebhooksInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutWebhooksInput, Prisma.UserUncheckedCreateWithoutWebhooksInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutWebhooksInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutWebhooksInput, Prisma.UserUncheckedUpdateWithoutWebhooksInput>
-}
-
-export type UserUpdateWithoutWebhooksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutWebhooksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutAuditLogsInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutAuditLogsInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutAuditLogsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
-}
-
-export type UserUpsertWithoutAuditLogsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutAuditLogsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
-}
-
-export type UserUpdateWithoutAuditLogsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutAuditLogsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutScreenshotsInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutScreenshotsInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutScreenshotsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutScreenshotsInput, Prisma.UserUncheckedCreateWithoutScreenshotsInput>
-}
-
-export type UserUpsertWithoutScreenshotsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutScreenshotsInput, Prisma.UserUncheckedUpdateWithoutScreenshotsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutScreenshotsInput, Prisma.UserUncheckedCreateWithoutScreenshotsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutScreenshotsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutScreenshotsInput, Prisma.UserUncheckedUpdateWithoutScreenshotsInput>
-}
-
-export type UserUpdateWithoutScreenshotsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutScreenshotsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutScheduledScreenshotsInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutScheduledScreenshotsInput = {
-  id?: string
-  email: string
-  name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
-  emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutScheduledScreenshotsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutScheduledScreenshotsInput, Prisma.UserUncheckedCreateWithoutScheduledScreenshotsInput>
-}
-
-export type UserUpsertWithoutScheduledScreenshotsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutScheduledScreenshotsInput, Prisma.UserUncheckedUpdateWithoutScheduledScreenshotsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutScheduledScreenshotsInput, Prisma.UserUncheckedCreateWithoutScheduledScreenshotsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutScheduledScreenshotsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutScheduledScreenshotsInput, Prisma.UserUncheckedUpdateWithoutScheduledScreenshotsInput>
-}
-
-export type UserUpdateWithoutScheduledScreenshotsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutScheduledScreenshotsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMembersInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMembersInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMembersInput = {
@@ -2672,134 +765,70 @@ export type UserUpdateToOneWithWhereWithoutMembersInput = {
 
 export type UserUpdateWithoutMembersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMembersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutInvitationsInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   members?: Prisma.MemberCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutInvitationsInput = {
-  id?: string
-  email: string
+  id: string
   name: string
-  plan?: $Enums.UserPlan
-  status?: $Enums.UserStatus
-  isAdmin?: boolean
+  email: string
   emailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  passwordResetUsedAt?: Date | string | null
-  failedLoginAttempts?: number
-  lockedUntil?: Date | string | null
-  lastLoginAt?: Date | string | null
+  image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  image?: string | null
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutUserInput
-  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  codeTokens?: Prisma.CodeTokenUncheckedCreateNestedManyWithoutUserInput
-  quotas?: Prisma.QuotaUncheckedCreateNestedManyWithoutUserInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
-  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  usageLogs?: Prisma.UsageLogUncheckedCreateNestedManyWithoutUserInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
-  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutInvitationsInput = {
@@ -2820,68 +849,372 @@ export type UserUpdateToOneWithWhereWithoutInvitationsInput = {
 
 export type UserUpdateWithoutInvitationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   members?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInvitationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumUserPlanFieldUpdateOperationsInput | $Enums.UserPlan
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutUserNestedInput
-  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  codeTokens?: Prisma.CodeTokenUncheckedUpdateManyWithoutUserNestedInput
-  quotas?: Prisma.QuotaUncheckedUpdateManyWithoutUserNestedInput
-  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
-  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  usageLogs?: Prisma.UsageLogUncheckedUpdateManyWithoutUserNestedInput
-  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
-  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutWebhooksInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  members?: Prisma.MemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutWebhooksInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutWebhooksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWebhooksInput, Prisma.UserUncheckedCreateWithoutWebhooksInput>
+}
+
+export type UserUpsertWithoutWebhooksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWebhooksInput, Prisma.UserUncheckedUpdateWithoutWebhooksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWebhooksInput, Prisma.UserUncheckedCreateWithoutWebhooksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWebhooksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWebhooksInput, Prisma.UserUncheckedUpdateWithoutWebhooksInput>
+}
+
+export type UserUpdateWithoutWebhooksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWebhooksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAuditLogsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  members?: Prisma.MemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAuditLogsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAuditLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+}
+
+export type UserUpsertWithoutAuditLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuditLogsInput, Prisma.UserUncheckedCreateWithoutAuditLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuditLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuditLogsInput, Prisma.UserUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type UserUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutScreenshotsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  members?: Prisma.MemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutScreenshotsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutScreenshotsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutScreenshotsInput, Prisma.UserUncheckedCreateWithoutScreenshotsInput>
+}
+
+export type UserUpsertWithoutScreenshotsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutScreenshotsInput, Prisma.UserUncheckedUpdateWithoutScreenshotsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutScreenshotsInput, Prisma.UserUncheckedCreateWithoutScreenshotsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutScreenshotsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutScreenshotsInput, Prisma.UserUncheckedUpdateWithoutScreenshotsInput>
+}
+
+export type UserUpdateWithoutScreenshotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutScreenshotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  scheduledScreenshots?: Prisma.ScheduledScreenshotUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutScheduledScreenshotsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  members?: Prisma.MemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutScheduledScreenshotsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutUserInput
+  webhooks?: Prisma.WebhookUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  screenshots?: Prisma.ScreenshotUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutScheduledScreenshotsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutScheduledScreenshotsInput, Prisma.UserUncheckedCreateWithoutScheduledScreenshotsInput>
+}
+
+export type UserUpsertWithoutScheduledScreenshotsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutScheduledScreenshotsInput, Prisma.UserUncheckedUpdateWithoutScheduledScreenshotsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutScheduledScreenshotsInput, Prisma.UserUncheckedCreateWithoutScheduledScreenshotsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutScheduledScreenshotsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutScheduledScreenshotsInput, Prisma.UserUncheckedUpdateWithoutScheduledScreenshotsInput>
+}
+
+export type UserUpdateWithoutScheduledScreenshotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  members?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutScheduledScreenshotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutUserNestedInput
+  webhooks?: Prisma.WebhookUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  screenshots?: Prisma.ScreenshotUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -2890,35 +1223,25 @@ export type UserUncheckedUpdateWithoutInvitationsInput = {
  */
 
 export type UserCountOutputType = {
-  accounts: number
-  apiKeys: number
-  auditLogs: number
-  codeTokens: number
-  quotas: number
-  scheduledScreenshots: number
-  screenshots: number
   sessions: number
-  usageLogs: number
-  verificationTokens: number
-  webhooks: number
+  accounts: number
   members: number
   invitations: number
+  webhooks: number
+  auditLogs: number
+  screenshots: number
+  scheduledScreenshots: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  accounts?: boolean | UserCountOutputTypeCountAccountsArgs
-  apiKeys?: boolean | UserCountOutputTypeCountApiKeysArgs
-  auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
-  codeTokens?: boolean | UserCountOutputTypeCountCodeTokensArgs
-  quotas?: boolean | UserCountOutputTypeCountQuotasArgs
-  scheduledScreenshots?: boolean | UserCountOutputTypeCountScheduledScreenshotsArgs
-  screenshots?: boolean | UserCountOutputTypeCountScreenshotsArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
-  usageLogs?: boolean | UserCountOutputTypeCountUsageLogsArgs
-  verificationTokens?: boolean | UserCountOutputTypeCountVerificationTokensArgs
-  webhooks?: boolean | UserCountOutputTypeCountWebhooksArgs
+  accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   members?: boolean | UserCountOutputTypeCountMembersArgs
   invitations?: boolean | UserCountOutputTypeCountInvitationsArgs
+  webhooks?: boolean | UserCountOutputTypeCountWebhooksArgs
+  auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
+  screenshots?: boolean | UserCountOutputTypeCountScreenshotsArgs
+  scheduledScreenshots?: boolean | UserCountOutputTypeCountScheduledScreenshotsArgs
 }
 
 /**
@@ -2934,55 +1257,6 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AccountWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountApiKeysArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ApiKeyWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AuditLogWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountCodeTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CodeTokenWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountQuotasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.QuotaWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountScheduledScreenshotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ScheduledScreenshotWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountScreenshotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ScreenshotWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
 export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SessionWhereInput
 }
@@ -2990,22 +1264,8 @@ export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.E
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountUsageLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UsageLogWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountVerificationTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.VerificationTokenWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountWebhooksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.WebhookWhereInput
+export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AccountWhereInput
 }
 
 /**
@@ -3022,120 +1282,94 @@ export type UserCountOutputTypeCountInvitationsArgs<ExtArgs extends runtime.Type
   where?: Prisma.InvitationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWebhooksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WebhookWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountScreenshotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScreenshotWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountScheduledScreenshotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScheduledScreenshotWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
   name?: boolean
-  plan?: boolean
-  status?: boolean
-  isAdmin?: boolean
+  email?: boolean
   emailVerified?: boolean
-  emailVerificationToken?: boolean
-  emailVerificationExpiry?: boolean
-  passwordResetToken?: boolean
-  passwordResetExpiry?: boolean
-  passwordResetUsedAt?: boolean
-  failedLoginAttempts?: boolean
-  lockedUntil?: boolean
-  lastLoginAt?: boolean
+  image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  image?: boolean
-  accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
-  apiKeys?: boolean | Prisma.User$apiKeysArgs<ExtArgs>
-  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
-  codeTokens?: boolean | Prisma.User$codeTokensArgs<ExtArgs>
-  quotas?: boolean | Prisma.User$quotasArgs<ExtArgs>
-  scheduledScreenshots?: boolean | Prisma.User$scheduledScreenshotsArgs<ExtArgs>
-  screenshots?: boolean | Prisma.User$screenshotsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
-  usageLogs?: boolean | Prisma.User$usageLogsArgs<ExtArgs>
-  verificationTokens?: boolean | Prisma.User$verificationTokensArgs<ExtArgs>
-  webhooks?: boolean | Prisma.User$webhooksArgs<ExtArgs>
+  accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   members?: boolean | Prisma.User$membersArgs<ExtArgs>
   invitations?: boolean | Prisma.User$invitationsArgs<ExtArgs>
+  webhooks?: boolean | Prisma.User$webhooksArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  screenshots?: boolean | Prisma.User$screenshotsArgs<ExtArgs>
+  scheduledScreenshots?: boolean | Prisma.User$scheduledScreenshotsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
   name?: boolean
-  plan?: boolean
-  status?: boolean
-  isAdmin?: boolean
+  email?: boolean
   emailVerified?: boolean
-  emailVerificationToken?: boolean
-  emailVerificationExpiry?: boolean
-  passwordResetToken?: boolean
-  passwordResetExpiry?: boolean
-  passwordResetUsedAt?: boolean
-  failedLoginAttempts?: boolean
-  lockedUntil?: boolean
-  lastLoginAt?: boolean
+  image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  image?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
   name?: boolean
-  plan?: boolean
-  status?: boolean
-  isAdmin?: boolean
+  email?: boolean
   emailVerified?: boolean
-  emailVerificationToken?: boolean
-  emailVerificationExpiry?: boolean
-  passwordResetToken?: boolean
-  passwordResetExpiry?: boolean
-  passwordResetUsedAt?: boolean
-  failedLoginAttempts?: boolean
-  lockedUntil?: boolean
-  lastLoginAt?: boolean
+  image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  image?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
-  email?: boolean
   name?: boolean
-  plan?: boolean
-  status?: boolean
-  isAdmin?: boolean
+  email?: boolean
   emailVerified?: boolean
-  emailVerificationToken?: boolean
-  emailVerificationExpiry?: boolean
-  passwordResetToken?: boolean
-  passwordResetExpiry?: boolean
-  passwordResetUsedAt?: boolean
-  failedLoginAttempts?: boolean
-  lockedUntil?: boolean
-  lastLoginAt?: boolean
+  image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  image?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "plan" | "status" | "isAdmin" | "emailVerified" | "emailVerificationToken" | "emailVerificationExpiry" | "passwordResetToken" | "passwordResetExpiry" | "passwordResetUsedAt" | "failedLoginAttempts" | "lockedUntil" | "lastLoginAt" | "createdAt" | "updatedAt" | "image", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
-  apiKeys?: boolean | Prisma.User$apiKeysArgs<ExtArgs>
-  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
-  codeTokens?: boolean | Prisma.User$codeTokensArgs<ExtArgs>
-  quotas?: boolean | Prisma.User$quotasArgs<ExtArgs>
-  scheduledScreenshots?: boolean | Prisma.User$scheduledScreenshotsArgs<ExtArgs>
-  screenshots?: boolean | Prisma.User$screenshotsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
-  usageLogs?: boolean | Prisma.User$usageLogsArgs<ExtArgs>
-  verificationTokens?: boolean | Prisma.User$verificationTokensArgs<ExtArgs>
-  webhooks?: boolean | Prisma.User$webhooksArgs<ExtArgs>
+  accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   members?: boolean | Prisma.User$membersArgs<ExtArgs>
   invitations?: boolean | Prisma.User$invitationsArgs<ExtArgs>
+  webhooks?: boolean | Prisma.User$webhooksArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
+  screenshots?: boolean | Prisma.User$screenshotsArgs<ExtArgs>
+  scheduledScreenshots?: boolean | Prisma.User$scheduledScreenshotsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3144,39 +1378,23 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    accounts: Prisma.$AccountPayload<ExtArgs>[]
-    apiKeys: Prisma.$ApiKeyPayload<ExtArgs>[]
-    auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
-    codeTokens: Prisma.$CodeTokenPayload<ExtArgs>[]
-    quotas: Prisma.$QuotaPayload<ExtArgs>[]
-    scheduledScreenshots: Prisma.$ScheduledScreenshotPayload<ExtArgs>[]
-    screenshots: Prisma.$ScreenshotPayload<ExtArgs>[]
     sessions: Prisma.$SessionPayload<ExtArgs>[]
-    usageLogs: Prisma.$UsageLogPayload<ExtArgs>[]
-    verificationTokens: Prisma.$VerificationTokenPayload<ExtArgs>[]
-    webhooks: Prisma.$WebhookPayload<ExtArgs>[]
+    accounts: Prisma.$AccountPayload<ExtArgs>[]
     members: Prisma.$MemberPayload<ExtArgs>[]
     invitations: Prisma.$InvitationPayload<ExtArgs>[]
+    webhooks: Prisma.$WebhookPayload<ExtArgs>[]
+    auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+    screenshots: Prisma.$ScreenshotPayload<ExtArgs>[]
+    scheduledScreenshots: Prisma.$ScheduledScreenshotPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    email: string
     name: string
-    plan: $Enums.UserPlan
-    status: $Enums.UserStatus
-    isAdmin: boolean
+    email: string
     emailVerified: boolean
-    emailVerificationToken: string | null
-    emailVerificationExpiry: Date | null
-    passwordResetToken: string | null
-    passwordResetExpiry: Date | null
-    passwordResetUsedAt: Date | null
-    failedLoginAttempts: number
-    lockedUntil: Date | null
-    lastLoginAt: Date | null
+    image: string | null
     createdAt: Date
     updatedAt: Date
-    image: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -3571,19 +1789,14 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  apiKeys<T extends Prisma.User$apiKeysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$apiKeysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApiKeyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  codeTokens<T extends Prisma.User$codeTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$codeTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CodeTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  quotas<T extends Prisma.User$quotasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$quotasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuotaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  scheduledScreenshots<T extends Prisma.User$scheduledScreenshotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$scheduledScreenshotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScheduledScreenshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  screenshots<T extends Prisma.User$screenshotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$screenshotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScreenshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  usageLogs<T extends Prisma.User$usageLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$usageLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UsageLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  verificationTokens<T extends Prisma.User$verificationTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$verificationTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VerificationTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  webhooks<T extends Prisma.User$webhooksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$webhooksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WebhookPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   members<T extends Prisma.User$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invitations<T extends Prisma.User$invitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  webhooks<T extends Prisma.User$webhooksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$webhooksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WebhookPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  screenshots<T extends Prisma.User$screenshotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$screenshotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScreenshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  scheduledScreenshots<T extends Prisma.User$scheduledScreenshotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$scheduledScreenshotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScheduledScreenshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3614,23 +1827,12 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
-  readonly email: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
-  readonly plan: Prisma.FieldRef<"User", 'UserPlan'>
-  readonly status: Prisma.FieldRef<"User", 'UserStatus'>
-  readonly isAdmin: Prisma.FieldRef<"User", 'Boolean'>
+  readonly email: Prisma.FieldRef<"User", 'String'>
   readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
-  readonly emailVerificationToken: Prisma.FieldRef<"User", 'String'>
-  readonly emailVerificationExpiry: Prisma.FieldRef<"User", 'DateTime'>
-  readonly passwordResetToken: Prisma.FieldRef<"User", 'String'>
-  readonly passwordResetExpiry: Prisma.FieldRef<"User", 'DateTime'>
-  readonly passwordResetUsedAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly failedLoginAttempts: Prisma.FieldRef<"User", 'Int'>
-  readonly lockedUntil: Prisma.FieldRef<"User", 'DateTime'>
-  readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly image: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly image: Prisma.FieldRef<"User", 'String'>
 }
     
 
@@ -4019,174 +2221,6 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.accounts
- */
-export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Account
-   */
-  select?: Prisma.AccountSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Account
-   */
-  omit?: Prisma.AccountOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AccountInclude<ExtArgs> | null
-  where?: Prisma.AccountWhereInput
-  orderBy?: Prisma.AccountOrderByWithRelationInput | Prisma.AccountOrderByWithRelationInput[]
-  cursor?: Prisma.AccountWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
-}
-
-/**
- * User.apiKeys
- */
-export type User$apiKeysArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ApiKey
-   */
-  select?: Prisma.ApiKeySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ApiKey
-   */
-  omit?: Prisma.ApiKeyOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ApiKeyInclude<ExtArgs> | null
-  where?: Prisma.ApiKeyWhereInput
-  orderBy?: Prisma.ApiKeyOrderByWithRelationInput | Prisma.ApiKeyOrderByWithRelationInput[]
-  cursor?: Prisma.ApiKeyWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ApiKeyScalarFieldEnum | Prisma.ApiKeyScalarFieldEnum[]
-}
-
-/**
- * User.auditLogs
- */
-export type User$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AuditLog
-   */
-  select?: Prisma.AuditLogSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AuditLog
-   */
-  omit?: Prisma.AuditLogOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AuditLogInclude<ExtArgs> | null
-  where?: Prisma.AuditLogWhereInput
-  orderBy?: Prisma.AuditLogOrderByWithRelationInput | Prisma.AuditLogOrderByWithRelationInput[]
-  cursor?: Prisma.AuditLogWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
-}
-
-/**
- * User.codeTokens
- */
-export type User$codeTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CodeToken
-   */
-  select?: Prisma.CodeTokenSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CodeToken
-   */
-  omit?: Prisma.CodeTokenOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CodeTokenInclude<ExtArgs> | null
-  where?: Prisma.CodeTokenWhereInput
-  orderBy?: Prisma.CodeTokenOrderByWithRelationInput | Prisma.CodeTokenOrderByWithRelationInput[]
-  cursor?: Prisma.CodeTokenWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CodeTokenScalarFieldEnum | Prisma.CodeTokenScalarFieldEnum[]
-}
-
-/**
- * User.quotas
- */
-export type User$quotasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Quota
-   */
-  select?: Prisma.QuotaSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Quota
-   */
-  omit?: Prisma.QuotaOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.QuotaInclude<ExtArgs> | null
-  where?: Prisma.QuotaWhereInput
-  orderBy?: Prisma.QuotaOrderByWithRelationInput | Prisma.QuotaOrderByWithRelationInput[]
-  cursor?: Prisma.QuotaWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.QuotaScalarFieldEnum | Prisma.QuotaScalarFieldEnum[]
-}
-
-/**
- * User.scheduledScreenshots
- */
-export type User$scheduledScreenshotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ScheduledScreenshot
-   */
-  select?: Prisma.ScheduledScreenshotSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ScheduledScreenshot
-   */
-  omit?: Prisma.ScheduledScreenshotOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ScheduledScreenshotInclude<ExtArgs> | null
-  where?: Prisma.ScheduledScreenshotWhereInput
-  orderBy?: Prisma.ScheduledScreenshotOrderByWithRelationInput | Prisma.ScheduledScreenshotOrderByWithRelationInput[]
-  cursor?: Prisma.ScheduledScreenshotWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ScheduledScreenshotScalarFieldEnum | Prisma.ScheduledScreenshotScalarFieldEnum[]
-}
-
-/**
- * User.screenshots
- */
-export type User$screenshotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Screenshot
-   */
-  select?: Prisma.ScreenshotSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Screenshot
-   */
-  omit?: Prisma.ScreenshotOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ScreenshotInclude<ExtArgs> | null
-  where?: Prisma.ScreenshotWhereInput
-  orderBy?: Prisma.ScreenshotOrderByWithRelationInput | Prisma.ScreenshotOrderByWithRelationInput[]
-  cursor?: Prisma.ScreenshotWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ScreenshotScalarFieldEnum | Prisma.ScreenshotScalarFieldEnum[]
-}
-
-/**
  * User.sessions
  */
 export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4211,75 +2245,27 @@ export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * User.usageLogs
+ * User.accounts
  */
-export type User$usageLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the UsageLog
+   * Select specific fields to fetch from the Account
    */
-  select?: Prisma.UsageLogSelect<ExtArgs> | null
+  select?: Prisma.AccountSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the UsageLog
+   * Omit specific fields from the Account
    */
-  omit?: Prisma.UsageLogOmit<ExtArgs> | null
+  omit?: Prisma.AccountOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UsageLogInclude<ExtArgs> | null
-  where?: Prisma.UsageLogWhereInput
-  orderBy?: Prisma.UsageLogOrderByWithRelationInput | Prisma.UsageLogOrderByWithRelationInput[]
-  cursor?: Prisma.UsageLogWhereUniqueInput
+  include?: Prisma.AccountInclude<ExtArgs> | null
+  where?: Prisma.AccountWhereInput
+  orderBy?: Prisma.AccountOrderByWithRelationInput | Prisma.AccountOrderByWithRelationInput[]
+  cursor?: Prisma.AccountWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.UsageLogScalarFieldEnum | Prisma.UsageLogScalarFieldEnum[]
-}
-
-/**
- * User.verificationTokens
- */
-export type User$verificationTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the VerificationToken
-   */
-  select?: Prisma.VerificationTokenSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the VerificationToken
-   */
-  omit?: Prisma.VerificationTokenOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.VerificationTokenInclude<ExtArgs> | null
-  where?: Prisma.VerificationTokenWhereInput
-  orderBy?: Prisma.VerificationTokenOrderByWithRelationInput | Prisma.VerificationTokenOrderByWithRelationInput[]
-  cursor?: Prisma.VerificationTokenWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.VerificationTokenScalarFieldEnum | Prisma.VerificationTokenScalarFieldEnum[]
-}
-
-/**
- * User.webhooks
- */
-export type User$webhooksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Webhook
-   */
-  select?: Prisma.WebhookSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Webhook
-   */
-  omit?: Prisma.WebhookOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.WebhookInclude<ExtArgs> | null
-  where?: Prisma.WebhookWhereInput
-  orderBy?: Prisma.WebhookOrderByWithRelationInput | Prisma.WebhookOrderByWithRelationInput[]
-  cursor?: Prisma.WebhookWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.WebhookScalarFieldEnum | Prisma.WebhookScalarFieldEnum[]
+  distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
 }
 
 /**
@@ -4328,6 +2314,102 @@ export type User$invitationsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.InvitationScalarFieldEnum | Prisma.InvitationScalarFieldEnum[]
+}
+
+/**
+ * User.webhooks
+ */
+export type User$webhooksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Webhook
+   */
+  select?: Prisma.WebhookSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Webhook
+   */
+  omit?: Prisma.WebhookOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WebhookInclude<ExtArgs> | null
+  where?: Prisma.WebhookWhereInput
+  orderBy?: Prisma.WebhookOrderByWithRelationInput | Prisma.WebhookOrderByWithRelationInput[]
+  cursor?: Prisma.WebhookWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WebhookScalarFieldEnum | Prisma.WebhookScalarFieldEnum[]
+}
+
+/**
+ * User.auditLogs
+ */
+export type User$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditLog
+   */
+  select?: Prisma.AuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditLog
+   */
+  omit?: Prisma.AuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditLogInclude<ExtArgs> | null
+  where?: Prisma.AuditLogWhereInput
+  orderBy?: Prisma.AuditLogOrderByWithRelationInput | Prisma.AuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.AuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
+}
+
+/**
+ * User.screenshots
+ */
+export type User$screenshotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Screenshot
+   */
+  select?: Prisma.ScreenshotSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Screenshot
+   */
+  omit?: Prisma.ScreenshotOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScreenshotInclude<ExtArgs> | null
+  where?: Prisma.ScreenshotWhereInput
+  orderBy?: Prisma.ScreenshotOrderByWithRelationInput | Prisma.ScreenshotOrderByWithRelationInput[]
+  cursor?: Prisma.ScreenshotWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScreenshotScalarFieldEnum | Prisma.ScreenshotScalarFieldEnum[]
+}
+
+/**
+ * User.scheduledScreenshots
+ */
+export type User$scheduledScreenshotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ScheduledScreenshot
+   */
+  select?: Prisma.ScheduledScreenshotSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ScheduledScreenshot
+   */
+  omit?: Prisma.ScheduledScreenshotOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScheduledScreenshotInclude<ExtArgs> | null
+  where?: Prisma.ScheduledScreenshotWhereInput
+  orderBy?: Prisma.ScheduledScreenshotOrderByWithRelationInput | Prisma.ScheduledScreenshotOrderByWithRelationInput[]
+  cursor?: Prisma.ScheduledScreenshotWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScheduledScreenshotScalarFieldEnum | Prisma.ScheduledScreenshotScalarFieldEnum[]
 }
 
 /**

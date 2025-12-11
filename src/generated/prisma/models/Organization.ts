@@ -244,22 +244,22 @@ export type OrganizationScalarWhereWithAggregatesInput = {
 }
 
 export type OrganizationCreateInput = {
-  id?: string
+  id: string
   name: string
   slug: string
   logo?: string | null
-  createdAt?: Date | string
+  createdAt: Date | string
   metadata?: string | null
   members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
-  id?: string
+  id: string
   name: string
   slug: string
   logo?: string | null
-  createdAt?: Date | string
+  createdAt: Date | string
   metadata?: string | null
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
@@ -288,11 +288,11 @@ export type OrganizationUncheckedUpdateInput = {
 }
 
 export type OrganizationCreateManyInput = {
-  id?: string
+  id: string
   name: string
   slug: string
   logo?: string | null
-  createdAt?: Date | string
+  createdAt: Date | string
   metadata?: string | null
 }
 
@@ -375,21 +375,21 @@ export type OrganizationUpdateOneRequiredWithoutInvitationsNestedInput = {
 }
 
 export type OrganizationCreateWithoutMembersInput = {
-  id?: string
+  id: string
   name: string
   slug: string
   logo?: string | null
-  createdAt?: Date | string
+  createdAt: Date | string
   metadata?: string | null
   invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutMembersInput = {
-  id?: string
+  id: string
   name: string
   slug: string
   logo?: string | null
-  createdAt?: Date | string
+  createdAt: Date | string
   metadata?: string | null
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
 }
@@ -431,21 +431,21 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
 }
 
 export type OrganizationCreateWithoutInvitationsInput = {
-  id?: string
+  id: string
   name: string
   slug: string
   logo?: string | null
-  createdAt?: Date | string
+  createdAt: Date | string
   metadata?: string | null
   members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutInvitationsInput = {
-  id?: string
+  id: string
   name: string
   slug: string
   logo?: string | null
-  createdAt?: Date | string
+  createdAt: Date | string
   metadata?: string | null
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
 }

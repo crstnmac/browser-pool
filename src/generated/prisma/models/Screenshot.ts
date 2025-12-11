@@ -495,6 +495,14 @@ export type BytesFieldUpdateOperationsInput = {
   set?: runtime.Bytes
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type ScreenshotCreateWithoutUserInput = {
   id?: string
   url: string
